@@ -1,0 +1,43 @@
+﻿
+    .Gap {
+        margin-top: 50px;
+    }
+
+    .Gap2 {
+        margin-top: 20px !important;
+    }
+
+    .panel-heading .panel-title a {
+        font-size: 18px !important;
+        font-weight: bold !important;
+    }
+
+    h4 {
+        text-align: left !important;
+    }
+
+    .netamount {
+        font-size: 20px !important;
+    }
+
+    .invoice {
+        margin: auto;
+        display: block;
+        width: 30% !important;
+    }
+
+    .button-primary {
+        font-size: 15px;
+        padding: 7px 1em;
+        line-height: 30px;
+        display: block;
+        width: 100%;
+        background-color: #85C51F;
+        color: #fff;
+        border: 2px solid transparent;
+        transition: background-color .15s;
+    }
+
+    .quantity {
+        height: 22px !important;
+    }

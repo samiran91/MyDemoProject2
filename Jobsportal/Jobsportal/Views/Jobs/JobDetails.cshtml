@@ -1,0 +1,108 @@
+﻿@model DAL.Job
+
+@{
+    ViewBag.Title = "JobDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/JobsPortalStyleSheets/JobsPortal.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/JobDetails/JobDetalis.js"></script>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+</script>
+
+<style>
+    #JobApplyLink {
+        background-color: #1aa3ff !important;
+        border: 0 !important;
+    }
+    
+</style>
+<div id="JobDetails-wrap" class="container">
+    <div class="desc-header">@Model.JobNo - @Model.JobTitle</div>
+    <div style="padding:15px 15px 0 15px;">
+        <ul class="nav nav-tabs nav-justified">
+            <li class="active"><a data-toggle="tab" href="#Desc">Description</a></li>
+            <li><a data-toggle="tab" href="#QualLevel">Qualification Level</a></li>
+            <li><a data-toggle="tab" href="#ImpDates">Important Dates</a></li>
+            <li><a data-toggle="tab" href="#ImpNotes">Important Notes</a></li>
+            <li><a data-toggle="tab" href="#FAQC">FAQ/Community</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="Desc" class="tab-pane fade in active">
+                <p style="margin:10px; text-align:justify; border: 1px solid #bcbbbc; padding: 10px; margin: 10px 0 0 0;">@Model.JobDesc</p>
+            </div>
+            <div id="QualLevel" class="tab-pane fade">
+                <p style=" border: 1px solid #bcbbbc; padding: 10px; margin: 10px 0 0 0;">@Model.Qualification</p>
+            </div>
+            <div id="ImpDates" class="tab-pane fade">
+                <p style="margin:10px;">
+                    <div>
+                        <table class="impdates-tbl">
+                            <thead>
+                                <tr>
+                                    <th>Events</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var JobDT in Model.JobList)
+                                {
+                                    <tr>
+                                        <td>@JobDT.Events</td>
+                                        <td>@JobDT.EventDateTime.ToString("MM/dd/yyyy")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </p>
+            </div>
+            <div id="ImpNotes" class="tab-pane fade">
+                <p style="margin: 10px 0 0 0;">
+
+                    <div>
+                        <table class="impdates-tbl">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var JOBNotes in Model.JobNotes)
+                                {
+                                    <tr>
+                                        <td>
+                                            <a data-toggle="tooltip" title="Download Link" href="@JOBNotes.DownloadLink" target="_blank">@JOBNotes.Title</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </p>
+
+            </div>
+            <div id="FAQC" class="tab-pane fade">
+                <p style=" border: 1px solid #bcbbbc; padding: 10px; margin: 10px 0 0 0;">Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+            </div>
+        </div>
+    </div>
+    <div class="text-center" style="padding:5px;">
+        <button type="button" id="JobApplyLink" class="btn btn-success">Apply Link</button>
+    </div>
+</div>
+
