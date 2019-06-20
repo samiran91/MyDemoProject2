@@ -4,3 +4,9 @@ D:\Maynak\Jobsportal\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
 D:\Maynak\Jobsportal\DAL\obj\Debug\DAL.dll
 D:\Maynak\Jobsportal\DAL\obj\Debug\DAL.pdb
 D:\Maynak\Jobsportal\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+D:\Maynak\Jobsportal_SourceControl\trunk\Jobsportal\Jobsportal\bin\DAL.dll
+D:\Maynak\Jobsportal_SourceControl\trunk\Jobsportal\Jobsportal\bin\DAL.pdb
+D:\Maynak\Jobsportal_SourceControl\trunk\Jobsportal\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+D:\Maynak\Jobsportal_SourceControl\trunk\Jobsportal\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
+D:\Maynak\Jobsportal_SourceControl\trunk\Jobsportal\DAL\obj\Debug\DAL.dll
+D:\Maynak\Jobsportal_SourceControl\trunk\Jobsportal\DAL\obj\Debug\DAL.pdb
