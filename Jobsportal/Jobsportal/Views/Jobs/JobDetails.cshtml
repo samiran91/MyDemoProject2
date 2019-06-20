@@ -22,10 +22,10 @@
 </script>
 
 <style>
-    #JobApplyLink {
+    /*#JobApplyLink {
         background-color: #1aa3ff !important;
         border: 0 !important;
-    }
+    }*/
     
 </style>
 <div id="JobDetails-wrap" class="container">
@@ -60,7 +60,7 @@
                                 {
                                     <tr>
                                         <td>@JobDT.Events</td>
-                                        <td>@JobDT.EventDateTime.ToString("MM/dd/yyyy")</td>
+                                        <td>@JobDT.EventDateTime.ToString("dd/MM/yyyy")</td>
                                     </tr>
                                 }
                             </tbody>
@@ -101,8 +101,11 @@
             </div>
         </div>
     </div>
+    
     <div class="text-center" style="padding:5px;">
-        <button type="button" id="JobApplyLink" class="btn btn-success">Apply Link</button>
+        <button type="button" id="JobReturn" class="btn btn-success">Return Back to Job List</button>
+
+        <button type="button" id="JobApplyLink" class="btn btn-success">Apply</button>
     </div>
 </div>
 
