@@ -60,7 +60,7 @@ namespace Jobsportal.Controllers
         {
             String Success = string.Empty;
             String Message = string.Empty;
-
+            Job j = Job.SaveJobDetails(JobDetails);
 
             return Json(new { Success = Convert.ToString(Success), Message = Convert.ToString(Message) }, JsonRequestBehavior.AllowGet);
         }
@@ -71,6 +71,11 @@ namespace Jobsportal.Controllers
             String ApplyURLLink = Job.FetchJobApplyURL(JobNo);
 
             return ApplyURLLink;
+        }
+
+        public ActionResult LoginRegistration()
+        {
+            return View();
         }
     }
 }

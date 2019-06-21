@@ -24,7 +24,7 @@ namespace DAL
 
         public String Events { get; set; }
 
-        public DateTime EventDateTime { get; set; }
+        public String EventDateTime { get; set; }
 
         public String Users { get; set; }
 
@@ -44,10 +44,18 @@ namespace DAL
 
         public List<Job> ImportantDT { get; set; }
 
+        public Int32 Success { get; set; }
+
+        public String Message { get; set; }
+
 
 
         private const String DBOp = "@i_DBOP";
         private const String JobNum = "@JobNumber";
+
+        private const String JobEvents = "@STR_EVENTS";
+        private const String JobEventsDT = "@DT_EVENTSDATETIME";
+        private const String InsertCondition = "@INT_INSERT";
 
 
         public static List<Job> GetJobList()
@@ -152,7 +160,7 @@ namespace DAL
                             var K = new Job()
                             {
                                 Events = (String)wizReader["EVENTS"],
-                                EventDateTime = (DateTime)wizReader["EVENTSDATETIME"],
+                                EventDateTime = (String)wizReader["EVENTSDATETIME"],
                             };
 
                             records.Add(K);
@@ -227,6 +235,58 @@ namespace DAL
                 }
             }
             return ApplyLinkURL;
+        }
+
+        public static Job SaveJobDetails(Job JobDetails)
+        {
+            String connstring = Connection.GetConnectionString();
+            Job JOBJ = new Job();
+            Job J = null;
+
+            using (SqlConnection dbCon = new SqlConnection(connstring))
+            {
+                dbCon.Open();
+
+                using (SqlCommand dbCom = new SqlCommand(StoredProcedure.USP_JOBEVENTDATETIME_INSERTJOBDETAILS, dbCon))
+                {
+
+                    dbCom.CommandType = CommandType.StoredProcedure;
+                   // dbCom.Parameters.AddWithValue(InsertCondition, 0);
+
+                    try
+                    {
+                        foreach (var item in JobDetails.ImportantDT)
+                        {
+                            dbCom.Parameters.AddWithValue(JobEvents, item.Events);
+                            dbCom.Parameters.AddWithValue(JobEventsDT, item.EventDateTime);
+                            dbCom.Parameters.AddWithValue(InsertCondition, 0);
+                            dbCom.Parameters.AddWithValue(JobNum, JobDetails.JobNo);
+
+                            using (SqlDataReader wizReader = dbCom.ExecuteReader())
+                            {
+
+                                while (wizReader.Read())
+                                {
+                                    J = new Job()
+                                    {
+                                        Success = (Int32)wizReader["SUCCESS"],
+                                        Message = (String)wizReader["MESSAGE"]
+                                    };
+                                }
+                            }
+                        }
+                    }
+                    catch(Exception e)
+                    {
+
+                    }
+
+                    
+                }
+
+            }
+
+            return J;
         }
     }
 }

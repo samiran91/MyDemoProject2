@@ -49,7 +49,7 @@ $(document).ready(function () {
         var $this = this;
 
         function initialize() {
-            $('#txt_offcaddr').summernote({
+            $('#txt_Descp').summernote({
                 focus: true,
                 height: 450,
                 codemirror: {

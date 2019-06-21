@@ -13,6 +13,8 @@ namespace DAL
 
         public const String usp_JOBIMPDATES_GetEventDateTime = "usp_JOBIMPDATES_GetEventDateTime";
 
-        public const string usp_JOBIMNOTES_GetJobNotes = "usp_JOBIMNOTES_GetJobNotes";
+        public const String usp_JOBIMNOTES_GetJobNotes = "usp_JOBIMNOTES_GetJobNotes";
+
+        public const String USP_JOBEVENTDATETIME_INSERTJOBDETAILS = "USP_JOBEVENTDATETIME_INSERTJOBDETAILS";
     }
 }
