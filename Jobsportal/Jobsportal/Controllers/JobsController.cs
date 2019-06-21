@@ -31,17 +31,23 @@ namespace Jobsportal.Controllers
 
         
         //[Authorize(Roles = "Admin,Operator")]
-        public JsonResult GetJobList()
+        public JsonResult GetJobList(int? page, int? limit, string sortBy, string direction, string searchString = null)
         {
-            //   var records = Job.GetJobList(HttpContext.Request.Cookies["Business"].Value);   string Prefix
+            
 
             var records = Job.GetJobList();
 
             //var NameString = (from N in records
             //                  where (N.ProductCode.ToLower().Contains(Prefix.ToLower()) || N.Description.ToLower().Contains(Prefix.ToLower()))
             //                  select new { N.ProductCode, N.Description, N.TaxableAmount, N.ProductString, N.ProductStringWStock, N.Quantity });
+            var total = records.ToList().Count();
+            if (page.HasValue && limit.HasValue)
+            {
+                int start = (page.Value - 1) * limit.Value;
+                records = records.Skip(start).Take(limit.Value).ToList();
+            }
 
-            return Json(records, JsonRequestBehavior.AllowGet);
+            return Json(new { records, total }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Editjobdetail()

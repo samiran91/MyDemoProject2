@@ -1,6 +1,11 @@
 ﻿
 $(document).ready(function () {
-    var value = document.cookie;
+    var keyword = getCookie("keyword");
+    var posted = getCookie("posted");
+    var location = getCookie("location");
+    $("#txt_keyword").val(keyword);
+    $("#ddl_posted").val(posted);
+   $("#ddl_location").val(location);
     
     grid = $('#grid').grid({
         primaryKey: 'JOBNO',
@@ -22,24 +27,34 @@ $(document).ready(function () {
         pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
    
 
-    });
+   });
+    Search();
 });
 window.addEventListener("beforeunload", function (e) {
    
 
-    var keyword = $("txt_keyword").text();
-    var posted = $("ddl_posted").text();
-    var location = $("ddl_location").text();
+    var keyword = $("#txt_keyword").val();
+    var posted = $("#ddl_posted").val();
+    var location = $("#ddl_location").val();
     document.cookie = "keyword="+keyword;
     document.cookie = "posted="+posted;
     document.cookie = "location="+location;
    
     
 });
-
+function Search() {
+    var keyword = $("#txt_keyword").val();
+    var posted = $("#ddl_posted").val();
+    var location = $("#ddl_location").val();
+    grid.reload({ searchString: keyword + "-" + posted+"-"+location });
+}
 function ApplyForJob(e) {
    
     var JobNumber = e.data.record.JobNo;
     window.location.href = "/jobs/JobDetails?JNo=" + JobNumber;
 
+}
+function getCookie(name) {
+    var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+    return v ? v[2] : null;
 }
