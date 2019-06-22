@@ -33,16 +33,6 @@ namespace DAL
 
         public DateTime Date { get; set; }
 
-        
-
-        
-
-   
-
-        
-
-        
-
         public Int32 Success { get; set; }
 
         public String Message { get; set; }
