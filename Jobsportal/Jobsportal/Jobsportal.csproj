@@ -147,6 +147,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\JobsController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -215,7 +216,9 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Content\summernote.css" />
     <Content Include="Scripts\summernote.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -232,8 +235,8 @@
     <Content Include="Views\Jobs\JobDetails.cshtml" />
     <Content Include="Views\Jobs\ListJob.cshtml" />
     <Content Include="Views\Jobs\Editjobdetail.cshtml" />
-    <Content Include="Views\Jobs\LoginRegistration.cshtml" />
     <Content Include="Views\Jobs\CandidateProfile.cshtml" />
+    <Content Include="Views\Login\LoginRegistration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

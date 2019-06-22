@@ -25,6 +25,9 @@ $(document).ready(function () {
 
 
     });
+    $("#JobReturn").click(function () {
+        window.location.href = "/jobs";
+    });
 
 });
 

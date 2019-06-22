@@ -41,9 +41,10 @@ window.addEventListener("beforeunload", function (e) {
     var keyword = $("#txt_keyword").val();
     var posted = $("#ddl_posted").val();
     var location = $("#ddl_location").val();
-    document.cookie = "keyword="+keyword;
-    document.cookie = "posted="+posted;
-    document.cookie = "location="+location;
+    setCookie("keyword", keyword, 365);
+    setCookie("posted", posted, 365);
+    setCookie("location", location, 365);
+    
    
     
 });
@@ -53,6 +54,9 @@ function Search() {
     var posted = $("#ddl_posted").val();
     var location = $("#ddl_location").val();
     grid.reload({ searchString: keyword + "|" + posted+"|"+location });
+}
+function Signinpage() {
+    window.location.href = "/Login/LoginRegistration";
 }
 function ApplyForJob(e) {
    
@@ -64,3 +68,9 @@ function getCookie(name) {
     var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
     return v ? v[2] : null;
 }
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+} 

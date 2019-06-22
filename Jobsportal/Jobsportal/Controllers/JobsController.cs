@@ -70,7 +70,7 @@ namespace Jobsportal.Controllers
         {
             return View();
         }
-
+       
         [HttpPost]
         public JsonResult SaveJobDetails(Job JobDetails)
         {
@@ -89,11 +89,7 @@ namespace Jobsportal.Controllers
             return ApplyURLLink;
         }
 
-        [HttpGet]
-        public ActionResult LoginRegistration()
-        {
-            return View();
-        }
+        
 
         public ActionResult CandidateProfile()
         {
