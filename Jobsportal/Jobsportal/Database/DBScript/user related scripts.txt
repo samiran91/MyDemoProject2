@@ -1,0 +1,45 @@
+CREATE TABLE [dbo].[Users](
+	[Username] [nvarchar](max) NULL,
+	[Password] [nvarchar](max) NULL,
+	[Displayname] [nvarchar](max) NULL,
+	[Roles] [nvarchar](max) NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[IsActive] [bit] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
+
+
+create  procedure [dbo].[sp_TrySignIn](@username nvarchar(max),@password nvarchar(max))
+as
+
+Select Roles from Users where Username=@username and [Password]=@password and IsActive=1
+
+
+GO
+
+
+
+
+CREATE  procedure [dbo].[sp_Signup](@Email nvarchar(max)='',@Phone nvarchar(max),@Password nvarchar(50),@Displayname nvarchar(50))
+as
+
+
+
+insert into Users(Username,[Password],Displayname,Roles,IsActive) values (@Phone,@Password,@Displayname,'Admin',1)
+
+
+
+
+
+
+GO
+
+create  procedure [dbo].[sp_TrySignIn](@username nvarchar(max),@password nvarchar(max))
+as
+
+Select Roles from Users where Username=@username and [Password]=@password and IsActive=1
+
+
+GO
