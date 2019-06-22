@@ -1,0 +1,79 @@
+USE [Jobsportal]
+GO
+
+/****** Object:  StoredProcedure [dbo].[usp_Job_GetJobDetails]    Script Date: 06  /22  /2019 15:15:14 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+
+
+CREATE PROCEDURE [dbo].[usp_Job_GetJobDetails]
+
+ @i_DBOP INT,
+ @Keyword nvarchar(100)='',
+   @Location nvarchar(100)='All',
+    @Posted INT='-365'
+
+AS
+
+	BEGIN
+
+
+
+		BEGIN TRY
+
+		--SET NOCOUNT ON;
+			IF(@i_DBOP=0)
+			IF(LEN(@Keyword)>0)
+				BEGIN
+							SELECT JOBNO,JOBTITLE,JOBDESC,POSTEDDATE,QUALIFICATION,APPLYLINK,POINT = 2*(LEN(JOBTITLE) - LEN(REPLACE(JOBTITLE, @Keyword, '')))/LEN(@Keyword)+1 * (LEN(JOBDESC) - LEN(REPLACE(JOBDESC, @Keyword, '')))/LEN(@Keyword)+ 2 * (LEN(QUALIFICATION) - LEN(REPLACE(QUALIFICATION, @Keyword, '')))/LEN(@Keyword) FROM JOB
+					where POSTEDDATE>DATEADD(DAY,@Posted,GETDATE()) and 1=1   order by POINT desc,posteddate desc
+				END
+ELSE
+SELECT JOBNO,JOBTITLE,JOBDESC,POSTEDDATE,QUALIFICATION,APPLYLINK,0 as POINT FROM JOB where POSTEDDATE>DATEADD(DAY,@Posted,GETDATE()) and 1=1 order by posteddate desc
+			ELSE
+
+				BEGIN
+
+					SELECT JOBNO,JOBTITLE,JOBDESC,POSTEDDATE,QUALIFICATION,APPLYLINK FROM JOB WHERE JOBNO=@i_DBOP
+
+				END
+
+
+		END TRY
+
+
+
+		BEGIN CATCH
+
+			DECLARE @ErrorMessage NVARCHAR(4000) ;
+
+				DECLARE @ErrorSeverity INT ;
+
+				DECLARE @ErrorState INT ;
+
+				SELECT  @ErrorMessage = ERROR_MESSAGE() ,
+
+						@ErrorSeverity = ERROR_SEVERITY() ,
+
+						@ErrorState = ERROR_STATE()
+
+				RAISERROR(@ErrorMessage,@ErrorSeverity,@ErrorState) ;
+
+		END CATCH		
+
+
+
+	END
+
+
+
+
+GO
+
+

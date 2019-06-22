@@ -23,6 +23,8 @@ namespace DAL
         public String Qualification { get; set; }
 
         public String ApplyLink { get; set; }
+
+        public int Point { get; set; }
         public List<JOBIMPDATES> JobImpDates { get; set; }
         public List<JOBIMNOTES> JobNotes { get; set; }
         public String Users { get; set; }
@@ -49,7 +51,10 @@ namespace DAL
 
         private const String DBOp = "@i_DBOP";
         private const String JobNum = "@JobNumber";
+        private const string Keyword = "Keyword";
+        private const string Location = "Location";
 
+        private const string Posted = "Posted";
         private const String JobEvents = "@STR_EVENTS";
         private const String JobEventsDT = "@DT_EVENTSDATETIME";
         private const String InsertCondition = "@INT_INSERT";
@@ -68,8 +73,14 @@ namespace DAL
 
             public String DownloadLink { get; set; }
         }
+        public class SearchParam
+        {
+            public string Keyword { get; set; }
+            public string Location { get; set; }
 
-        public static List<Job> GetJobList()
+            public int Posted { get; set; }
+        }
+        public static List<Job> GetJobList(SearchParam param=null)
         {
 
             List<Job> records = new List<Job>();
@@ -87,6 +98,14 @@ namespace DAL
 
                     dbCom.CommandType = CommandType.StoredProcedure;
                     dbCom.Parameters.Add(DBOp, SqlDbType.VarChar).Value = 0;
+                    if (param.Keyword != null)
+                    {
+                        dbCom.Parameters.Add(Keyword, SqlDbType.VarChar).Value = param.Keyword;
+
+                        dbCom.Parameters.Add(Location, SqlDbType.VarChar).Value = param.Location;
+                        dbCom.Parameters.Add(Posted, SqlDbType.Int).Value = param.Posted;
+                    }
+                    
                     using (SqlDataReader wizReader = dbCom.ExecuteReader())
                     {
                         while (wizReader.Read())
@@ -98,6 +117,7 @@ namespace DAL
                                 JobDesc = (String)wizReader["JOBDESC"],
                                 PostedDate = (DateTime)wizReader["POSTEDDATE"],
                                 Qualification = (String)wizReader["QUALIFICATION"],
+                                Point= Convert.ToInt32(wizReader["POINT"]),
                             };
 
                             records.Add(p);

@@ -1,11 +1,16 @@
 ﻿
 $(document).ready(function () {
+    debugger;
     var keyword = getCookie("keyword");
     var posted = getCookie("posted");
     var location = getCookie("location");
     $("#txt_keyword").val(keyword);
-    $("#ddl_posted").val(posted);
-   $("#ddl_location").val(location);
+    if (posted!=null) {
+        $("#ddl_posted").val(posted);
+    }
+    if (location!=null) {
+        $("#ddl_location").val(location);
+    }
     
     grid = $('#grid').grid({
         primaryKey: 'JOBNO',
@@ -43,10 +48,11 @@ window.addEventListener("beforeunload", function (e) {
     
 });
 function Search() {
+    debugger;
     var keyword = $("#txt_keyword").val();
     var posted = $("#ddl_posted").val();
     var location = $("#ddl_location").val();
-    grid.reload({ searchString: keyword + "-" + posted+"-"+location });
+    grid.reload({ searchString: keyword + "|" + posted+"|"+location });
 }
 function ApplyForJob(e) {
    

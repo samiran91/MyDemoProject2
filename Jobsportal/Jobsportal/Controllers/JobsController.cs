@@ -28,18 +28,34 @@ namespace Jobsportal.Controllers
             var J = Job.GetJobDescription(QueryString);
             return View(J);
         }
+        public Job.SearchParam SetFilter(string searchstring=null)
+            {
+            Job.SearchParam ret = new Job.SearchParam();
+            if(searchstring!=null)
+                {
+                string[] searchparams = searchstring.Split('|');
+                ret.Keyword = Convert.ToString(searchparams[0]);
+                ret.Posted = Convert.ToInt32(searchparams[1]);
+                ret.Location = Convert.ToString(searchparams[2]);
+            }
+            return ret;
+            }
 
-        
         //[Authorize(Roles = "Admin,Operator")]
         public JsonResult GetJobList(int? page, int? limit, string sortBy, string direction, string searchString = null)
         {
-            
 
-            var records = Job.GetJobList();
+           
+          
+                Job.SearchParam searchparam = SetFilter(searchString);
+           
+            var records = Job.GetJobList(searchparam);
+            if (!string.IsNullOrEmpty(searchparam.Keyword))
+            {
+                records = records.Where(q => q.Point>0).ToList();
+            }
 
-            //var NameString = (from N in records
-            //                  where (N.ProductCode.ToLower().Contains(Prefix.ToLower()) || N.Description.ToLower().Contains(Prefix.ToLower()))
-            //                  select new { N.ProductCode, N.Description, N.TaxableAmount, N.ProductString, N.ProductStringWStock, N.Quantity });
+
             var total = records.ToList().Count();
             if (page.HasValue && limit.HasValue)
             {
