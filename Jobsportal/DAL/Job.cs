@@ -22,27 +22,24 @@ namespace DAL
 
         public String Qualification { get; set; }
 
-        public String Events { get; set; }
-
-        public String EventDateTime { get; set; }
-
+        public String ApplyLink { get; set; }
+        public List<JOBIMPDATES> JobImpDates { get; set; }
+        public List<JOBIMNOTES> JobNotes { get; set; }
         public String Users { get; set; }
 
         public String Comments { get; set; }
 
         public DateTime Date { get; set; }
 
-        public List<Job> JobList { get; set; }
+        
 
-        public List<Job> JobNotes { get; set; }
+        
 
-        public String Title { get; set; }
+   
 
-        public String DownloadLink { get; set; }
+        
 
-        public String ApplyLink { get; set; }
-
-        public List<Job> ImportantDT { get; set; }
+        
 
         public Int32 Success { get; set; }
 
@@ -56,7 +53,21 @@ namespace DAL
         private const String JobEvents = "@STR_EVENTS";
         private const String JobEventsDT = "@DT_EVENTSDATETIME";
         private const String InsertCondition = "@INT_INSERT";
+        public class JOBIMPDATES
+        {
+            public int JobNo { get; set; }
+            public String Events { get; set; }
 
+            public DateTime EventDateTime { get; set; }
+        }
+
+        public class JOBIMNOTES
+        {
+            public int JobNo { get; set; }
+            public String Title { get; set; }
+
+            public String DownloadLink { get; set; }
+        }
 
         public static List<Job> GetJobList()
         {
@@ -123,9 +134,10 @@ namespace DAL
                                 JobDesc = HttpUtility.HtmlDecode((String)wizReader["JOBDESC"]),
                                 PostedDate = (DateTime)wizReader["POSTEDDATE"],
                                 Qualification = (String)wizReader["QUALIFICATION"],
+                                ApplyLink= (String)wizReader["APPLYLINK"],
                             };
 
-                            J.JobList = Job.GetEventDateList(JobNumber);
+                            J.JobImpDates = Job.GetEventDateList(JobNumber);
                             J.JobNotes = Job.GetJobNotesList(JobNumber);
                         }
                     }
@@ -136,9 +148,9 @@ namespace DAL
             return J;
         }
 
-        public static List<Job> GetEventDateList(Int32 JobNumber)
+        public static List<JOBIMPDATES> GetEventDateList(Int32 JobNumber)
         {
-            List<Job> records = new List<Job>();
+            List<JOBIMPDATES> records = new List<JOBIMPDATES>();
 
             String connstring = Connection.GetConnectionString();
 
@@ -157,10 +169,11 @@ namespace DAL
                     {
                         while (wizReader.Read())
                         {
-                            var K = new Job()
+                            var K = new JOBIMPDATES()
                             {
-                                Events = (String)wizReader["EVENTS"],
-                                EventDateTime = (String)wizReader["EVENTSDATETIME"],
+                                JobNo=JobNumber,
+                                Events = Convert.ToString(wizReader["EVENTS"]),
+                                EventDateTime =Convert.ToDateTime(wizReader["EVENTSDATETIME"]),
                             };
 
                             records.Add(K);
@@ -172,9 +185,9 @@ namespace DAL
             return records;
         }
 
-        public static List<Job> GetJobNotesList(Int32 JobNumber)
+        public static List<JOBIMNOTES> GetJobNotesList(Int32 JobNumber)
         {
-            List<Job> records = new List<Job>();
+            List<JOBIMNOTES> records = new List<JOBIMNOTES>();
 
             String connstring = Connection.GetConnectionString();
 
@@ -193,10 +206,10 @@ namespace DAL
                     {
                         while (wizReader.Read())
                         {
-                            var K = new Job()
+                            var K = new JOBIMNOTES()
                             {
-                                Title = (String)wizReader["TITLE"],
-                                DownloadLink = (String)wizReader["DOWNLOADLINK"],
+                                Title = Convert.ToString(wizReader["TITLE"]),
+                                DownloadLink = Convert.ToString(wizReader["DOWNLOADLINK"]),
                             };
 
                             records.Add(K);
@@ -246,39 +259,32 @@ namespace DAL
             using (SqlConnection dbCon = new SqlConnection(connstring))
             {
                 dbCon.Open();
-
-                using (SqlCommand dbCom = new SqlCommand(StoredProcedure.USP_JOBEVENTDATETIME_INSERTJOBDETAILS, dbCon))
+                foreach (var item in JobDetails.JobImpDates)
                 {
-
-                    dbCom.CommandType = CommandType.StoredProcedure;
-                   // dbCom.Parameters.AddWithValue(InsertCondition, 0);
-
-                    try
+                    using (SqlCommand dbCom = new SqlCommand(StoredProcedure.USP_JOBEVENTDATETIME_INSERTJOBDETAILS, dbCon))
                     {
-                        foreach (var item in JobDetails.ImportantDT)
+
+                        dbCom.CommandType = CommandType.StoredProcedure;
+                        // dbCom.Parameters.AddWithValue(InsertCondition, 0);
+
+                        try
                         {
+
                             dbCom.Parameters.AddWithValue(JobEvents, item.Events);
                             dbCom.Parameters.AddWithValue(JobEventsDT, item.EventDateTime);
                             dbCom.Parameters.AddWithValue(InsertCondition, 0);
                             dbCom.Parameters.AddWithValue(JobNum, JobDetails.JobNo);
 
-                            using (SqlDataReader wizReader = dbCom.ExecuteReader())
-                            {
 
-                                while (wizReader.Read())
-                                {
-                                    J = new Job()
-                                    {
-                                        Success = (Int32)wizReader["SUCCESS"],
-                                        Message = (String)wizReader["MESSAGE"]
-                                    };
-                                }
-                            }
+                            dbCom.ExecuteNonQuery();
+
+
+
                         }
-                    }
-                    catch(Exception e)
-                    {
+                        catch (Exception e)
+                        {
 
+                        }
                     }
 
                     
@@ -289,4 +295,6 @@ namespace DAL
             return J;
         }
     }
+
+   
 }

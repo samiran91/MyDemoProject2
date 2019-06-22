@@ -122,7 +122,7 @@ $(document).ready(function () {
         JobDetails.ApplyLink = JobApplyLink;
         JobDetails.JobDesc = JobDescp;
         JobDetails.Qualification = Str_Qual;
-        JobDetails.ImportantDT = JobData;
+        JobDetails.JobImpDates = JobData;
         
         console.log(JobDetails);
         debugger;
