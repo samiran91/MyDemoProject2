@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "CandidateProfile";
+    ViewBag.Title = "Candidate Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
@@ -9,7 +9,7 @@
 <link href="~/Content/EditJobDetail/EditJobDetail.css" rel="stylesheet" />
 <link href="~/Content/CandidateProfile/CandidateProfile.css" rel="stylesheet" />
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-
+<link href="~/Content/jquery-confirm.css" rel="stylesheet" />
 
 <script src="~/Scripts/jquery.min.js"></script>
 <script src="~/Scripts/bootstrap.js"></script>
@@ -18,8 +18,9 @@
 <script src="~/Scripts/jquery-ui.min.js"></script>
 <script src="~/Scripts/lodash.underscore.min.js"></script>
 <script src="~/Scripts/jqueryui-multisearch.min.js"></script>
-@*<script src="~/Scripts/EditJobDetail/EditJobDetail.js"></script>*@
+<script src="~/Scripts/jquery-confirm.js"></script>
 <script src="~/Scripts/CandidateProfile/CandidateProfile.js"></script>
+
 
 <style>
 
@@ -92,7 +93,6 @@
         border-radius: 4px;
     }
 </style>
-
 <style>
     .form-inline {
         margin-bottom: 0;
@@ -111,7 +111,7 @@
             border-bottom: 1px solid #bcbbbc;
         }
 
-    .picker {
+    .picker1 {
         background-color: #f7f7f7;
     }
 
@@ -216,6 +216,7 @@
     }
 </style>
 
+<h2>Candidate Profile</h2>
 <div class="panel-group">
 
     <div class="panel panel-primary">
@@ -227,8 +228,9 @@
         </div>
         <div class="panel-body collapse" id="panel_Info">
             <form class="form-inline">
-                <div class="form-group col-md-12">
-                    <div class="avatar-upload">
+                <div class="form-group col-md-9"></div>
+                <div class="form-group col-md-3">
+                    <div class="avatar-upload text-right">
                         <div class="avatar-edit">
                             <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
                             <label for="imageUpload" class="text-center">
@@ -242,22 +244,90 @@
                     </div>
                 </div>
             </form>
+            <form class="form-inline">
+                <div class="form-group col-md-6">
+                    <label for="companyname" class="col-md-4">Name:</label>
+                    <input type="text" class="form-control col-md-4" id="txt_candName" placeholder="Name">
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="gstin" class="col-md-4">Gender:</label>
+                    @*<input type="text" class="form-control col-md-4" id="txt_candGender" placeholder="Gender">*@
+                    <select id="txt_candGender" class="form-control">
+                        <option value="0">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+            </form>
+            <form class="form-inline">
+                <div class="form-group col-md-6">
+                    <label for="companyname" class="col-md-4">Date of Birth:</label>
+                    <input class="form-control" type="date" id="txt_candDOB" name="bday" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="gstin" class="col-md-4">Address:</label>
+                    <input type="text" class="form-control col-md-4" id="txt_candAddress" placeholder="Address">
+                </div>
+            </form>
+            <form class="form-inline">
+                <div class="form-group col-md-6">
+                    <label for="companyname" class="col-md-4">Email:</label>
+                    <input type="text" class="form-control col-md-4" id="txt_candEmail" placeholder="Email">
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="gstin" class="col-md-4">Mobile:</label>
+                    <input type="text" class="form-control col-md-4" id="txt_candMobile" placeholder="Mobile">
+                </div>
+            </form>
         </div>
     </div>
     <div class="panel panel-primary">
         <div class="panel-heading">
-
             <h4 class="panel-title">
-                <a data-toggle="collapse" href="#panel_Qual">Qualification Level:</a>
+                <a data-toggle="collapse" href="#panel_EduQual">Educational Qualification:</a>
             </h4>
         </div>
-        <div class="panel-body collapse in" id="panel_Qual">
+        <div class="panel-body collapse" id="panel_EduQual">
+            <form class="form-inline">
+                <label for="offc address" class="col-md-12">Educational Qualification:</label>
+                <div class="form-group col-md-12" style="padding:0;">
+                    <textarea style="resize:vertical;min-height:100px;max-height:500px;" rows="4" cols="50" id="txt_candQual" align="left" placeholder="Educational Qualification" class="form-control col-md-4"></textarea>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" href="#panel_ProfExp">Professional Experiance:</a>
+            </h4>
+        </div>
+        <div class="panel-body collapse" id="panel_ProfExp">
+            <form class="form-inline">
+                <label for="offc address" class="col-md-12">Professional Experiance:</label>
+                <div class="form-group col-md-12" style="padding:0;">
+                    <textarea style="resize:vertical;min-height:100px;max-height:500px;" rows="4" cols="50" id="txt_candExp" align="left" placeholder="Professional Experiance" class="form-control col-md-4"></textarea>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" href="#panel_Intrst">Interests:</a>
+            </h4>
+        </div>
+        <div class="panel-body collapse" id="panel_Intrst">
 
             <form class="form-inline">
                 <div class="form-group col-md-12">
                     <div id="myMultiSearch">
                         <div data-role="selected-list" class="sel-anchor">
-                            <input data-role="input" type="text" placeholder="Search Qualification..." />
+                            <input data-role="input" type="text" placeholder="Search Interests..." />
                         </div>
 
                         <div data-role="picker" class="picker1">
@@ -271,7 +341,21 @@
 
         </div>
     </div>
-    <button type="button" id="SubmitJobDetail" class="btn btn-success Gap2"><span class="glyphicon glyphicon-off"></span>Submit</button>
-
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" href="#panel_Settings">Settings:</a>
+            </h4>
+        </div>
+        <div class="panel-body collapse" id="panel_Settings">
+            <form class="form-inline">
+                <div class="form-group col-md-12" style="padding:0;">
+                    <label for="gstin" class="col-md-4">New Password:</label>
+                    <input type="text" class="form-control col-md-4" id="txt_cngPassword" placeholder="New Password">
+                </div>
+            </form>
+        </div>
+    </div>
+    <button type="button" id="SubmitCandidateDetail" onclick="SaveCandidateInfo()" class="btn btn-success Gap2"><span class="glyphicon glyphicon-off"></span>Submit</button>
 </div>
 

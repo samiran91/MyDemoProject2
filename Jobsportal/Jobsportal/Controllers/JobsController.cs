@@ -95,5 +95,12 @@ namespace Jobsportal.Controllers
         {
             return View();
         }
+
+        public JsonResult InsertCandidateRecord(Job.CandidateProfile OBJ)
+        {
+            Job.CandidateProfile CP = Job.InsertCandidateRecord(OBJ);
+
+            return Json(new { Success = Convert.ToString(CP.Success), Message = Convert.ToString(CP.Message) }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

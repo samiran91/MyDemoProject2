@@ -37,17 +37,6 @@ namespace DAL
 
         public String Message { get; set; }
 
-
-
-        private const String DBOp = "@i_DBOP";
-        private const String JobNum = "@JobNumber";
-        private const string Keyword = "Keyword";
-        private const string Location = "Location";
-
-        private const string Posted = "Posted";
-        private const String JobEvents = "@STR_EVENTS";
-        private const String JobEventsDT = "@DT_EVENTSDATETIME";
-        private const String InsertCondition = "@INT_INSERT";
         public class JOBIMPDATES
         {
             public int JobNo { get; set; }
@@ -70,6 +59,54 @@ namespace DAL
 
             public int Posted { get; set; }
         }
+
+        public class CandidateProfile
+        {
+            public String Name { get; set; }
+
+            public String Gender { get; set; }
+
+            public DateTime DOB { get; set; }
+
+            public String Address { get; set; }
+
+            public String Email { get; set; }
+
+            public String Mobile { get; set; }
+
+            public String Qualification { get; set; }
+
+            public String  Experiance { get; set; }
+
+            public String Interests { get; set; }
+
+            public int Success { get; set; }
+
+            public String Message { get; set; }
+        }
+
+        private const String DBOp = "@i_DBOP";
+        private const String JobNum = "@JobNumber";
+        private const string Keyword = "Keyword";
+        private const string Location = "Location";
+
+        private const string Posted = "Posted";
+        private const String JobEvents = "@STR_EVENTS";
+        private const String JobEventsDT = "@DT_EVENTSDATETIME";
+        private const String InsertCondition = "@INT_INSERT";
+
+        private const String CandidatePERSONID = "@INT_PERSONID";
+        private const String CandidateName = "@STR_NAME";
+        private const String CandidateGender = "@STR_GENDER";
+        private const String CandidateDOB = "@DT_DOB";
+        private const String CandidateAddress = "@STR_ADDRESS";
+        private const String CandidateEmail = "@STR_EMAIL";
+        private const String CandidateMobile = "@STR_MOBILE";
+        private const String CandidateQual = "@STR_QUALIFICATION";
+        private const String CandidateExp = "@STR_EXPERIANCE";
+        private const String CandidateIntrst = "@STR_INTEREST";
+        private const String DBOperation = "@INT_DBOPERATION";
+
         public static List<Job> GetJobList(SearchParam param=null)
         {
 
@@ -303,6 +340,49 @@ namespace DAL
             }
 
             return J;
+        }
+
+        public static CandidateProfile InsertCandidateRecord(CandidateProfile CPOBJ)
+        {
+            CandidateProfile OBJ = null;
+
+            String connstring = Connection.GetConnectionString();
+            using (SqlConnection dbCon = new SqlConnection(connstring))
+            {
+                dbCon.Open();
+
+                using (SqlCommand dbCom = new SqlCommand(StoredProcedure.USP_PERSON_CANDIDATEINSERTUPDATE, dbCon))
+                {
+
+                    dbCom.CommandType = CommandType.StoredProcedure;
+                    dbCom.Parameters.AddWithValue(CandidatePERSONID,000);
+                    dbCom.Parameters.AddWithValue(CandidateName, CPOBJ.Name);
+                    dbCom.Parameters.AddWithValue(CandidateGender, CPOBJ.Gender);
+                    dbCom.Parameters.AddWithValue(CandidateDOB, CPOBJ.DOB);
+                    dbCom.Parameters.AddWithValue(CandidateAddress, CPOBJ.Address);
+                    dbCom.Parameters.AddWithValue(CandidateEmail, CPOBJ.Email);
+                    dbCom.Parameters.AddWithValue(CandidateMobile, CPOBJ.Mobile);
+                    dbCom.Parameters.AddWithValue(CandidateQual, CPOBJ.Qualification);
+                    dbCom.Parameters.AddWithValue(CandidateExp, CPOBJ.Experiance);
+                    dbCom.Parameters.AddWithValue(CandidateIntrst, CPOBJ.Interests);
+                    dbCom.Parameters.AddWithValue(DBOperation, 0);
+
+                    using (SqlDataReader wizReader = dbCom.ExecuteReader())
+                    {
+                        while (wizReader.Read())
+                        {
+                            OBJ = new CandidateProfile()
+                            {
+                                Success = (Int32)wizReader["Success"],
+                                Message = (String)wizReader["Message"]
+                            };
+                        }
+                    }
+                }
+
+            }
+
+            return OBJ;
         }
     }
 

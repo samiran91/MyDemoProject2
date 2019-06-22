@@ -16,5 +16,7 @@ namespace DAL
         public const String usp_JOBIMNOTES_GetJobNotes = "usp_JOBIMNOTES_GetJobNotes";
 
         public const String USP_JOBEVENTDATETIME_INSERTJOBDETAILS = "USP_JOBEVENTDATETIME_INSERTJOBDETAILS";
+
+        public const String USP_PERSON_CANDIDATEINSERTUPDATE = "USP_PERSON_CANDIDATEINSERTUPDATE";
     }
 }
