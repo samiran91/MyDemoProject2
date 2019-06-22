@@ -73,7 +73,13 @@ namespace Jobsportal.Controllers
             return ApplyURLLink;
         }
 
+        [HttpGet]
         public ActionResult LoginRegistration()
+        {
+            return View();
+        }
+
+        public ActionResult CandidateProfile()
         {
             return View();
         }

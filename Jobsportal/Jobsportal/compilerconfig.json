@@ -2,5 +2,9 @@
   {
     "outputFile": "Content/JobsPortalStyleSheets/JobsPortal.css",
     "inputFile": "Content/JobsPortalStyleSheets/JobsPortal.less"
+  },
+  {
+    "outputFile": "Content/CandidateProfile/CandidateProfile.css",
+    "inputFile": "Content/CandidateProfile/CandidateProfile.less"
   }
 ]

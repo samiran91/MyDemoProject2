@@ -155,6 +155,12 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\CandidateProfile\CandidateProfile.css">
+      <DependentUpon>CandidateProfile.less</DependentUpon>
+    </Content>
+    <Content Include="Content\CandidateProfile\CandidateProfile.min.css">
+      <DependentUpon>CandidateProfile.css</DependentUpon>
+    </Content>
     <Content Include="Content\EditJobDetail\EditJobDetail.css" />
     <Content Include="Content\grid\grid.css" />
     <Content Include="Content\grid\grid.min.css" />
@@ -164,6 +170,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\NoImage.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -174,7 +181,9 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
+    <Content Include="Content\CandidateProfile\CandidateProfile.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\CandidateProfile\CandidateProfile.js" />
     <Content Include="Scripts\custom-html.js" />
     <Content Include="Scripts\custom-html.min.js" />
     <Content Include="Scripts\EditJobDetail\EditJobDetail.js" />
@@ -224,6 +233,7 @@
     <Content Include="Views\Jobs\ListJob.cshtml" />
     <Content Include="Views\Jobs\Editjobdetail.cshtml" />
     <Content Include="Views\Jobs\LoginRegistration.cshtml" />
+    <Content Include="Views\Jobs\CandidateProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
