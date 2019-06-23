@@ -10,21 +10,21 @@ namespace Jobsportal.Controllers
 {
     public class LoginController : Controller
     {
-       
+
         // GET: Login
         public ActionResult Index()
         {
             return View();
         }
 
-       [HttpPost]
+        [HttpPost]
         public JsonResult SignIn(Users userdata)
         {
-            string  role = Users.TrySignIn(userdata.Username, userdata.Password);
+            string role = Users.TrySignIn(userdata.Username, userdata.Password);
             if (!role.Contains("Invalid"))
             {
                 userdata.Roles = role;
-                
+
                 FormsAuthentication.SetAuthCookie(userdata.Username, false);
 
                 var authTicket = new FormsAuthenticationTicket(1, userdata.Username, DateTime.Now, DateTime.Now.AddMinutes(20), false, userdata.Roles);
@@ -38,7 +38,7 @@ namespace Jobsportal.Controllers
             {
                 return Json(false);
             }
-            
+
         }
 
 
@@ -48,14 +48,23 @@ namespace Jobsportal.Controllers
             return View();
         }
         public ActionResult SignOut()
-       {
+        {
 
 
-           FormsAuthentication.SignOut();
+            FormsAuthentication.SignOut();
 
-          return  RedirectToAction("Index");
-          
+            return RedirectToAction("Index");
 
-       }
+
+        }
+
+        [HttpPost]
+        public JsonResult CandidateSignUp(Users USROBJ)
+        {
+            Users U = Users.CandidateSignUp(USROBJ);
+
+            return Json(new { Success = Convert.ToString(U.Success), Message = Convert.ToString(U.Message) }, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

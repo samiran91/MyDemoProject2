@@ -5,8 +5,15 @@
 }
 
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/jquery-confirm.css" rel="stylesheet" />
+
+
 <script src="~/Scripts/jquery.min.js"></script>
 <script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/jquery-confirm.js"></script>
+<script src="~/Scripts/UserRegistration/UserRegistration.js"></script>
+
+
 <script>
     function signin() {
         debugger;
@@ -62,7 +69,7 @@
     .panel-height {
         border: 1px solid #f7f7f7;
         padding: 15px;
-        height: 450px;
+        height: 500px;
         border-radius: 0px;
         background-color: #f7f7f7;
         -webkit-box-shadow: 0px 0px 12px 2px rgba(188,187,188,1);
@@ -104,22 +111,28 @@
         </div>
         <div class="form-group" style="margin-top: 30px;">
             <label for="email">Name:</label>
-            <input type="email" class="form-control" id="email" name="email">
+            <input type="text" class="form-control" id="txt_UsrName" name="email">
         </div>
         <div class="form-group">
             <label for="pwd">Phone Number:</label>
-            <input type="password" class="form-control" id="pwd" name="pwd">
+            <input type="text" class="form-control" id="txt_UsrPhone" name="pwd">
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" name="email">
+            <input type="text" class="form-control" id="txt_UsrEmail" name="email">
         </div>
         <div class="form-group">
             <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" name="pwd">
+            <input type="password" class="form-control" id="txt_UsrPassword" name="pwd">
         </div>
         <div>
-            <button type="button" class="btn btn-success">Sign Up</button>
+            <button type="button" onclick="SignUp()" class="btn btn-success">Sign Up</button>
+        </div>
+        <div id="error-message_SignUP" class="alert alert-danger" style="display: none">
+            <button class="close" data-close="alert"></button>
+            <span id="error-message-text_SignUP">
+                Error message
+            </span>
         </div>
     </div>
 

@@ -20,5 +20,8 @@ namespace DAL
         public const String USP_PERSON_CANDIDATEINSERTUPDATE = "USP_PERSON_CANDIDATEINSERTUPDATE";
 
         public const String USP_JOB_INSERTJOBDETAILS = "USP_JOB_INSERTJOBDETAILS";
+
+        public const String USP_SIGNUP = "USP_SIGNUP";
+
     }
 }

@@ -361,7 +361,7 @@ namespace DAL
                 {
 
                     dbCom.CommandType = CommandType.StoredProcedure;
-                    dbCom.Parameters.AddWithValue(CandidatePERSONID, 000);
+                    //dbCom.Parameters.AddWithValue(CandidatePERSONID, 000);
                     dbCom.Parameters.AddWithValue(CandidateName, CPOBJ.Name);
                     dbCom.Parameters.AddWithValue(CandidateGender, CPOBJ.Gender);
                     dbCom.Parameters.AddWithValue(CandidateDOB, CPOBJ.DOB);
@@ -428,6 +428,9 @@ namespace DAL
             }
             return JobNumber;
         }
+
+
+
     }
 
 
