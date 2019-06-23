@@ -264,7 +264,7 @@
             <form class="form-inline">
                 <div class="form-group col-md-6">
                     <label for="companyname" class="col-md-4">Date of Birth:</label>
-                    <input class="form-control" type="date" id="txt_candDOB" name="bday" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+                    <input class="form-control" type="date" id="txt_candDOB" name="bday" value="01/01/1998" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
                 </div>
 
                 <div class="form-group col-md-6">
@@ -303,14 +303,14 @@
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" href="#panel_ProfExp">Professional Experiance:</a>
+                <a data-toggle="collapse" href="#panel_ProfExp">Working Experiance:</a>
             </h4>
         </div>
         <div class="panel-body collapse" id="panel_ProfExp">
             <form class="form-inline">
-                <label for="offc address" class="col-md-12">Professional Experiance:</label>
+                <label for="offc address" class="col-md-12">Working Experiance:</label>
                 <div class="form-group col-md-12" style="padding:0;">
-                    <textarea style="resize:vertical;min-height:100px;max-height:500px;" rows="4" cols="50" id="txt_candExp" align="left" placeholder="Professional Experiance" class="form-control col-md-4"></textarea>
+                    <textarea style="resize:vertical;min-height:100px;max-height:500px;" rows="4" cols="50" id="txt_candExp" align="left" placeholder="Working Experiance" class="form-control col-md-4"></textarea>
                 </div>
             </form>
         </div>
@@ -356,6 +356,6 @@
             </form>
         </div>
     </div>
-    <button type="button" id="SubmitCandidateDetail" onclick="SaveCandidateInfo()" class="btn btn-success Gap2"><span class="glyphicon glyphicon-off"></span>Submit</button>
+    <button type="button" id="SubmitCandidateDetail" onclick="SaveCandidateInfo()" class="btn btn-success Gap2"><span class="glyphicon glyphicon-off"></span>Save</button>
 </div>
 

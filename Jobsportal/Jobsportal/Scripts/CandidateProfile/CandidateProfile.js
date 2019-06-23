@@ -365,7 +365,7 @@ function SaveCandidateInfo() {
                 }
                 $('input[type="text"]').val('');
                 $("textarea").val('');
-                $("#txt_candDOB").val('mm/dd/yyyy');
+                $("#txt_candDOB").val('dd/mm/yyyy');
             },
 
             error: function (response) {
@@ -375,7 +375,7 @@ function SaveCandidateInfo() {
                 });
                 $('input[type="text"]').val('');
                 $("textarea").val('');
-                $("#txt_candDOB").val('mm/dd/yyyy');
+                $("#txt_candDOB").val('dd/mm/yyyy');
             }
         });
     }
