@@ -4,12 +4,14 @@
 
 
 $(document).ready(function () {
+
     var i = 1;
     // $(".quantity").spinner();
     $('.ui-spinner-button').click(function () {
         var id = $(this).siblings('input').attr('id')
         qtychanged(id);
     });
+
     $('.quantity').on('keyup keydown keypress blur change', function (e) {
 
         var id = event.target.id;
@@ -21,7 +23,7 @@ $(document).ready(function () {
         var count = $('.product').length;
         $('#tab_logic').append('<tr id="addr' + (count + 1) + '"></tr>');
 
-        $('#addr' + (Number(count) + Number(1))).html("<td id='srn_" + (count + 1) + "'>" + (count + 1) + "</td ><td><input type='text' id='productcode_" + (count + 1) + "'  placeholder='Product' class='form-control product' /> <input type='hidden' id='productcode_stock_" + (count + 1) + "' aria-hidden='true' /></td><td> <input class='form-control' type='date' id='evntDate_" + (count + 1) + "'name='evntDate' required pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}'></td><td> <span class='glyphicon glyphicon-remove'  id='del_" + (count + 1) + "'style='cursor: pointer;'></span></td>");
+        $('#addr' + (Number(count) + Number(1))).html("<td id='srn_" + (count + 1) + "'>" + (count + 1) + "</td ><td><input type='text' id='productcode_" + (count + 1) + "'  placeholder='Event' class='form-control product' /> <input type='hidden' id='productcode_stock_" + (count + 1) + "' aria-hidden='true' /></td><td> <input class='form-control eventDt' type='date' id='evntDate_" + (count + 1) + "'name='evntDate' required pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}'></td><td> <span class='glyphicon glyphicon-remove'  id='del_" + (count + 1) + "'style='cursor: pointer;'></span></td>");
 
 
         //$(".quantity").spinner();//for new row
@@ -67,15 +69,87 @@ $(document).ready(function () {
         self.init();
     })
 
+    //$("#SubmitJobDetail").click(function () {
+
+
+    //    var JobNumber = $("#txt_JobNumber").val();
+    //    var JobTitle = $("#txt_JobTitle").val();
+    //    var JobPostedDate = $("#txt_PostedDate").val();
+    //    var JobApplyLink = $("#txt_AplyLink").val();
+    //    var JobDescp = $(".note-editable").text();
+
+
+    //    var Qual = [];
+    //    var Str_Qual;
+
+    //    $("#myMultiSearch div.sel-anchor a").each(function () {
+    //        Qual.push($(this).text());
+    //        Str_Qual = Qual.toString();
+    //    });
+
+    //    var JobData = [];
+    //    var Str_JobData;
+
+    //    var mathedcount = 1;
+    //    var count = $('.product').length;
+    //    var loopcount = 1;
+    //    while (mathedcount <= count) {
+    //        var element = {};
+    //        element.Events = $("#productcode_" + loopcount).val();
+    //        element.EventDateTime = $("#evntDate_" + loopcount).val();
+    //        typeof (element.ProductCode != 'undefined')
+    //        {
+    //            JobData.push(element);
+    //            mathedcount++;
+    //        }
+
+    //        loopcount++;
+
+    //    }
+
+
+    //    var JobDetails = new Object();
+
+    //    JobDetails.JobNo = JobNumber;
+    //    JobDetails.JobTitle = JobTitle;
+    //    JobDetails.PostedDate = JobPostedDate;
+    //    JobDetails.ApplyLink = JobApplyLink;
+    //    JobDetails.JobDesc = JobDescp;
+    //    JobDetails.Qualification = Str_Qual;
+    //    JobDetails.JobImpDates = JobData;
+
+    //    console.log(JobDetails);
+    //    debugger;
+    //    $.ajax({
+    //        type: "POST",
+    //        url: "/Jobs/SaveJobDetails",
+    //        data: JSON.stringify(JobDetails),
+    //        contentType: "application/json; charset=utf-8",
+    //        dataType: "json",
+    //        success: function (response) {
+    //              debugger;
+    //            if (response["j"] == '1') {
+    //                alert("Inside Insert");
+    //            }
+    //        },
+
+    //        error: function (response) {
+    //        }
+    //    });
+
+
+    //});
+
+
     $("#SubmitJobDetail").click(function () {
 
+        var JobDetailValidate = 1;
 
-        var JobNumber = $("#txt_JobNumber").val();
+        // var JobNumber = $("#txt_JobNumber").val();
         var JobTitle = $("#txt_JobTitle").val();
         var JobPostedDate = $("#txt_PostedDate").val();
         var JobApplyLink = $("#txt_AplyLink").val();
-        var JobDescp = $("#txt_Descp").val();
-
+        var JobDescp = $(".note-editable").text();
 
         var Qual = [];
         var Str_Qual;
@@ -84,8 +158,6 @@ $(document).ready(function () {
             Qual.push($(this).text());
             Str_Qual = Qual.toString();
         });
-        console.log(Str_Qual);
-      //  debugger;
 
         var JobData = [];
         var Str_JobData;
@@ -100,48 +172,148 @@ $(document).ready(function () {
             typeof (element.ProductCode != 'undefined')
             {
                 JobData.push(element);
-           //     Str_JobData = JobData.toString();
-              //  console.log(Str_JobData);
                 mathedcount++;
             }
 
-           // Str_JobData = JobData.toString();
-           // console.log(Str_JobData);
             loopcount++;
 
         }
 
-
-      //  debugger;
-
-        var JobDetails = new Object();
-
-        JobDetails.JobNo = JobNumber;
-        JobDetails.JobTitle = JobTitle;
-        JobDetails.PostedDate = JobPostedDate;
-        JobDetails.ApplyLink = JobApplyLink;
-        JobDetails.JobDesc = JobDescp;
-        JobDetails.Qualification = Str_Qual;
-        JobDetails.JobImpDates = JobData;
-        
-        console.log(JobDetails);
-        debugger;
-        $.ajax({
-            type: "POST",
-            url: "/Jobs/SaveJobDetails",
-            data: JSON.stringify(JobDetails),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (response) {
-              //  debugger;
-                //if (response["Message"] == 'INSERTSUCCESS') {
-                //}
-            },
-
-            error: function (response) {
+        var EventCount = 0;
+        $("#tab_logic tr td input.product").each(function () {
+            var vlue = $(this).val();
+            if (vlue == null || vlue == "") {
+                EventCount++;
             }
         });
 
+        var EventDTCount = 0;
+        $("#tab_logic tr td input.eventDt").each(function () {
+            var vlue = $(this).val();
+            if (vlue == null || vlue == "") {
+                EventDTCount++;
+            }
+        });
+
+        //  debugger;
+        if (JobTitle == null || JobTitle == "") {
+            $.alert({
+                title: 'Alert!',
+                content: 'Please Provide Job Title',
+            });
+
+            JobDetailValidate = 0;
+        }
+
+        else if (JobPostedDate == null || JobPostedDate == "") {
+            $.alert({
+                title: 'Alert!',
+                content: 'Please Provide Job Posted Date',
+            });
+
+            JobDetailValidate = 0;
+        }
+
+        else if (JobApplyLink == null || JobApplyLink == "") {
+            $.alert({
+                title: 'Alert!',
+                content: 'Please Provide Apply Link',
+            });
+
+            JobDetailValidate = 0;
+        }
+
+        else if (JobDescp == null || JobDescp == "") {
+            $.alert({
+                title: 'Alert!',
+                content: 'Please Provide Job Description',
+            });
+
+            JobDetailValidate = 0;
+        }
+
+        else if (Str_Qual == null || Str_Qual == "") {
+            $.alert({
+                title: 'Alert!',
+                content: 'Please Select Qualification',
+            });
+
+            JobDetailValidate = 0;
+        }
+        else if (EventCount > 0) {
+            $.alert({
+                title: 'Alert!',
+                content: 'Please provide events',
+            });
+
+            JobDetailValidate = 0;
+        }
+
+        else if (EventDTCount > 0) {
+            $.alert({
+                title: 'Alert!',
+                content: 'Please provide events Date',
+            });
+
+            JobDetailValidate = 0;
+        }
+
+        if (JobDetailValidate > 0) {
+            var JobDetails = new Object();
+
+            //JobDetails.JobNo = JobNumber;
+            JobDetails.JobTitle = JobTitle;
+            JobDetails.PostedDate = JobPostedDate;
+            JobDetails.ApplyLink = JobApplyLink;
+            JobDetails.JobDesc = JobDescp;
+            JobDetails.Qualification = Str_Qual;
+            JobDetails.JobImpDates = JobData;
+
+            console.log(JobDetails);
+            //         debugger;
+            $.ajax({
+                type: "POST",
+                url: "/Jobs/SaveJobDetails",
+                data: JSON.stringify(JobDetails),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    //         debugger;
+                    if (response["j"] == '1') {
+                        $.alert({
+                            title: 'Confirm!!',
+                            content: 'Registration Successful!!',
+                        });
+
+                        $('input[type="text"]').val('');
+                        $("textarea").val('');
+                        $("#txt_PostedDate").val('mm/dd/yyyy');
+                    }
+
+                    else if (response["j"] == '0') {
+                        $.alert({
+                            title: 'Confirm!!',
+                            content: 'Registration Error!!',
+                        });
+
+                        $('input[type="text"]').val('');
+                        $("textarea").val('');
+                        $("#txt_PostedDate").val('mm/dd/yyyy');
+                    }
+                },
+
+                error: function (response) {
+                    $.alert({
+                        title: 'Alert!',
+                        content: 'Insertion Error',
+                    });
+
+                    $('input[type="text"]').val('');
+                    $("textarea").val('');
+                    $("#txt_PostedDate").val('mm/dd/yyyy');
+                }
+            });
+        }
 
     });
 
@@ -576,8 +748,3 @@ function CreateInvoice(e) {
         $.alert('Missing Input', 'Alert!');
     }
 }
-
-
-
-
- 

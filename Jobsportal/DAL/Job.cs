@@ -76,7 +76,7 @@ namespace DAL
 
             public String Qualification { get; set; }
 
-            public String  Experiance { get; set; }
+            public String Experiance { get; set; }
 
             public String Interests { get; set; }
 
@@ -107,7 +107,13 @@ namespace DAL
         private const String CandidateIntrst = "@STR_INTEREST";
         private const String DBOperation = "@INT_DBOPERATION";
 
-        public static List<Job> GetJobList(SearchParam param=null)
+        private const String JobTitl = "@STR_JOBTITLE";
+        private const String JobDescrption = "@STR_JOBDESC";
+        private const String JobPostedDate = "@DT_JOBPOSTEDDATE";
+        private const String JobQualification = "@STR_QUALIFICATION";
+        private const String JobApplyLink = "@STR_APPLYLINK";
+
+        public static List<Job> GetJobList(SearchParam param = null)
         {
 
             List<Job> records = new List<Job>();
@@ -132,7 +138,7 @@ namespace DAL
                         dbCom.Parameters.Add(Location, SqlDbType.VarChar).Value = param.Location;
                         dbCom.Parameters.Add(Posted, SqlDbType.Int).Value = param.Posted;
                     }
-                    
+
                     using (SqlDataReader wizReader = dbCom.ExecuteReader())
                     {
                         while (wizReader.Read())
@@ -144,7 +150,7 @@ namespace DAL
                                 JobDesc = (String)wizReader["JOBDESC"],
                                 PostedDate = (DateTime)wizReader["POSTEDDATE"],
                                 Qualification = (String)wizReader["QUALIFICATION"],
-                                Point= Convert.ToInt32(wizReader["POINT"]),
+                                Point = Convert.ToInt32(wizReader["POINT"]),
                             };
 
                             records.Add(p);
@@ -181,7 +187,7 @@ namespace DAL
                                 JobDesc = HttpUtility.HtmlDecode((String)wizReader["JOBDESC"]),
                                 PostedDate = (DateTime)wizReader["POSTEDDATE"],
                                 Qualification = (String)wizReader["QUALIFICATION"],
-                                ApplyLink= (String)wizReader["APPLYLINK"],
+                                ApplyLink = (String)wizReader["APPLYLINK"],
                             };
 
                             J.JobImpDates = Job.GetEventDateList(JobNumber);
@@ -218,9 +224,9 @@ namespace DAL
                         {
                             var K = new JOBIMPDATES()
                             {
-                                JobNo=JobNumber,
+                                JobNo = JobNumber,
                                 Events = Convert.ToString(wizReader["EVENTS"]),
-                                EventDateTime =Convert.ToDateTime(wizReader["EVENTSDATETIME"]),
+                                EventDateTime = Convert.ToDateTime(wizReader["EVENTSDATETIME"]),
                             };
 
                             records.Add(K);
@@ -271,7 +277,7 @@ namespace DAL
 
         public static String FetchJobApplyURL(Int32 JobNo)
         {
-           
+
             String sql_select = String.Format("SELECT APPLYLINK FROM JOB WHERE JOBNO = {0}", JobNo);
             String connstring = Connection.GetConnectionString();
             String ApplyLinkURL = string.Empty;
@@ -284,7 +290,7 @@ namespace DAL
                 {
 
                     dbCom.CommandType = CommandType.Text;
-                    
+
                     using (SqlDataReader wizReader = dbCom.ExecuteReader())
                     {
                         while (wizReader.Read())
@@ -297,22 +303,25 @@ namespace DAL
             return ApplyLinkURL;
         }
 
-        public static Job SaveJobDetails(Job JobDetails)
+        public static Int32 SaveJobDetails(Job JobDetails)
         {
             String connstring = Connection.GetConnectionString();
-            Job JOBJ = new Job();
-            Job J = null;
+
+            //Job J = null;
+            Int32 RowAffected = 0;
 
             using (SqlConnection dbCon = new SqlConnection(connstring))
             {
                 dbCon.Open();
+
+                Int32 JobNumber = SaveJobInfo(JobDetails);
+
                 foreach (var item in JobDetails.JobImpDates)
                 {
                     using (SqlCommand dbCom = new SqlCommand(StoredProcedure.USP_JOBEVENTDATETIME_INSERTJOBDETAILS, dbCon))
                     {
 
                         dbCom.CommandType = CommandType.StoredProcedure;
-                        // dbCom.Parameters.AddWithValue(InsertCondition, 0);
 
                         try
                         {
@@ -320,26 +329,23 @@ namespace DAL
                             dbCom.Parameters.AddWithValue(JobEvents, item.Events);
                             dbCom.Parameters.AddWithValue(JobEventsDT, item.EventDateTime);
                             dbCom.Parameters.AddWithValue(InsertCondition, 0);
-                            dbCom.Parameters.AddWithValue(JobNum, JobDetails.JobNo);
+                            dbCom.Parameters.AddWithValue(JobNum, JobNumber);
 
+                            // dbCom.ExecuteNonQuery();
 
-                            dbCom.ExecuteNonQuery();
-
-
-
+                            RowAffected = dbCom.ExecuteNonQuery();
                         }
                         catch (Exception e)
                         {
 
                         }
                     }
-
-                    
+                     
                 }
 
             }
 
-            return J;
+            return RowAffected;
         }
 
         public static CandidateProfile InsertCandidateRecord(CandidateProfile CPOBJ)
@@ -355,7 +361,7 @@ namespace DAL
                 {
 
                     dbCom.CommandType = CommandType.StoredProcedure;
-                    dbCom.Parameters.AddWithValue(CandidatePERSONID,000);
+                    dbCom.Parameters.AddWithValue(CandidatePERSONID, 000);
                     dbCom.Parameters.AddWithValue(CandidateName, CPOBJ.Name);
                     dbCom.Parameters.AddWithValue(CandidateGender, CPOBJ.Gender);
                     dbCom.Parameters.AddWithValue(CandidateDOB, CPOBJ.DOB);
@@ -384,7 +390,45 @@ namespace DAL
 
             return OBJ;
         }
+
+        private static Int32 SaveJobInfo(Job JobDetails)
+        {
+            String connstring = Connection.GetConnectionString();
+            Int32 JobNumber = 0;
+            using (SqlConnection dbCon = new SqlConnection(connstring))
+            {
+                dbCon.Open();
+
+                using (SqlCommand dbCom = new SqlCommand(StoredProcedure.USP_JOB_INSERTJOBDETAILS, dbCon))
+                {
+
+                    dbCom.CommandType = CommandType.StoredProcedure;
+                    dbCom.Parameters.AddWithValue(JobTitl, JobDetails.JobTitle);
+                    dbCom.Parameters.AddWithValue(JobDescrption, JobDetails.JobDesc);
+                    dbCom.Parameters.AddWithValue(JobPostedDate, JobDetails.PostedDate);
+                    dbCom.Parameters.AddWithValue(JobQualification, JobDetails.Qualification);
+                    dbCom.Parameters.AddWithValue(JobApplyLink, JobDetails.ApplyLink);
+
+                    try
+                    {
+                        using (SqlDataReader wizReader = dbCom.ExecuteReader())
+                        {
+                            while (wizReader.Read())
+                            {
+                                JobNumber = Convert.ToInt32(wizReader[0]);
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+
+                }
+            }
+            return JobNumber;
+        }
     }
 
-   
+
 }

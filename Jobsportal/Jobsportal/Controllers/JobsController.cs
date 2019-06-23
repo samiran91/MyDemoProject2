@@ -76,9 +76,9 @@ namespace Jobsportal.Controllers
         {
             String Success = string.Empty;
             String Message = string.Empty;
-            Job j = Job.SaveJobDetails(JobDetails);
+            Int32 j = Job.SaveJobDetails(JobDetails);
 
-            return Json(new { Success = Convert.ToString(Success), Message = Convert.ToString(Message) }, JsonRequestBehavior.AllowGet);
+            return Json(new { j }, JsonRequestBehavior.AllowGet);
         }
 
         public String FetchJobApplyLink(Int32 JobNo)
