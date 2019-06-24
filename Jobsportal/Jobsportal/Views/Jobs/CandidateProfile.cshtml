@@ -3,23 +3,23 @@
     ViewBag.Title = "Candidate Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-<link href="~/Content/Site.css" rel="stylesheet" />
-<link href="~/Content/summernote.css" rel="stylesheet" />
-<link href="~/Content/EditJobDetail/EditJobDetail.css" rel="stylesheet" />
-<link href="~/Content/CandidateProfile/CandidateProfile.css" rel="stylesheet" />
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-<link href="~/Content/jquery-confirm.css" rel="stylesheet" />
 
-<script src="~/Scripts/jquery.min.js"></script>
-<script src="~/Scripts/bootstrap.js"></script>
-@*<script src="~/Scripts/respond.js"></script>*@
+<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" media="all" />
+<link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" media="all" />
+<link href="@Url.Content("~/Content/summernote.css")" rel="stylesheet" type="text/css" media="all" />
+<link href="@Url.Content("~/Content/EditJobDetail/EditJobDetail.css")" rel="stylesheet" type="text/css" media="all" />
+<link href="@Url.Content("~/Content/CandidateProfile/CandidateProfile.css")" rel="stylesheet" type="text/css" media="all" />
+<link href="@Url.Content("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")" rel="stylesheet" type="text/css" media="all" />
+<link href="@Url.Content("~/Content/jquery-confirm.css")" rel="stylesheet" type="text/css" media="all" />
 
-<script src="~/Scripts/jquery-ui.min.js"></script>
-<script src="~/Scripts/lodash.underscore.min.js"></script>
-<script src="~/Scripts/jqueryui-multisearch.min.js"></script>
-<script src="~/Scripts/jquery-confirm.js"></script>
-<script src="~/Scripts/CandidateProfile/CandidateProfile.js"></script>
+<script src="@Url.Content("~/Scripts/jquery.min.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/bootstrap.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui.min.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/lodash.underscore.min.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jqueryui-multisearch.min.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-confirm.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/CandidateProfile/CandidateProfile.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+
 
 
 <style>

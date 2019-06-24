@@ -5,11 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-<link href="~/Content/Site.css" rel="stylesheet" />
-<link href="~/Content/JobsPortalStyleSheets/JobsPortal.css" rel="stylesheet" />
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-<script src="~/Scripts/JobDetails/JobDetalis.js"></script>
+<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" media="all" />
+<link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" media="all" />
+<link href="@Url.Content("~/Content/JobsPortalStyleSheets/JobsPortal.css")" rel="stylesheet" type="text/css" media="all" />
+
+<script src="@Url.Content("~/Scripts/jquery-3.3.1.min.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/JobDetails/JobDetalis.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
@@ -21,13 +22,6 @@
 
 </script>
 
-<style>
-    /*#JobApplyLink {
-        background-color: #1aa3ff !important;
-        border: 0 !important;
-    }*/
-    
-</style>
 <div id="JobDetails-wrap" class="container">
     <div class="desc-header">@Model.JobNo - @Model.JobTitle</div>
     <div style="padding:15px 15px 0 15px;">

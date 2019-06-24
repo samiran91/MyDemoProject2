@@ -4,14 +4,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-<link href="~/Content/jquery-confirm.css" rel="stylesheet" />
+<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" media="all" />
+<link href="@Url.Content("~/Content/jquery-confirm.css")" rel="stylesheet" type="text/css" media="all" />
 
-
-<script src="~/Scripts/jquery.min.js"></script>
-<script src="~/Scripts/bootstrap.js"></script>
-<script src="~/Scripts/jquery-confirm.js"></script>
-<script src="~/Scripts/UserRegistration/UserRegistration.js"></script>
+<script src="@Url.Content("~/Scripts/jquery.min.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/bootstrap.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-confirm.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/UserRegistration/UserRegistration.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
 
 
 <script>
