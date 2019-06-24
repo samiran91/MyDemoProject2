@@ -163,6 +163,12 @@
       <DependentUpon>CandidateProfile.css</DependentUpon>
     </Content>
     <Content Include="Content\EditJobDetail\EditJobDetail.css" />
+    <Content Include="Content\FooterTemplate\FooterTemplate.css">
+      <DependentUpon>FooterTemplate.less</DependentUpon>
+    </Content>
+    <Content Include="Content\FooterTemplate\FooterTemplate.min.css">
+      <DependentUpon>FooterTemplate.css</DependentUpon>
+    </Content>
     <Content Include="Content\grid\grid.css" />
     <Content Include="Content\grid\grid.min.css" />
     <Content Include="Content\JobsPortalStyleSheets\JobsPortal.css" />
@@ -184,6 +190,7 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <Content Include="Content\CandidateProfile\CandidateProfile.less" />
+    <Content Include="Content\FooterTemplate\FooterTemplate.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CandidateProfile\CandidateProfile.js" />
     <Content Include="Scripts\custom-html.js" />
@@ -237,6 +244,7 @@
     <Content Include="Views\Jobs\Editjobdetail.cshtml" />
     <Content Include="Views\Jobs\CandidateProfile.cshtml" />
     <Content Include="Views\Login\LoginRegistration.cshtml" />
+    <Content Include="Views\Login\_FooterTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

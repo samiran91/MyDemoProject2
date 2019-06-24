@@ -66,5 +66,12 @@ namespace Jobsportal.Controllers
             return Json(new { Success = Convert.ToString(U.Success), Message = Convert.ToString(U.Message) }, JsonRequestBehavior.AllowGet);
         }
 
+
+        [HttpGet]
+        public ActionResult FooterTemplate()
+        {
+            return PartialView("_FooterTemplate");
+        }
+
     }
 }
