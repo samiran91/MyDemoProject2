@@ -53,7 +53,7 @@ namespace Jobsportal.Controllers
 
             FormsAuthentication.SignOut();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("LoginRegistration");
 
 
         }

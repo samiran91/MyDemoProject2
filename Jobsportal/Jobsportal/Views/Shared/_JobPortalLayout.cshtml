@@ -1,0 +1,152 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+
+
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+
+
+
+        .icon-bar {
+            background-color: #fff !important;
+        }
+
+
+        li {
+            cursor: pointer;
+        }
+
+
+
+
+
+        .topicon {
+            padding-top: 5px;
+        }
+
+        .topmenu {
+            /*background-color: lightgrey;*/
+            background: #3f4952;
+        }
+
+        .content {
+            text-align: centre;
+            font-family: Arial san-serif;
+        }
+
+        .leftmenu {
+            /*background-color: #f8f8f8;*/
+            background: #3f4952;
+        }
+
+        ul li a {
+            font: bold;
+            color: white;
+        }
+
+        .white {
+            font: bold;
+            color: white;
+        }
+
+        #myNavbarleft {
+            min-height: 650px;
+        }
+
+        h4 {
+            text-align: center;
+            font: bold;
+        }
+
+        .footer {
+            background: #3f4952;
+            /*background-color: lightgrey;*/
+            text-align: center;
+            font: bold;
+            color: white;
+        }
+
+        body {
+            padding-top: 0 !important;
+        }
+
+        #myNavbarleft {
+            padding: 0 !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="row topmenu">
+        <div class="col-sm-10 hidden-xs">
+            <img src="~/Content/Images/Drashta.png" height="50px" width="200px" />
+        </div>
+        <div class="col-sm-2">
+            <div class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="white"> Welcome Candidate</span>
+
+                    <span class="white"> <i class="fa fa-angle-down fa-x"></i></span>
+
+                </a>
+
+
+                <ul class="dropdown-menu">
+
+
+                    <li><a href="/Login/SignOut"><i class="fa fa-check-square" aria-hidden="true"></i> Sign Out</a></li>
+
+
+                </ul>
+
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-2 leftmenu">
+
+            <div>
+
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle white" data-toggle="collapse" data-target="#myNavbarleft">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbarleft">
+                    <ul class="nav nav-pills nav-stacked " id="myNavbarleftUL">
+                        @*@if (Model.Roles.Contains("Admin"))
+                            {
+                                <li><a data-url="Dashboard/Dashboard"><i class="fa fa-product-hunt" aria-hidden="true"></i> Jobs</a></li>
+                            }*@
+                        <li><a href="@Url.Action("Editjobdetail","Jobs")"><i class="fa fa-product-hunt" aria-hidden="true"></i> Jobs</a></li>
+                        <li><a href="@Url.Action("CandidateProfile","Jobs")"><i class="fa fa-product-hunt" aria-hidden="true"></i> Profile</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-10 content">
+
+            @RenderBody()
+
+        </div>
+
+    </div>
+    <section id="FooterTemplate" style="margin-top:100px;">
+        <div id="FooterTemplateDiv">
+            @{ Html.RenderAction("FooterTemplate", "Login");}
+        </div>
+    </section>
+</body>
+</html>

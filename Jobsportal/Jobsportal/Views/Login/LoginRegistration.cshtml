@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "LoginRegistration";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
 
 <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" media="all" />
@@ -139,5 +139,8 @@
 
 </div>
 
-
-
+<section id="FooterTemplate" style="margin-top:100px;">
+    <div class="" id="FooterTemplateDiv">
+        @{ Html.RenderAction("FooterTemplate", "Login");}
+    </div>
+</section>
