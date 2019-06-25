@@ -70,7 +70,10 @@ namespace Jobsportal.Controllers
         {
             return View();
         }
-       
+       public ActionResult Job_Internal()
+        {
+            return View();
+        }
         [HttpPost]
         public JsonResult SaveJobDetails(Job JobDetails)
         {
