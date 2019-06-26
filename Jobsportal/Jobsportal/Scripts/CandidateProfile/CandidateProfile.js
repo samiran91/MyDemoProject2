@@ -1,6 +1,41 @@
 ﻿function readURL(input) {
 
+    var today = new Date();
+    var date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+    var time = today.getHours() + "-" + today.getMinutes() + "-" + today.getSeconds();
+    var dateTime = date + "-" + time;
+    
+
     if (input.files && input.files[0]) {
+
+        var ImgUploadedFiles = input.files[0].name;
+        ImgUploadedFiles = dateTime + "-" + ImgUploadedFiles;
+
+
+        var files = input.files;
+        var fileData = new FormData();
+        for (var i = 0; i < files.length; i++) {
+            fileData.append(dateTime + "-" + files[i].name, files[i]);
+        }
+       
+        $('input[name=hiddeninputname]').val(ImgUploadedFiles);
+
+        $.ajax({
+            url: '/Jobs/UploadFiles',
+            type: "POST",
+            contentType: false, // Not to set any content header  
+            processData: false, // Not to process data  
+            data: fileData,
+            success: function (result) {
+                // alert(result);
+            },
+            error: function (err) {
+                alert(err.statusText);
+            }
+        });
+
+
+
         var reader = new FileReader();
         reader.onload = function (e) {
             $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
@@ -14,6 +49,7 @@
 $(document).ready(function () {
 
     $("#imageUpload").change(function () {
+        debugger;
         readURL(this);
     });
 
@@ -258,6 +294,7 @@ function SaveCandidateInfo() {
     var Mobile = $("#txt_candMobile").val();
     var Qual = $("#txt_candQual").val();
     var Exp = $("#txt_candExp").val();
+    var ImgValue = $("#hdn_imgfname").val();
 
     if (Name == null || Name == "") {
         $.alert({
@@ -346,6 +383,7 @@ function SaveCandidateInfo() {
         CandidateLogin.Qualification = Qual;
         CandidateLogin.Experiance = Exp;
         CandidateLogin.Interests = Str_Intrst;
+        CandidateLogin.ImgValue = ImgValue;
 
         console.log(CandidateLogin);
         debugger;
@@ -356,7 +394,9 @@ function SaveCandidateInfo() {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                  debugger;
+                debugger;
+                 
+
                 if (response["Message"] == 'InsertSuccess') {
                     $.alert({
                         title: 'Confirm',

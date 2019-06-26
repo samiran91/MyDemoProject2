@@ -83,6 +83,8 @@ namespace DAL
             public int Success { get; set; }
 
             public String Message { get; set; }
+
+            public String ImgValue { get; set; }
         }
 
         private const String DBOp = "@i_DBOP";
@@ -106,6 +108,7 @@ namespace DAL
         private const String CandidateExp = "@STR_EXPERIANCE";
         private const String CandidateIntrst = "@STR_INTEREST";
         private const String DBOperation = "@INT_DBOPERATION";
+        private const String CandidateImage = "@STR_CANDIDATEIMG";
 
         private const String JobTitl = "@STR_JOBTITLE";
         private const String JobDescrption = "@STR_JOBDESC";
@@ -352,6 +355,8 @@ namespace DAL
         {
             CandidateProfile OBJ = null;
 
+            String ImgPath = "~/CandidateImages/" + CPOBJ.ImgValue;
+
             String connstring = Connection.GetConnectionString();
             using (SqlConnection dbCon = new SqlConnection(connstring))
             {
@@ -372,6 +377,7 @@ namespace DAL
                     dbCom.Parameters.AddWithValue(CandidateExp, CPOBJ.Experiance);
                     dbCom.Parameters.AddWithValue(CandidateIntrst, CPOBJ.Interests);
                     dbCom.Parameters.AddWithValue(DBOperation, 0);
+                    dbCom.Parameters.AddWithValue(CandidateImage, ImgPath);
 
                     using (SqlDataReader wizReader = dbCom.ExecuteReader())
                     {
