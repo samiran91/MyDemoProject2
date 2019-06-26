@@ -23,5 +23,7 @@ namespace DAL
 
         public const String USP_SIGNUP = "USP_SIGNUP";
 
+        public const string USP_PERSON_GETPERSONDETAILS = "USP_PERSON_GETPERSONDETAILS";
+
     }
 }

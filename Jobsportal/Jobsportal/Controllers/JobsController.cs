@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DAL;
+using Newtonsoft.Json;
 
 namespace Jobsportal.Controllers
 {
@@ -157,6 +158,15 @@ namespace Jobsportal.Controllers
             {
                 return Json("No files selected.");
             }
+        }
+
+
+        public JsonResult FetchCandidateDetails()
+        {
+            
+            Job.CandidateProfile CP = Job.FetchCandidateDetails();
+
+            return Json(CP, JsonRequestBehavior.AllowGet);
         }
     }
 

@@ -435,6 +435,53 @@ namespace DAL
             return JobNumber;
         }
 
+        public static CandidateProfile FetchCandidateDetails()
+        {
+            CandidateProfile OBJ = null;
+
+            String connstring = Connection.GetConnectionString();
+            
+            using (SqlConnection dbCon = new SqlConnection(connstring))
+            {
+                dbCon.Open();
+
+                using (SqlCommand dbCom = new SqlCommand(StoredProcedure.USP_PERSON_GETPERSONDETAILS, dbCon))
+                {
+
+                    dbCom.CommandType = CommandType.StoredProcedure;
+    
+                    try
+                    {
+                        using (SqlDataReader wizReader = dbCom.ExecuteReader())
+                        {
+                            while (wizReader.Read())
+                            {
+                                OBJ = new CandidateProfile()
+                                {
+                                    Name = (String)wizReader["NAME"],
+                                    Gender = (String)wizReader["GENDER"],
+                                    DOB = (DateTime)wizReader["DOB"],
+                                    Address = (String)wizReader["ADDRESS"],
+                                    Email = (String)wizReader["EMAIL"],
+                                    Mobile = (String)wizReader["MOBILE"],
+                                    Qualification = (String)wizReader["QUALIFICATION"],
+                                    Experiance = (String)wizReader["EXPERIANCE"],
+                                    Interests = (String)wizReader["INTEREST"],
+                                    ImgValue = (String)wizReader["IMGPATH"]
+                                };
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+
+                }
+            }
+
+            return OBJ;
+        }
 
 
     }

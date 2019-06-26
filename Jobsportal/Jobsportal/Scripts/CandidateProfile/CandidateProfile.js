@@ -49,7 +49,7 @@
 $(document).ready(function () {
 
     $("#imageUpload").change(function () {
-        debugger;
+       // debugger;
         readURL(this);
     });
 
@@ -65,6 +65,10 @@ $(document).ready(function () {
     $("#myMultiSearch").multisearch({
         source: babyNames,
     });
+
+   // var PhoneNo = HttpContext.Current.User.Identity.Name;
+   // debugger;
+    FetchCandidateDetails();
 
 });
 
@@ -284,7 +288,7 @@ function SaveCandidateInfo() {
     });
 
     console.log(Str_Intrst);
-    debugger;
+   // debugger;
     var ValidateCandidate = 1;
     var Name = $("#txt_candName").val();
     var Gender = $('#txt_candGender :selected').val();
@@ -368,7 +372,7 @@ function SaveCandidateInfo() {
             title: 'Alert!',
             content: 'Please Provide Interests',
         });
-        debugger;
+       // debugger;
     }
 
     if (ValidateCandidate > 0) {
@@ -386,7 +390,7 @@ function SaveCandidateInfo() {
         CandidateLogin.ImgValue = ImgValue;
 
         console.log(CandidateLogin);
-        debugger;
+       // debugger;
         $.ajax({
             type: "POST",
             url: "/Jobs/InsertCandidateRecord",
@@ -394,7 +398,7 @@ function SaveCandidateInfo() {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                debugger;
+               // debugger;
                  
 
                 if (response["Message"] == 'InsertSuccess') {
@@ -431,4 +435,52 @@ function isEmail(Email) {
 function phonenumber(Mobile) {
     var regex = /^\d{10}$/;
     return regex.test(Mobile);
+}
+
+function FetchCandidateDetails() {
+
+    
+  //  debugger;
+    $.ajax({
+        type: 'POST',
+        url: '/Jobs/FetchCandidateDetails',
+        //data: {
+        //    JobNo: JobNumber
+        //},
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+           // debugger;
+           // var r = JSON.parse(data);
+            $("#imagePreview").css("background-image", "url('" + data.ImgValue + "')");
+            $("#txt_candName").val(data.Name);
+            $("#txt_candGender").val(data.Gender);
+            $("#txt_candDOB").val(data.DOB);
+            $("#txt_candAddress").val(data.Address);
+            $("#txt_candEmail").val(data.Email);
+            $("#txt_candMobile").val(data.Mobile);
+            $("#txt_candQual").val(data.Qualification);
+            $("#txt_candExp").val(data.Experiance);
+
+            var Intr = data.Interests;
+            var temp = new Array();
+            
+            temp = Intr.split(",");
+           // console.log(temp);
+            var htm1 = '<a href="#" data-role="selected-item">';
+            var htm2 = '</a>';
+            $.each(temp, function (i, val) {
+               // console.log(val);
+               // debugger;
+                var final = htm1 + val + htm2;
+                $("div.sel-anchor").append(final);
+            });
+
+        },
+        error: function (ex) {
+            alert("Message: " + ex.Message);
+            alert("StackTrace: " + ex.StackTrace);
+            alert("ExceptionType: " + ex.ExceptionType);
+        }
+    });
 }

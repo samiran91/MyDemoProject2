@@ -154,6 +154,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CandidateImages\2019-6-26-19-24-2-hush-naidoo-382152-unsplash.jpg" />
+    <Content Include="CandidateImages\2019-6-26-20-19-46-pic.jpg" />
+    <Content Include="CandidateImages\2019-6-26-20-52-21-dominik-lange-1183371-unsplash.jpg" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\CandidateProfile\CandidateProfile.css">
@@ -251,7 +254,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="CandidateImages\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
