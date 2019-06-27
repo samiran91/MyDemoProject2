@@ -163,7 +163,7 @@ namespace Jobsportal.Controllers
 
         public JsonResult FetchCandidateDetails()
         {
-            
+            string phoneno = System.Web.HttpContext.Current.User.Identity.Name;
             Job.CandidateProfile CP = Job.FetchCandidateDetails();
 
             return Json(CP, JsonRequestBehavior.AllowGet);
