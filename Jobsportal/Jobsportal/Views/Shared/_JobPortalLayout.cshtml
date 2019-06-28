@@ -125,11 +125,13 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbarleft">
                     <ul class="nav nav-pills nav-stacked " id="myNavbarleftUL">
-                        @*@if (Model.Roles.Contains("Admin"))
-                            {
-                                <li><a data-url="Dashboard/Dashboard"><i class="fa fa-product-hunt" aria-hidden="true"></i> Jobs</a></li>
-                            }*@
-                        <li><a href="@Url.Action("Job_Internal","Jobs")"><i class="fa fa-product-hunt" aria-hidden="true"></i> Jobs</a></li>
+                        @if (((System.Web.Security.FormsIdentity)System.Web.HttpContext.Current.User.Identity).Ticket.UserData.Contains("ADMIN"))
+    {
+                    <li><a href="@Url.Action("Job_Internal","Jobs")"><i class="fa fa-product-hunt" aria-hidden="true"></i> Jobs</a></li>
+     }
+
+
+
                         <li><a href="@Url.Action("CandidateProfile","Jobs")"><i class="fa fa-product-hunt" aria-hidden="true"></i> Profile</a></li>
                     </ul>
 
