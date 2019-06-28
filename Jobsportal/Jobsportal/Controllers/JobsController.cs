@@ -81,8 +81,8 @@ namespace Jobsportal.Controllers
         [HttpPost]
         public JsonResult SaveJobDetails(Job JobDetails)
         {
-            String Success = string.Empty;
-            String Message = string.Empty;
+            //String Success = string.Empty;
+            //String Message = string.Empty;
             Int32 j = Job.SaveJobDetails(JobDetails);
 
             return Json(new { j }, JsonRequestBehavior.AllowGet);

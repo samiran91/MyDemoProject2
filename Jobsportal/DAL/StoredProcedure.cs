@@ -23,7 +23,9 @@ namespace DAL
 
         public const String USP_SIGNUP = "USP_SIGNUP";
 
-        public const string USP_PERSON_GETPERSONDETAILS = "USP_PERSON_GETPERSONDETAILS";
+        public const String USP_PERSON_GETPERSONDETAILS = "USP_PERSON_GETPERSONDETAILS";
+
+        public const String USP_JOBIMNOTES_INSERTIMNOTES = "USP_JOBIMNOTES_INSERTIMNOTES";
 
     }
 }

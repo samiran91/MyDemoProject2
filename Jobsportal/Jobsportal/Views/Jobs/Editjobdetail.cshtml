@@ -151,71 +151,42 @@
         #DocUpload tbody tr:nth-child(even) {
             background-color: #ffffff;
         }
+</style>
 
-
-    div.input-group.my-3 {
-        position: relative;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: stretch;
-        width: 50%;
-    }
-
-    span#inputGroupFileAddon01.input-group-text {
-        display: flex;
-        align-items: center;
-        padding: .375rem .75rem;
-        margin-bottom: 0;
-        font-weight: 400;
-        line-height: 1.5;
-        color: #495057;
-        text-align: center;
-        white-space: nowrap;
-        background-color: #e9ecef;
-        border: 1px solid #ced4da;
-        border-radius: .25rem;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-
-    div.custom-file {
-        display: flex;
-        align-items: center;
-    }
-
-    input#inputGroupFile01.custom-file-input {
-        margin-bottom: 0;
-        /* position: relative; */
-        z-index: 2;
-        width: 100%;
-        margin: 0;
-        opacity: 0;
-    }
-
-    label.custom-file-label {
-        top: 0;
-        right: 0;
-        left: 0;
-        z-index: 1;
-        height: calc(1.5em + .75rem + 2px);
-        padding: .375rem .75rem;
-        font-weight: 400;
-        line-height: 1.5;
-        color: #495057;
-        background-color: #fff;
-        border: 1px solid #ced4da;
-        border-radius: .25rem;
-        width: 150px;
-        margin: 0;
-        text-align: center;
-        padding-left: 15px;
-    }
-
-    label {
+<style>
+    input[type=file], input[type=file] + input {
         display: inline-block;
-        margin-bottom: 8px;
-        font-weight: bold;
-        margin-top: 5px;
+        /*background-color: #f7f7f7;*/
+        /*border: 1px solid #bcbbbc;*/
+        font-size: 12px;
+        margin: 5px;
+    }
+
+    input[type=file] + input {
+        padding: 7px 14px;
+        background-color: #40779e;
+        color: #ffffff;
+    }
+
+    ::-webkit-file-upload-button {
+        -webkit-appearance: none;
+        background-color: #40779e;
+        border: 1px solid #bcbbbc;
+        font-size: 12px;
+        padding: 7px 14px;
+        color: #ffffff;
+    }
+
+    ::-ms-browse {
+        background-color: #40779e;
+        border: 1px solid #bcbbbc;
+        font-size: 12px;
+        padding: 7px 14px;
+        color: #ffffff;
+    }
+
+    input[type=file]::-ms-value {
+        border: none;
     }
 </style>
 <div class="panel-group">
@@ -227,7 +198,7 @@
             </h4>
 
         </div>
-        <div class="panel-body collapse" id="panel_Info">
+        <div class="panel-body collapse in" id="panel_Info">
             <form class="form-inline">
                 <div class="form-group col-md-6">
                     <label for="companyname" class="col-md-4">Job Number:</label>
@@ -362,15 +333,13 @@
 
         </div>
         <div class="panel-body collapse" id="panel_Notes">
-            <div class="input-group my-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+            <form class="form-inline">
+                <div class="form-group col-md-12">
+                    <input type="file" class="custom-file-input" id="importantNotesfile" aria-describedby="inputGroupFileAddon01" style="height: 30px; float:left;">
+                    <button type="button" onclick="UploadNotes()" class="btn btn-success" style="float: right; margin:5px;"><i class="fa fa-upload" style="padding-right: 5px;" aria-hidden="true"></i>Upload</button>
                 </div>
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" style="height: 30px;">
-                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                </div>
-            </div>
+              
+            </form>
             <form class="form-inline">
                 <div class="form-group col-md-12">
                     <table id="DocUpload">
@@ -383,12 +352,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><a href="#">File</a></td>
-                                <td>Maynak Nandi</td>
-                                <td>06-04-2019</td>
-                                <td>Delete</td>
-                            </tr>
+
                         </tbody>
                     </table>
                     <div>

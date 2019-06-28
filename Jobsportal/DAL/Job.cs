@@ -51,6 +51,10 @@ namespace DAL
             public String Title { get; set; }
 
             public String DownloadLink { get; set; }
+
+            public String Uplodedby { get; set; }
+
+            public DateTime Uplodeddate { get; set; }
         }
         public class SearchParam
         {
@@ -310,7 +314,6 @@ namespace DAL
         {
             String connstring = Connection.GetConnectionString();
 
-            //Job J = null;
             Int32 RowAffected = 0;
 
             using (SqlConnection dbCon = new SqlConnection(connstring))
@@ -318,6 +321,42 @@ namespace DAL
                 dbCon.Open();
 
                 Int32 JobNumber = SaveJobInfo(JobDetails);
+
+                foreach (var item in JobDetails.JobNotes)
+                {
+                    using (SqlCommand dbCom = new SqlCommand(StoredProcedure.USP_JOBIMNOTES_INSERTIMNOTES, dbCon))
+                    {
+
+                        dbCom.CommandType = CommandType.StoredProcedure;
+
+                        try
+                        {
+
+                            dbCom.Parameters.AddWithValue("@JobNumber", JobNumber);
+                            dbCom.Parameters.AddWithValue("@STR_TITLE", item.Title);
+                            dbCom.Parameters.AddWithValue("@DT_UPLODEDDATE", item.Uplodeddate);
+                            dbCom.Parameters.AddWithValue("@STR_DOWNLOADLINK", item.DownloadLink);
+                            dbCom.Parameters.AddWithValue("@STR_UPLODEDBY", item.Uplodedby);
+                            dbCom.Parameters.AddWithValue("@INT_INSERT", 0);
+
+                            //var temp= dbCom.ExecuteNonQuery();
+                            using (SqlDataReader wizReader = dbCom.ExecuteReader())
+                            {
+                                while (wizReader.Read())
+                                {
+                                    var Success = (Int32)wizReader["SUCCESS"];
+                                    var Message = (String)wizReader["MESSAGE"];
+                                }
+                            }
+
+                        }
+                        catch (Exception e)
+                        {
+
+                        }
+                    }
+
+                }
 
                 foreach (var item in JobDetails.JobImpDates)
                 {
@@ -333,8 +372,6 @@ namespace DAL
                             dbCom.Parameters.AddWithValue(JobEventsDT, item.EventDateTime);
                             dbCom.Parameters.AddWithValue(InsertCondition, 0);
                             dbCom.Parameters.AddWithValue(JobNum, JobNumber);
-
-                            // dbCom.ExecuteNonQuery();
 
                             RowAffected = dbCom.ExecuteNonQuery();
                         }
@@ -427,7 +464,7 @@ namespace DAL
                     }
                     catch (Exception e)
                     {
-
+                        
                     }
 
                 }
@@ -482,6 +519,8 @@ namespace DAL
 
             return OBJ;
         }
+
+
 
 
     }

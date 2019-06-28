@@ -178,7 +178,7 @@ $(document).ready(function () {
             loopcount++;
 
         }
-
+       // debugger;
         var EventCount = 0;
         $("#tab_logic tr td input.product").each(function () {
             var vlue = $(this).val();
@@ -194,6 +194,39 @@ $(document).ready(function () {
                 EventDTCount++;
             }
         });
+
+
+        var Documents = [];
+        var mathedcount = 1;
+        var count = $('.uplodednotes').length;
+        var count = $('.uplodedby').length;
+        var count = $('.uplodeddate').length;
+
+        var loopcount = 1;
+        while (mathedcount <= count) {
+            var element = {};
+            element.Title = $("#uplodednotes_" + loopcount).text();
+            element.Uplodedby = $("#uplodedby_" + loopcount).text();
+            element.Uplodeddate = $("#uplodeddate_" + loopcount).text();
+            var dlink = $("#uplodednotes_" + loopcount).text();
+            element.DownloadLink = "~/CandidateImages/" + dlink;
+
+            typeof (element.uplodednotes != 'undefined')
+            {
+                Documents.push(element);
+                mathedcount++;
+            }
+
+
+            loopcount++;
+
+        }
+       // debugger;
+
+
+
+
+
 
         //  debugger;
         if (JobTitle == null || JobTitle == "") {
@@ -268,8 +301,9 @@ $(document).ready(function () {
             JobDetails.JobDesc = JobDescp;
             JobDetails.Qualification = Str_Qual;
             JobDetails.JobImpDates = JobData;
+            JobDetails.JobNotes = Documents;
 
-            console.log(JobDetails);
+         //   console.log(JobDetails);
             //         debugger;
             $.ajax({
                 type: "POST",
@@ -747,4 +781,53 @@ function CreateInvoice(e) {
     else {
         $.alert('Missing Input', 'Alert!');
     }
+}
+
+
+function UploadNotes() {
+    // alert("a");
+    var today = new Date();
+   // console.log(today);
+    var date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+    //var date1 = today.getDate() + "-" + (today.getMonth() + 1) + "-" + today.getFullYear();
+   // console.log(date);
+    var time = today.getHours() + "-" + today.getMinutes() + "-" + today.getSeconds();
+    var dateTime = date + "-" + time;
+    var fileUpload = $("#importantNotesfile").get(0);
+    var files = fileUpload.files;
+    var modifiedfilename = "";
+    if (files.length > 0) {
+        modifiedfilename = dateTime + "-" + files[0].name;
+    }
+
+   // debugger;
+    var fileData = new FormData();
+    // Looping over all files and add it to FormData object  
+    for (var i = 0; i < files.length; i++) {
+        fileData.append(dateTime + "-" + files[i].name, files[i]);
+    }
+
+    $.ajax({
+        url: '/Jobs/UploadFiles',
+        type: "POST",
+        contentType: false, // Not to set any content header  
+        processData: false, // Not to process data  
+        data: fileData,
+        success: function (result) {
+
+          //  debugger;
+            var count = $('.uplodednotes').length;
+            var count1 = $('.uplodedby').length;
+            var count2 = $('.uplodeddate').length;
+            count++;
+            count1++;
+            count2++;
+            var htm = '<tr><td id="uplodednotes_' + count + '" class="uplodednotes">' + modifiedfilename + '</td><td id="uplodedby_' + count1 + '" class="uplodedby">Maynak Nandi</td><td id="uplodeddate_' + count2 +'" class="uplodeddate">' + date + '</td> <td> <i class="fa fa-times" aria-hidden="true"></i></td></tr>';
+            $("#DocUpload tbody").append(htm);
+            count++;
+        },
+        error: function (err) {
+            alert(err.statusText);
+        }
+    });
 }
