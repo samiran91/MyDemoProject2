@@ -70,7 +70,7 @@ namespace DAL
 
             public String Gender { get; set; }
 
-            public DateTime DOB { get; set; }
+            public DateTime? DOB { get; set; }
 
             public String Address { get; set; }
 
@@ -119,6 +119,7 @@ namespace DAL
         private const String JobPostedDate = "@DT_JOBPOSTEDDATE";
         private const String JobQualification = "@STR_QUALIFICATION";
         private const String JobApplyLink = "@STR_APPLYLINK";
+        private const String Phoneno = "@phoneno";
 
         public static List<Job> GetJobList(SearchParam param = null)
         {
@@ -321,66 +322,78 @@ namespace DAL
                 dbCon.Open();
 
                 Int32 JobNumber = SaveJobInfo(JobDetails);
-
-                foreach (var item in JobDetails.JobNotes)
+                if (JobDetails.JobNotes != null)
                 {
-                    using (SqlCommand dbCom = new SqlCommand(StoredProcedure.USP_JOBIMNOTES_INSERTIMNOTES, dbCon))
+                    if (JobDetails.JobNotes.Count > 0)
                     {
 
-                        dbCom.CommandType = CommandType.StoredProcedure;
-
-                        try
+                        foreach (var item in JobDetails.JobNotes)
                         {
-
-                            dbCom.Parameters.AddWithValue("@JobNumber", JobNumber);
-                            dbCom.Parameters.AddWithValue("@STR_TITLE", item.Title);
-                            dbCom.Parameters.AddWithValue("@DT_UPLODEDDATE", item.Uplodeddate);
-                            dbCom.Parameters.AddWithValue("@STR_DOWNLOADLINK", item.DownloadLink);
-                            dbCom.Parameters.AddWithValue("@STR_UPLODEDBY", item.Uplodedby);
-                            dbCom.Parameters.AddWithValue("@INT_INSERT", 0);
-
-                            //var temp= dbCom.ExecuteNonQuery();
-                            using (SqlDataReader wizReader = dbCom.ExecuteReader())
+                            using (SqlCommand dbCom = new SqlCommand(StoredProcedure.USP_JOBIMNOTES_INSERTIMNOTES, dbCon))
                             {
-                                while (wizReader.Read())
+
+                                dbCom.CommandType = CommandType.StoredProcedure;
+
+                                try
                                 {
-                                    var Success = (Int32)wizReader["SUCCESS"];
-                                    var Message = (String)wizReader["MESSAGE"];
+
+                                    dbCom.Parameters.AddWithValue("@JobNumber", JobNumber);
+                                    dbCom.Parameters.AddWithValue("@STR_TITLE", item.Title);
+                                    dbCom.Parameters.AddWithValue("@DT_UPLODEDDATE", item.Uplodeddate);
+                                    dbCom.Parameters.AddWithValue("@STR_DOWNLOADLINK", item.DownloadLink);
+                                    dbCom.Parameters.AddWithValue("@STR_UPLODEDBY", item.Uplodedby);
+                                    dbCom.Parameters.AddWithValue("@INT_INSERT", 0);
+
+                                    //var temp= dbCom.ExecuteNonQuery();
+                                    using (SqlDataReader wizReader = dbCom.ExecuteReader())
+                                    {
+                                        while (wizReader.Read())
+                                        {
+                                            var Success = (Int32)wizReader["SUCCESS"];
+                                            var Message = (String)wizReader["MESSAGE"];
+                                        }
+                                    }
+
+                                }
+                                catch (Exception e)
+                                {
+
                                 }
                             }
 
                         }
-                        catch (Exception e)
-                        {
-
-                        }
                     }
-
                 }
-
-                foreach (var item in JobDetails.JobImpDates)
+                if (JobDetails.JobImpDates != null)
                 {
-                    using (SqlCommand dbCom = new SqlCommand(StoredProcedure.USP_JOBEVENTDATETIME_INSERTJOBDETAILS, dbCon))
+                    if (JobDetails.JobImpDates.Count > 0)
                     {
 
-                        dbCom.CommandType = CommandType.StoredProcedure;
-
-                        try
+                        foreach (var item in JobDetails.JobImpDates)
                         {
+                            using (SqlCommand dbCom = new SqlCommand(StoredProcedure.USP_JOBEVENTDATETIME_INSERTJOBDETAILS, dbCon))
+                            {
 
-                            dbCom.Parameters.AddWithValue(JobEvents, item.Events);
-                            dbCom.Parameters.AddWithValue(JobEventsDT, item.EventDateTime);
-                            dbCom.Parameters.AddWithValue(InsertCondition, 0);
-                            dbCom.Parameters.AddWithValue(JobNum, JobNumber);
+                                dbCom.CommandType = CommandType.StoredProcedure;
 
-                            RowAffected = dbCom.ExecuteNonQuery();
-                        }
-                        catch (Exception e)
-                        {
+                                try
+                                {
+
+                                    dbCom.Parameters.AddWithValue(JobEvents, item.Events);
+                                    dbCom.Parameters.AddWithValue(JobEventsDT, item.EventDateTime);
+                                    dbCom.Parameters.AddWithValue(InsertCondition, 0);
+                                    dbCom.Parameters.AddWithValue(JobNum, JobNumber);
+
+                                    RowAffected = dbCom.ExecuteNonQuery();
+                                }
+                                catch (Exception e)
+                                {
+
+                                }
+                            }
 
                         }
                     }
-                     
                 }
 
             }
@@ -447,6 +460,7 @@ namespace DAL
 
                     dbCom.CommandType = CommandType.StoredProcedure;
                     dbCom.Parameters.AddWithValue(JobTitl, JobDetails.JobTitle);
+                    dbCom.Parameters.AddWithValue("@i_intJOBNO", JobDetails.JobNo);
                     dbCom.Parameters.AddWithValue(JobDescrption, JobDetails.JobDesc);
                     dbCom.Parameters.AddWithValue(JobPostedDate, JobDetails.PostedDate);
                     dbCom.Parameters.AddWithValue(JobQualification, JobDetails.Qualification);
@@ -472,7 +486,7 @@ namespace DAL
             return JobNumber;
         }
 
-        public static CandidateProfile FetchCandidateDetails()
+        public static CandidateProfile FetchCandidateDetails(string phoneno)
         {
             CandidateProfile OBJ = null;
 
@@ -486,7 +500,8 @@ namespace DAL
                 {
 
                     dbCom.CommandType = CommandType.StoredProcedure;
-    
+                    dbCom.Parameters.AddWithValue(Phoneno, phoneno);
+
                     try
                     {
                         using (SqlDataReader wizReader = dbCom.ExecuteReader())
@@ -495,16 +510,16 @@ namespace DAL
                             {
                                 OBJ = new CandidateProfile()
                                 {
-                                    Name = (String)wizReader["NAME"],
-                                    Gender = (String)wizReader["GENDER"],
-                                    DOB = (DateTime)wizReader["DOB"],
-                                    Address = (String)wizReader["ADDRESS"],
-                                    Email = (String)wizReader["EMAIL"],
-                                    Mobile = (String)wizReader["MOBILE"],
-                                    Qualification = (String)wizReader["QUALIFICATION"],
-                                    Experiance = (String)wizReader["EXPERIANCE"],
-                                    Interests = (String)wizReader["INTEREST"],
-                                    ImgValue = (String)wizReader["IMGPATH"]
+                                    Name = Convert.ToString(wizReader["NAME"]),
+                                    Gender = Convert.ToString(wizReader["GENDER"]),
+                                    DOB =Convert.ToDateTime(wizReader["DOB"]),
+                                    Address = Convert.ToString(wizReader["ADDRESS"]),
+                                    Email = Convert.ToString(wizReader["EMAIL"]),
+                                    Mobile = Convert.ToString(wizReader["MOBILE"]),
+                                    Qualification = Convert.ToString(wizReader["QUALIFICATION"]),
+                                    Experiance = Convert.ToString(wizReader["EXPERIANCE"]),
+                                    Interests = Convert.ToString(wizReader["INTEREST"]),
+                                    ImgValue = Convert.ToString(wizReader["IMGPATH"])
                                 };
                             }
                         }
