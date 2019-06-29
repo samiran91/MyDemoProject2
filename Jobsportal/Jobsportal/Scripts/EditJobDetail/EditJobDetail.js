@@ -1,8 +1,4 @@
 ﻿
-
-
-
-
 $(document).ready(function () {
 
     var i = 1;
@@ -142,7 +138,7 @@ $(document).ready(function () {
 
 
     $("#SubmitJobDetail").click(function () {
-
+        debugger;
         var JobDetailValidate = 1;
 
         // var JobNumber = $("#txt_JobNumber").val();
@@ -178,7 +174,7 @@ $(document).ready(function () {
             loopcount++;
 
         }
-       // debugger;
+
         var EventCount = 0;
         $("#tab_logic tr td input.product").each(function () {
             var vlue = $(this).val();
@@ -221,14 +217,7 @@ $(document).ready(function () {
             loopcount++;
 
         }
-       // debugger;
 
-
-
-
-
-
-        //  debugger;
         if (JobTitle == null || JobTitle == "") {
             $.alert({
                 title: 'Alert!',
@@ -350,6 +339,8 @@ $(document).ready(function () {
         }
 
     });
+
+    fetchJobDetails();
 
 });
 
@@ -593,6 +584,8 @@ $(document).on('click', '.glyphicon-remove', function (e) {
     }
 
 });
+
+
 function today() {
     return new Date();
 }
@@ -828,6 +821,94 @@ function UploadNotes() {
         },
         error: function (err) {
             alert(err.statusText);
+        }
+    });
+}
+
+function GetParameterValues(param) {
+    var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for (var i = 0; i < url.length; i++) {
+        var urlparam = url[i].split('=');
+        if (urlparam[0] == param) {
+            return urlparam[1];
+        }
+    }
+} 
+
+function fetchJobDetails() {
+    var JobNumber = GetParameterValues('JobNo');
+    debugger;
+    $.ajax({
+        type: 'GET',
+        url: '/Jobs/FetchJobDetails',
+        data: {
+            JobNo: JobNumber
+        },
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+           // debugger;
+            $("#txt_JobNumber").val(data.JobNo);
+            $("#txt_JobTitle").val(data.JobTitle);
+            $("#txt_PostedDate").val(data.PostedDate);
+            $("#txt_AplyLink").val(data.ApplyLink);
+            $(".note-editable").text(data.JobDesc);
+
+            var Ql = data.Qualification;
+            var temp = new Array();
+
+            temp = Ql.split(",");
+            
+            var htm1 = '<a href="#" data-role="selected-item">';
+            var htm2 = '</a>';
+            $.each(temp, function (i, val) {
+
+                var final = htm1 + val + htm2;
+                $("div.sel-anchor").append(final);
+            });
+
+
+
+            //debugger;
+            $("#tab_logic tbody").html('');
+            var tablerow = $('#tab_logic tbody tr').length;
+            for (var i = 0; i < data.JobImpDates.length; i++) {
+                var Evnts = data.JobImpDates[i].Events;
+                var EventDateTime = data.JobImpDates[i].EventDateTime;
+                var j = i + 1;
+                var htm = '<tr id="addr' + j + '"><td id="srn' + j + '">' + j + '</td><td><input type="text" id="productcode_' + j + '" placeholder="Event" class="form-control product"><input type="hidden" id="productcode_stock_' + j + '" aria-hidden="true"></td><td><div><input class="form-control eventDt" type="date" id="evntDate_' + j + '" name="bday" required="" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"></div></td><td><span class="glyphicon glyphicon-remove" id="del_' + j + '" style="cursor: pointer;"></span></td></tr>'
+                $("#tab_logic tbody").append(htm);
+                $("#productcode_" + j).val(Evnts);
+                $("#evntDate_" + j).val(EventDateTime);
+                //tablerow++;
+            }
+
+
+            $("#DocUpload tbody").html('');
+            for (var i = 0; i < data.JobNotes.length; i++) {
+                var Title = data.JobNotes[i].Title;
+                var DownloadLink = data.JobNotes[i].DownloadLink;
+                var UploadedBy = data.JobNotes[i].Uplodedby;
+                var UplodedDT = data.JobNotes[i].Uplodeddate;
+
+                
+                var count = $('.uplodednotes').length;
+                var count1 = $('.uplodedby').length;
+                var count2 = $('.uplodeddate').length;
+                count++;
+                count1++;
+                count2++;
+                var htm = '<tr><td id="uplodednotes_' + count + '" class="uplodednotes"><a href="' + DownloadLink + '">' + Title + '</a></td><td id="uplodedby_' + count1 + '" class="uplodedby">' + UploadedBy + '</td><td id="uplodeddate_' + count2 + '" class="uplodeddate">' + UplodedDT + '</td> <td> <i class="fa fa-times" aria-hidden="true"></i></td></tr>';
+                $("#DocUpload tbody").append(htm);
+
+            }
+
+
+        },
+        error: function (ex) {
+            alert("Message: " + ex.Message);
+            alert("StackTrace: " + ex.StackTrace);
+            alert("ExceptionType: " + ex.ExceptionType);
         }
     });
 }

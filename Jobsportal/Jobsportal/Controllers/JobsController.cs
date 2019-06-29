@@ -172,6 +172,13 @@ namespace Jobsportal.Controllers
 
             return Json(CP, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult FetchJobDetails(Int32 Jobno)
+        {
+            var J = Job.GetJobDescription(Jobno);
+
+            return Json(J, JsonRequestBehavior.AllowGet);
+        }
     }
 
 }

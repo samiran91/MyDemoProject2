@@ -25,11 +25,12 @@ $(document).ready(function () {
 
 
     });
- 
 });
 
 function Edit(e) {
-    window.location.href = "/Jobs/Editjobdetail";
+    debugger;
+    window.location.href = "/Jobs/Editjobdetail?JobNo=" + e.data.record.JobNo;
+    
 }
 
 function Add() {
@@ -70,3 +71,5 @@ function Remove(e) {
     });
 
 }
+
+
