@@ -50,5 +50,18 @@ namespace DAL
                 //To do
             }
     }
+
+        public static DataSet CandidateData()
+        {
+
+            String sql_select = String.Format("Select ISNULL(QUALIFICATION,'') +' '+ISNULL(EXPERIANCE,'') +' '+ISNULL(INTEREST,'') as PerKeyword, EMAIL from PERSON");
+            String connstring = Connection.GetConnectionString();
+            DataSet ds = new DataSet();
+
+
+            SqlDataAdapter adpt = new SqlDataAdapter(sql_select, connstring);
+            adpt.Fill(ds);
+            return ds;
+        }
     }
 }

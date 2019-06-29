@@ -5,10 +5,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DAL;
+using System.Data;
 using Newtonsoft.Json;
+using System.Net.Mail;
+using System.Text;
 
 namespace Jobsportal.Controllers
 {
+    public delegate void SendEmailToCandidate_delegate(int jobno, string jobkeywords);
     public class JobsController : Controller
     {
         // GET: Jobs
@@ -88,9 +92,76 @@ namespace Jobsportal.Controllers
             //String Message = string.Empty;
             Int32 j = Job.SaveJobDetails(JobDetails);
 
+            SendEmailToCandidate_delegate d = null;
+            d = new SendEmailToCandidate_delegate(SendEmailToCandidate);
+
+            IAsyncResult R = null;
+            R = d.BeginInvoke(JobDetails.JobNo, JobDetails.JobTitle + " " + JobDetails.JobDesc + " " + JobDetails.Qualification, new AsyncCallback(TaskCompleted), null);
+            
             return Json(new { j }, JsonRequestBehavior.AllowGet);
         }
+        public void TaskCompleted(IAsyncResult R)
+        {
+            // Write here code to handle the completion of
+            // your asynchronous method
+        }
+        public void SendEmailToCandidate(int jobno,string jobkeywords)
+        {
+            DataSet Candidate = Utility.CandidateData();
 
+            string[] jobwords = jobkeywords.Split(' ');
+            if(Candidate.Tables.Count>0)
+            {
+                if(Candidate.Tables[0].Rows.Count>0)
+                {
+                    foreach(DataRow dr in Candidate.Tables[0].Rows)
+                    {
+                        string PerKeyword = dr["PerKeyword"].ToString();
+                        string[] perwords = PerKeyword.Split(' ');
+                        string mailcommonwords = string.Empty;
+                        string Email = dr["Email"].ToString();
+                        var commonwords = jobwords.Intersect(perwords);
+                        foreach (string word in commonwords)
+                        {
+                            mailcommonwords = mailcommonwords + "," + word;
+                        }
+
+                        if(!string.IsNullOrEmpty(mailcommonwords))
+                        {
+                            EmailServer emailconfigdata = EmailServer.GetEmailConfiguration();
+                            SmtpClient client = new SmtpClient();
+                            client.Port = Convert.ToInt32(emailconfigdata.Port);
+                            client.Host = emailconfigdata.Host;
+                            client.EnableSsl = emailconfigdata.SSL;
+                            client.Timeout = 10000;
+                            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                            client.UseDefaultCredentials = false;
+                            client.Credentials = new System.Net.NetworkCredential(emailconfigdata.Email, emailconfigdata.Password);
+
+                            // string mailbody = "A New job has been posted.  You can apply the job using below link" + Environment.NewLine + System.Web.HttpContext.Current.Request.Url.Host + "/jobs/ JobDetails ? JNo = " + jobno + Environment.NewLine + "You are receiving mail because your profile contains these words " +"<b>"+ mailcommonwords+"</b>"+Environment.NewLine+ "Regards,"+ Environment.NewLine+"Drashta Infotech Team";
+                            string mailbody = "A New job has been posted.  You can apply the job using below link" + Environment.NewLine + "http://jobhelperstage.drashtainfotech.com/" + "/jobs/ JobDetails ? JNo = " + jobno + Environment.NewLine + "You are receiving mail because your profile contains these words " + "<b>" + mailcommonwords + "</b>" + Environment.NewLine + "Regards," + Environment.NewLine + "Drashta Infotech Team";
+                            MailMessage mm = new MailMessage(emailconfigdata.Email, Email, "Notification from  Drashta Infotech Job Helper portal ", mailbody);
+                           
+                            mm.BodyEncoding = UTF8Encoding.UTF8;
+                            mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+
+                            try
+                            {
+
+                                client.Send(mm);
+                            }
+                            catch (Exception ex)
+                            {
+                                DALError.LogError("Invoice.ForwardEmail", ex);
+
+
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
         public String FetchJobApplyLink(Int32 JobNo)
         {
             // String QueryString = Request.QueryString["JNo"];
