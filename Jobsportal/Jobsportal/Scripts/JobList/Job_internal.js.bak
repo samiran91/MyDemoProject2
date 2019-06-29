@@ -14,11 +14,11 @@ $(document).ready(function () {
             { field: 'PostedDate', title: 'Posted Date', width: 200, sortable: true, type: 'date', priority: 2 },
             {
                 field: "Edit", title: "", width: 34, type: "icon",
-                icon: "fal fa-pencil fa-2X", tooltip: "Edit", events: { "click": Edit }
+                icon: "glyphicon-pencil", tooltip: "Edit", events: { "click": Edit }
             },
             {
                 field: "Delete", title: "", width: 34, type: "icon",
-                icon: "fas fa-times fa-2X", tooltip: "Delete", events: { "click": Remove }
+                icon: "glyphicon-remove", tooltip: "Delete", events: { "click": Remove }
             }
         ],
         pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }

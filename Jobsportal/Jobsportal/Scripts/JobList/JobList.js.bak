@@ -25,7 +25,7 @@ $(document).ready(function () {
            
             {
                 field: "", title: "Apply Now", width: 100, type: "icon",
-                icon: "fas fa-sign-in-alt fa-2X", tooltip: "Apply Now", events: { "click": ApplyForJob }
+                icon: "fa fa-sign-in fa-2X", tooltip: "Apply Now", events: { "click": ApplyForJob }
                 
             }
         ],
