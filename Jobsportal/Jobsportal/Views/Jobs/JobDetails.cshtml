@@ -1,26 +1,20 @@
 ﻿@model DAL.Job
 
 @{
-    ViewBag.Title = "JobDetails";
+    ViewBag.Title = "Job Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" media="all" />
 <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" media="all" />
 <link href="@Url.Content("~/Content/JobsPortalStyleSheets/JobsPortal.css")" rel="stylesheet" type="text/css" media="all" />
+<link href="@Url.Content("~/Content/jquery-confirm.css")" rel="stylesheet" type="text/css" media="all" />
 
 <script src="@Url.Content("~/Scripts/jquery-3.3.1.min.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/bootstrap.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/JobDetails/JobDetalis.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
-
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/bootstrap")
-
-<script>
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-
-</script>
+<script src="@Url.Content("~/Scripts/jquery-confirm.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/respond.min.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
 
 <div id="JobDetails-wrap" class="container">
     <div class="desc-header">@Model.JobNo - @Model.JobTitle</div>

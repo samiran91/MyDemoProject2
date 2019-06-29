@@ -1,27 +1,46 @@
 ﻿
 $(document).ready(function () {
 
-    $("#JobApplyLink").click(function () {
 
+    $('[data-toggle="tooltip"]').tooltip();
+
+    $("#JobApplyLink").click(function () {
+        debugger;
         var JobNumber = GetParameterValues('JNo');
 
-        $.ajax({
-            type: 'POST',
-            url: '/Jobs/FetchJobApplyLink',
-            data: {
-                JobNo: JobNumber
-            },
-            success: function (data) {
-                debugger;
-                window.location.href = data;
-            },
-            error: function (ex) {
-                var r = jQuery.parseJSON(response.responseText);
-                alert("Message: " + r.Message);
-                alert("StackTrace: " + r.StackTrace);
-                alert("ExceptionType: " + r.ExceptionType);
+
+        $.confirm({
+            title: 'Confirm!',
+            content: 'Are you sure, you apply this job? ',
+            buttons: {
+                confirm: function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Jobs/FetchJobApplyLink',
+                        data: {
+                            JobNo: JobNumber
+                        },
+                        success: function (data) {
+                            debugger;
+                            window.location.href = data;
+                        },
+                        error: function (ex) {
+                            var r = jQuery.parseJSON(response.responseText);
+                            alert("Message: " + r.Message);
+                            alert("StackTrace: " + r.StackTrace);
+                            alert("ExceptionType: " + r.ExceptionType);
+                        }
+                    }); 
+                },
+                cancel: function () {
+                    
+                }
             }
         });
+
+
+
+
 
 
     });
