@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Job List";
-    Layout = null;
+    Layout = "~/Views/Shared/_JobPortalLayoutNoshellber.cshtml";
 }
 <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" media="all" />
 <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" media="all" />
@@ -100,9 +100,9 @@
     </div>
 </div>
 
-<section id="FooterTemplate" style="margin-top:100px;">
+@*<section id="FooterTemplate" style="margin-top:100px;">
     <div id="FooterTemplateDiv">
         @{ Html.RenderAction("FooterTemplate", "Login");}
     </div>
-</section>
+</section>*@
 

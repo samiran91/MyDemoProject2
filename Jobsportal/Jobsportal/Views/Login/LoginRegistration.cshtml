@@ -1,7 +1,7 @@
 ﻿
 @{
-    ViewBag.Title = "LoginRegistration";
-    Layout = null;
+    ViewBag.Title = "Login & Signup";   
+    Layout = "~/Views/Shared/_JobPortalLayoutNoshellber.cshtml";
 }
 
 <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" media="all" />
@@ -87,7 +87,7 @@
         </div>
         <div class="form-group" style="margin-top:30px;">
             <label for="phone">Phone Number:</label>
-            <input type="number" class="form-control" id="phone" name="phone">
+            <input type="text" class="form-control" id="phone" name="phone">
         </div>
         <div class="form-group">
             <label for="pwd">Password:</label>
@@ -142,8 +142,8 @@
 
 </div>
 
-<section id="FooterTemplate" style="margin-top:100px;">
+@*<section id="FooterTemplate" style="margin-top:100px;">
     <div class="" id="FooterTemplateDiv">
         @{ Html.RenderAction("FooterTemplate", "Login");}
     </div>
-</section>
+</section>*@

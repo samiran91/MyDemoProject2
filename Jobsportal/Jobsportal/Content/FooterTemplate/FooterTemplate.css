@@ -54,6 +54,7 @@
   text-transform: uppercase;
   position: relative;
   padding-bottom: 10px;
+  text-align: left;
 }
 #footer .footer-top .footer-links {
   margin-bottom: 30px;

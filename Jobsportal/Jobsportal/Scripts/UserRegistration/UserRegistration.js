@@ -14,38 +14,65 @@ function SignUp() {
     var Password = $("#txt_UsrPassword").val();
 
     if (Name == null || Name == "") {
-        $('#error-message_SignUP').css("display", "block");
-        $('#error-message-text_SignUP').text("Invalid Username");
+       // $('#error-message_SignUP').css("display", "block");
+       // $('#error-message-text_SignUP').text("Invalid Username");
+
+        $.alert({
+            title: 'Alert!',
+            content: 'Invalid Username',
+        });
 
         SignUpValidator = 0;
     }
 
     else if (Phone == null || Phone == "") {
-        $('#error-message_SignUP').css("display", "block");
-        $('#error-message-text_SignUP').text("Please provide Phone");
+       // $('#error-message_SignUP').css("display", "block");
+       // $('#error-message-text_SignUP').text("Please provide Phone");
+
+        $.alert({
+            title: 'Alert!',
+            content: 'Please provide Phone',
+        });
 
         SignUpValidator = 0;
     }
 
     else if (!phonenumber(Phone)) {
 
-        $('#error-message_SignUP').css("display", "block");
-        $('#error-message-text_SignUP').text("Please enter a valid Phone Number");
+       // $('#error-message_SignUP').css("display", "block");
+       // $('#error-message-text_SignUP').text("Please enter a valid Phone Number");
+
+        $.alert({
+            title: 'Alert!',
+            content: 'Please enter a valid Phone Number',
+        });
 
         SignUpValidator = 0;
     }
 
     else if (Email == null || Email == "") {
-        $('#error-message_SignUP').css("display", "block");
-        $('#error-message-text_SignUP').text("Please Provide Email");
+      //  $('#error-message_SignUP').css("display", "block");
+      //  $('#error-message-text_SignUP').text("Please Provide Email");
+
+
+        $.alert({
+            title: 'Alert!',
+            content: 'Please Provide Email',
+        });
 
         SignUpValidator = 0;
     }
 
     else if (!isEmail(Email)) {
 
-        $('#error-message_SignUP').css("display", "block");
-        $('#error-message-text_SignUP').text("Please enter a valid email id");
+      //  $('#error-message_SignUP').css("display", "block");
+      //  $('#error-message-text_SignUP').text("Please enter a valid email id");
+
+
+        $.alert({
+            title: 'Alert!',
+            content: 'Please enter a valid email id',
+        });
 
         SignUpValidator = 0;
     }

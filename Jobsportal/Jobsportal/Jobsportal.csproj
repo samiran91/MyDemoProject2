@@ -251,6 +251,7 @@
     <Content Include="Views\Login\_FooterTemplate.cshtml" />
     <Content Include="Views\Shared\_JobPortalLayout.cshtml" />
     <Content Include="Views\Jobs\Job_Internal.cshtml" />
+    <Content Include="Views\Shared\_JobPortalLayoutNoshellber.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

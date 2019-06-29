@@ -1,0 +1,100 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+
+
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+
+
+
+        .icon-bar {
+            background-color: #fff !important;
+        }
+
+
+        li {
+            cursor: pointer;
+        }
+
+
+
+
+
+        .topicon {
+            padding-top: 5px;
+        }
+
+        .topmenu {
+            /*background-color: lightgrey;*/
+            background: #3f4952;
+        }
+
+        .content {
+            text-align: centre;
+            font-family: Arial san-serif;
+        }
+
+        .leftmenu {
+            /*background-color: #f8f8f8;*/
+            background: #3f4952;
+        }
+
+        ul li a {
+            font: bold;
+            color: white;
+        }
+
+        .white {
+            font: bold;
+            color: white;
+        }
+
+        #myNavbarleft {
+            min-height: 650px;
+        }
+
+        h4 {
+            text-align: center;
+            font: bold;
+        }
+
+        .footer {
+            background: #3f4952;
+            /*background-color: lightgrey;*/
+            text-align: center;
+            font: bold;
+            color: white;
+        }
+
+        body {
+            padding-top: 0 !important;
+        }
+
+        #myNavbarleft {
+            padding: 0 !important;
+        }
+    </style>
+</head>
+<body>
+        <div class="col-sm-12">
+
+            @RenderBody()
+
+        </div>
+
+    <section id="FooterTemplate" style="margin-top:100px;">
+        <div id="FooterTemplateDiv">
+            @{ Html.RenderAction("FooterTemplate", "Login");}
+        </div>
+    </section>
+
+
+
+
+</body>
+</html>
