@@ -45,6 +45,7 @@ namespace Jobsportal.Controllers
         [HttpGet]
         public ActionResult LoginRegistration()
         {
+            Utility.LogActivity("At LoginRegistration", "LoginRegistration");
             return View();
         }
         public ActionResult SignOut()

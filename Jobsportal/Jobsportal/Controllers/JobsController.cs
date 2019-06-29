@@ -20,6 +20,7 @@ namespace Jobsportal.Controllers
         [HttpGet]
         public ActionResult ListJob()
         {
+            Utility.LogActivity("At List Job","ListJob");
             return View();
         }
 
@@ -28,6 +29,7 @@ namespace Jobsportal.Controllers
         {
             Int32 QueryString = Convert.ToInt32(Request.QueryString["JNo"]);
             var J = Job.GetJobDescription(QueryString);
+            Utility.LogActivity("At JobDetails", "JobDetails");
             return View(J);
         }
         public Job.SearchParam SetFilter(string searchstring = null)
@@ -75,6 +77,7 @@ namespace Jobsportal.Controllers
 
        public ActionResult Job_Internal()
         {
+            Utility.LogActivity("At Job_Internal", "Job_Internal");
             return View();
         }
 
@@ -100,6 +103,7 @@ namespace Jobsportal.Controllers
 
         public ActionResult CandidateProfile()
         {
+            Utility.LogActivity("At CandidateProfile", "CandidateProfile");
             return View();
         }
 
