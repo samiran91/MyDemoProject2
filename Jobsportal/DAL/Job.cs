@@ -405,7 +405,7 @@ namespace DAL
         {
             CandidateProfile OBJ = null;
 
-            String ImgPath = "~/CandidateImages/" + CPOBJ.ImgValue;
+          //  String ImgPath = "~/CandidateImages/" + CPOBJ.ImgValue;
 
             String connstring = Connection.GetConnectionString();
             using (SqlConnection dbCon = new SqlConnection(connstring))
@@ -427,7 +427,7 @@ namespace DAL
                     dbCom.Parameters.AddWithValue(CandidateExp, CPOBJ.Experiance);
                     dbCom.Parameters.AddWithValue(CandidateIntrst, CPOBJ.Interests);
                     dbCom.Parameters.AddWithValue(DBOperation, 0);
-                    dbCom.Parameters.AddWithValue(CandidateImage, ImgPath);
+                    dbCom.Parameters.AddWithValue(CandidateImage, CPOBJ.ImgValue);
 
                     using (SqlDataReader wizReader = dbCom.ExecuteReader())
                     {
@@ -461,7 +461,7 @@ namespace DAL
                     dbCom.CommandType = CommandType.StoredProcedure;
                     dbCom.Parameters.AddWithValue(JobTitl, JobDetails.JobTitle);
                     dbCom.Parameters.AddWithValue("@i_intJOBNO", JobDetails.JobNo);
-                    dbCom.Parameters.AddWithValue(JobDescrption, JobDetails.JobDesc);
+                    dbCom.Parameters.AddWithValue(JobDescrption, HttpUtility.HtmlDecode(JobDetails.JobDesc));
                     dbCom.Parameters.AddWithValue(JobPostedDate, JobDetails.PostedDate);
                     dbCom.Parameters.AddWithValue(JobQualification, JobDetails.Qualification);
                     dbCom.Parameters.AddWithValue(JobApplyLink, JobDetails.ApplyLink);

@@ -19,9 +19,10 @@ function SignUp() {
 
         $.alert({
             title: 'Alert!',
-            content: 'Invalid Username',
+            content: 'Please provide Name',
+            type: 'red'
         });
-
+        $("#txt_UsrName").focus();
         SignUpValidator = 0;
     }
 
@@ -32,8 +33,9 @@ function SignUp() {
         $.alert({
             title: 'Alert!',
             content: 'Please provide Phone',
+            type: 'red'
         });
-
+        $("txt_UsrPhone").focus();
         SignUpValidator = 0;
     }
 
@@ -44,9 +46,10 @@ function SignUp() {
 
         $.alert({
             title: 'Alert!',
-            content: 'Please enter a valid Phone Number',
+            content: 'Please provide a valid Phone Number',
+            type: 'red'
         });
-
+        $("#txt_UsrPhone").focus();
         SignUpValidator = 0;
     }
 
@@ -58,8 +61,9 @@ function SignUp() {
         $.alert({
             title: 'Alert!',
             content: 'Please Provide Email',
+            type: 'red'
         });
-
+        $("#txt_UsrEmail").focus();
         SignUpValidator = 0;
     }
 
@@ -71,9 +75,10 @@ function SignUp() {
 
         $.alert({
             title: 'Alert!',
-            content: 'Please enter a valid email id',
+            content: 'Please provide a valid email id',
+            type: 'red'
         });
-
+        $("#txt_UsrEmail").focus();
         SignUpValidator = 0;
     }
 

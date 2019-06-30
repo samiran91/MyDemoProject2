@@ -205,7 +205,7 @@ $(document).ready(function () {
             element.Uplodedby = $("#uplodedby_" + loopcount).text();
             element.Uplodeddate = $("#uplodeddate_" + loopcount).text();
             var dlink = $("#uplodednotes_" + loopcount).text();
-            element.DownloadLink = "~/CandidateImages/" + dlink;
+            element.DownloadLink = "/CandidateImages/" + dlink;
 
             typeof (element.uplodednotes != 'undefined')
             {
@@ -220,6 +220,7 @@ $(document).ready(function () {
 
         if (JobTitle == null || JobTitle == "") {
             $.alert({
+                type: 'red',
                 title: 'Alert!',
                 content: 'Please Provide Job Title',
             });
@@ -229,6 +230,7 @@ $(document).ready(function () {
 
         else if (JobPostedDate == null || JobPostedDate == "") {
             $.alert({
+                type: 'red',
                 title: 'Alert!',
                 content: 'Please Provide Job Posted Date',
             });
@@ -238,6 +240,7 @@ $(document).ready(function () {
 
         else if (JobApplyLink == null || JobApplyLink == "") {
             $.alert({
+                type: 'red',
                 title: 'Alert!',
                 content: 'Please Provide Apply Link',
             });
@@ -247,6 +250,7 @@ $(document).ready(function () {
 
         else if (JobDescp == null || JobDescp == "") {
             $.alert({
+                type: 'red',
                 title: 'Alert!',
                 content: 'Please Provide Job Description',
             });
@@ -256,6 +260,7 @@ $(document).ready(function () {
 
         else if (Str_Qual == null || Str_Qual == "") {
             $.alert({
+                type: 'red',
                 title: 'Alert!',
                 content: 'Please Select Qualification',
             });
@@ -264,6 +269,7 @@ $(document).ready(function () {
         }
         else if (EventCount > 0) {
             $.alert({
+                type: 'red',
                 title: 'Alert!',
                 content: 'Please provide events',
             });
@@ -273,6 +279,7 @@ $(document).ready(function () {
 
         else if (EventDTCount > 0) {
             $.alert({
+                type: 'red',
                 title: 'Alert!',
                 content: 'Please provide events Date',
             });
@@ -304,8 +311,9 @@ $(document).ready(function () {
                     //         debugger;
                     if (response["j"] == '1') {
                         $.alert({
-                            title: 'Confirm!!',
-                            content: 'Registration Successful!!',
+                            type: 'green',
+                            title: 'Sucessfull!',
+                            content: 'Job Saved Sucessfully!',
                         });
 
                         $('input[type="text"]').val('');
@@ -316,8 +324,9 @@ $(document).ready(function () {
 
                     else if (response["j"] == '0') {
                         $.alert({
-                            title: 'Confirm!!',
-                            content: 'Registration Error!!',
+                            type: 'red',
+                            title: 'Failed!',
+                            content: 'Failed to Save!',
                         });
 
                         $('input[type="text"]').val('');
@@ -329,8 +338,9 @@ $(document).ready(function () {
 
                 error: function (response) {
                     $.alert({
+                        type: 'red',
                         title: 'Alert!',
-                        content: 'Insertion Error',
+                        content: 'Failed to Save!',
                     });
 
                     $('input[type="text"]').val('');

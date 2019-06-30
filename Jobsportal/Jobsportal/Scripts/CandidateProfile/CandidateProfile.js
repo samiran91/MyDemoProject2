@@ -7,7 +7,7 @@
     
 
     if (input.files && input.files[0]) {
-
+        debugger;
         var ImgUploadedFiles = input.files[0].name;
         ImgUploadedFiles = dateTime + "-" + ImgUploadedFiles;
 
@@ -68,7 +68,7 @@ $(document).ready(function () {
 
    // var PhoneNo = HttpContext.Current.User.Identity.Name;
    // debugger;
-    FetchCandidateDetails();
+   FetchCandidateDetails();
 
 });
 
@@ -302,65 +302,74 @@ function SaveCandidateInfo() {
 
     if (Name == null || Name == "") {
         $.alert({
+            type: 'red',
             title: 'Alert!',
-            content: 'Please Provide Name',
+            content: 'Please provide name',
         });
         ValidateCandidate = 0;
     }
     else if (DOB == null || DOB == "") {
         $.alert({
+            type: 'red',
             title: 'Alert!',
-            content: 'Please Provide Birth date',
+            content: 'Please provide birth date',
         });
         ValidateCandidate = 0;
     }
     else if (Address == null || Address == "") {
         $.alert({
+            type: 'red',
             title: 'Alert!',
-            content: 'Please Provide Address',
+            content: 'Please provide address',
         });
         ValidateCandidate = 0;
     }
     else if (Email == null || Email == "") {
         $.alert({
+            type: 'red',
             title: 'Alert!',
-            content: 'Please Provide Email',
+            content: 'Please provide email',
         });
         ValidateCandidate = 0;
     }
 
     else if (!isEmail(Email)) {
         $.alert({
-            title: 'Confirm',
-            content: 'Please enter a valid email id!!',
+            type: 'red',
+            title: 'Alert!',
+            content: 'Please provide a valid email id!!',
         });
         ValidateCandidate = 0;
     }
 
     else if (Mobile == null || Mobile == "") {
         $.alert({
+            type: 'red',
             title: 'Alert!',
-            content: 'Please Provide Mobile no',
+            content: 'Please Provide mobile no',
         });
         ValidateCandidate = 0;
     }
     else if (!phonenumber(Mobile)) {
         $.alert({
-            title: 'Confirm',
-            content: 'Please enter a valid Mobile Number!!',
+            type: 'red',
+            title: 'Alert!',
+            content: 'Please provide a valid mobile number!!',
         });
         ValidateCandidate = 0;
     }
 
     else if (Qual == null || Qual == "") {
         $.alert({
+            type: 'red',
             title: 'Alert!',
-            content: 'Please Provide Qualifications',
+            content: 'Please provide qualifications',
         });
         ValidateCandidate = 0;
     }
     else if (Exp == null || Exp == "") {
         $.alert({
+            type: 'red',
             title: 'Alert!',
             content: 'Please Provide your Experiance',
         });
@@ -369,8 +378,9 @@ function SaveCandidateInfo() {
 
     else if (Str_Intrst == null || Str_Intrst == "") {
         $.alert({
+            type: 'red',
             title: 'Alert!',
-            content: 'Please Provide Interests',
+            content: 'Please provide interests',
         });
        // debugger;
     }
@@ -403,7 +413,8 @@ function SaveCandidateInfo() {
 
                 if (response["Message"] == 'InsertSuccess') {
                     $.alert({
-                        title: 'Confirm',
+                        type: 'green',
+                        title: 'Sucessfull!',
                         content: 'Profile Saved Successfully',
                     });
                 }
@@ -414,8 +425,9 @@ function SaveCandidateInfo() {
 
             error: function (response) {
                 $.alert({
-                    title: 'Alert!',
-                    content: 'Insertion Error!!',
+                    type: 'green',
+                    title: 'Failed!',
+                    content: 'Failed to Save!!',
                 });
                 $('input[type="text"]').val('');
                 $("textarea").val('');
