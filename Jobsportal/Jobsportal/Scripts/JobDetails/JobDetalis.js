@@ -11,7 +11,7 @@ $(document).ready(function () {
 
         $.confirm({
             title: 'Confirm!',
-            content: 'Are you sure, you apply this job? ',
+            content: 'You will be redirected to the vendor website.Press confirm to visit that site ',
             buttons: {
                 confirm: function () {
                     $.ajax({
