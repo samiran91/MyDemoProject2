@@ -20,3 +20,4 @@ D:\Maynak\SS\JobPortal_New\trunk\Jobsportal\DAL\obj\Debug\DAL.dll
 D:\Maynak\SS\JobPortal_New\trunk\Jobsportal\DAL\obj\Debug\DAL.pdb
 D:\Maynak\SS\JobPortal_New\trunk\Jobsportal\Jobsportal\bin\DAL.dll
 D:\Maynak\SS\JobPortal_New\trunk\Jobsportal\Jobsportal\bin\DAL.pdb
+D:\Maynak\SS\JobPortal_New\trunk\Jobsportal\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache

@@ -308,22 +308,22 @@ function SaveCandidateInfo() {
         });
         ValidateCandidate = 0;
     }
-    else if (DOB == null || DOB == "") {
-        $.alert({
-            type: 'red',
-            title: 'Alert!',
-            content: 'Please provide birth date',
-        });
-        ValidateCandidate = 0;
-    }
-    else if (Address == null || Address == "") {
-        $.alert({
-            type: 'red',
-            title: 'Alert!',
-            content: 'Please provide address',
-        });
-        ValidateCandidate = 0;
-    }
+    //else if (DOB == null || DOB == "") {
+    //    $.alert({
+    //        type: 'red',
+    //        title: 'Alert!',
+    //        content: 'Please provide birth date',
+    //    });
+    //    ValidateCandidate = 0;
+    //}
+    //else if (Address == null || Address == "") {
+    //    $.alert({
+    //        type: 'red',
+    //        title: 'Alert!',
+    //        content: 'Please provide address',
+    //    });
+    //    ValidateCandidate = 0;
+    //}
     else if (Email == null || Email == "") {
         $.alert({
             type: 'red',
@@ -359,31 +359,31 @@ function SaveCandidateInfo() {
         ValidateCandidate = 0;
     }
 
-    else if (Qual == null || Qual == "") {
-        $.alert({
-            type: 'red',
-            title: 'Alert!',
-            content: 'Please provide qualifications',
-        });
-        ValidateCandidate = 0;
-    }
-    else if (Exp == null || Exp == "") {
-        $.alert({
-            type: 'red',
-            title: 'Alert!',
-            content: 'Please Provide your Experiance',
-        });
-        ValidateCandidate = 0;
-    }
+    //else if (Qual == null || Qual == "") {
+    //    $.alert({
+    //        type: 'red',
+    //        title: 'Alert!',
+    //        content: 'Please provide qualifications',
+    //    });
+    //    ValidateCandidate = 0;
+    //}
+    //else if (Exp == null || Exp == "") {
+    //    $.alert({
+    //        type: 'red',
+    //        title: 'Alert!',
+    //        content: 'Please Provide your Experiance',
+    //    });
+    //    ValidateCandidate = 0;
+    //}
 
-    else if (Str_Intrst == null || Str_Intrst == "") {
-        $.alert({
-            type: 'red',
-            title: 'Alert!',
-            content: 'Please provide interests',
-        });
-       // debugger;
-    }
+    //else if (Str_Intrst == null || Str_Intrst == "") {
+    //    $.alert({
+    //        type: 'red',
+    //        title: 'Alert!',
+    //        content: 'Please provide interests',
+    //    });
+    //   // debugger;
+    //}
 
     if (ValidateCandidate > 0) {
         var CandidateLogin = new Object();
@@ -418,14 +418,14 @@ function SaveCandidateInfo() {
                         content: 'Profile Saved Successfully',
                     });
                 }
-                $('input[type="text"]').val('');
-                $("textarea").val('');
-                $("#txt_candDOB").val('dd/mm/yyyy');
+                //$('input[type="text"]').val('');
+                //$("textarea").val('');
+               //  $("#txt_candDOB").val('dd/mm/yyyy');
             },
 
             error: function (response) {
                 $.alert({
-                    type: 'green',
+                    type: 'RED',
                     title: 'Failed!',
                     content: 'Failed to Save!!',
                 });

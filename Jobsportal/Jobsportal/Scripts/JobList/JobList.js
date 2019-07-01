@@ -19,12 +19,12 @@ $(document).ready(function () {
         
         dataSource: '/Jobs/GetJobList',
         columns: [
-            { field: 'JobNo', title: 'Job Number', width: 200, priority: 3 },
-            { field: 'JobTitle', title: 'Job Title', sortable: true, priority: 1 },
-            { field: 'PostedDate', title: 'Posted Date', width: 200, sortable: true, type: 'date', priority: 2 },
+            { field: 'JobNo', title: 'Job Number', width:'25%',  priority: 3 },
+            { field: 'JobTitle', title: 'Job Title', width: '25%', sortable: true, priority: 1 },
+            { field: 'PostedDate', title: 'Posted Date', width: '25%',  sortable: true, type: 'date', priority: 2 },
            
             {
-                field: "", title: "Apply Now", width: 100, type: "icon",
+                field: "", title: "Apply Now", type: "icon", width: '25%',
                 icon: "fas fa-sign-in-alt fa-2X", tooltip: "Apply Now", events: { "click": ApplyForJob }
                 
             }
