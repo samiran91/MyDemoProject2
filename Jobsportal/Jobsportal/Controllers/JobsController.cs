@@ -240,7 +240,10 @@ namespace Jobsportal.Controllers
         {
             string phoneno = System.Web.HttpContext.Current.User.Identity.Name;
             Job.CandidateProfile CP = Job.FetchCandidateDetails(phoneno);
-            CP.ImgValue = "/CandidateImages/"+ CP.ImgValue;
+            if(CP.ImgValue != null)
+            {
+                CP.ImgValue = "/CandidateImages/" + CP.ImgValue;
+            }
 
             return Json(CP, JsonRequestBehavior.AllowGet);
         }

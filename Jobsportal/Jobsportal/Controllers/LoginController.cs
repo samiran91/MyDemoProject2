@@ -20,14 +20,14 @@ namespace Jobsportal.Controllers
         [HttpPost]
         public JsonResult SignIn(Users userdata)
         {
-            string role = Users.TrySignIn(userdata.Username, userdata.Password);
+            string role = Users.TrySignIn(userdata.Mobile, userdata.Password);
             if (!role.Contains("Invalid"))
             {
                 userdata.Roles = role;
 
-                FormsAuthentication.SetAuthCookie(userdata.Username, false);
+                FormsAuthentication.SetAuthCookie(userdata.Mobile, false);
 
-                var authTicket = new FormsAuthenticationTicket(1, userdata.Username, DateTime.Now, DateTime.Now.AddMinutes(20), false, userdata.Roles);
+                var authTicket = new FormsAuthenticationTicket(1, userdata.Mobile, DateTime.Now, DateTime.Now.AddMinutes(20), false, userdata.Roles);
                 string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
                 var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
                 HttpContext.Response.Cookies.Add(authCookie);
@@ -64,7 +64,11 @@ namespace Jobsportal.Controllers
         {
             Users U = Users.CandidateSignUp(USROBJ);
 
+            SignIn(USROBJ);
+
             return Json(new { Success = Convert.ToString(U.Success), Message = Convert.ToString(U.Message) }, JsonRequestBehavior.AllowGet);
+
+            
         }
 
 

@@ -104,6 +104,14 @@ function SignUp() {
                 if (response["Message"] == 'InsertSuccess') {
                     window.location = "/Jobs/CandidateProfile";
                 }
+                else if (response["Message"] == 'MOBILE_EXISTS') {
+                    $.alert({
+                        title: 'Alert!',
+                        content: 'Mobile number you entered is already exists',
+                        type: 'red'
+                    });
+                    $("#txt_UsrPhone").focus();
+                }
             },
 
             error: function (response) {

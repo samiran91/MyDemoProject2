@@ -17,16 +17,16 @@
 
     function signin() {
         debugger;
-        var username = $('#phone').val();
+        var Mobile = $('#phone').val();
 
         var password = $('#pwd').val();
         var UserData = {
 
-            Username: username,
+            Mobile: Mobile,
             Password: password
         };
 
-        if (username == "" || password == "") {
+        if (Mobile == "" || password == "") {
 
             $('#error-message').css("display", "block");
             $('#error-message-text').text("Invalid Phone Number/Password");
@@ -37,7 +37,7 @@
                 .done(function (data) {
 
                     if (data != false) {
-                        if (username == "admin") {
+                        if (Mobile == "admin") {
                             window.location = "/Jobs/Editjobdetail";
                         }
                         else {

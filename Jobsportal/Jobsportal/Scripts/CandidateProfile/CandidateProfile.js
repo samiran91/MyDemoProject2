@@ -4,7 +4,7 @@
     var date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
     var time = today.getHours() + "-" + today.getMinutes() + "-" + today.getSeconds();
     var dateTime = date + "-" + time;
-    
+
 
     if (input.files && input.files[0]) {
         debugger;
@@ -17,7 +17,7 @@
         for (var i = 0; i < files.length; i++) {
             fileData.append(dateTime + "-" + files[i].name, files[i]);
         }
-       
+
         $('input[name=hiddeninputname]').val(ImgUploadedFiles);
 
         $.ajax({
@@ -49,7 +49,7 @@
 $(document).ready(function () {
 
     $("#imageUpload").change(function () {
-       // debugger;
+        // debugger;
         readURL(this);
     });
 
@@ -66,9 +66,9 @@ $(document).ready(function () {
         source: babyNames,
     });
 
-   // var PhoneNo = HttpContext.Current.User.Identity.Name;
-   // debugger;
-   FetchCandidateDetails();
+    // var PhoneNo = HttpContext.Current.User.Identity.Name;
+    // debugger;
+    FetchCandidateDetails();
 
 });
 
@@ -278,7 +278,7 @@ var babyNames = [
 
 
 function SaveCandidateInfo() {
-    
+
     var Intrest = [];
     var Str_Intrst;
 
@@ -288,7 +288,7 @@ function SaveCandidateInfo() {
     });
 
     console.log(Str_Intrst);
-   // debugger;
+    // debugger;
     var ValidateCandidate = 1;
     var Name = $("#txt_candName").val();
     var Gender = $('#txt_candGender :selected').val();
@@ -400,7 +400,7 @@ function SaveCandidateInfo() {
         CandidateLogin.ImgValue = ImgValue;
 
         console.log(CandidateLogin);
-       // debugger;
+        // debugger;
         $.ajax({
             type: "POST",
             url: "/Jobs/InsertCandidateRecord",
@@ -408,8 +408,8 @@ function SaveCandidateInfo() {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-               // debugger;
-                 
+                // debugger;
+
 
                 if (response["Message"] == 'InsertSuccess') {
                     $.alert({
@@ -420,7 +420,7 @@ function SaveCandidateInfo() {
                 }
                 //$('input[type="text"]').val('');
                 //$("textarea").val('');
-               //  $("#txt_candDOB").val('dd/mm/yyyy');
+                //  $("#txt_candDOB").val('dd/mm/yyyy');
             },
 
             error: function (response) {
@@ -429,9 +429,9 @@ function SaveCandidateInfo() {
                     title: 'Failed!',
                     content: 'Failed to Save!!',
                 });
-                $('input[type="text"]').val('');
-                $("textarea").val('');
-                $("#txt_candDOB").val('dd/mm/yyyy');
+                //$('input[type="text"]').val('');
+                //$("textarea").val('');
+                // $("#txt_candDOB").val('dd/mm/yyyy');
             }
         });
     }
@@ -450,7 +450,7 @@ function phonenumber(Mobile) {
 }
 function formatDate(date) {
     var datestr = parseJsonDate(date);
-   
+
     var d = new Date(datestr),
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
@@ -473,8 +473,8 @@ function parseJsonDate(jsonDate) {
 };
 function FetchCandidateDetails() {
 
-    
-  //  debugger;
+
+    //  debugger;
     $.ajax({
         type: 'POST',
         url: '/Jobs/FetchCandidateDetails',
@@ -485,7 +485,7 @@ function FetchCandidateDetails() {
         dataType: "json",
         success: function (data) {
             debugger;
-           // var r = JSON.parse(data);
+            // var r = JSON.parse(data);
             $("#imagePreview").css("background-image", "url('" + data.ImgValue + "')");
             $("#txt_candName").val(data.Name);
             $("#txt_candGender").val(data.Gender);
@@ -495,19 +495,34 @@ function FetchCandidateDetails() {
             $("#txt_candMobile").val(data.Mobile);
             $("#txt_candQual").val(data.Qualification);
             $("#txt_candExp").val(data.Experiance);
+            // var Img = data.ImgValue;
+            var arr = data.ImgValue.split('/');
+            $('input[name=hiddeninputname]').val(arr[2]);
+
 
             var Intr = data.Interests;
             var temp = new Array();
-            
+
             temp = Intr.split(",");
-           // console.log(temp);
+            // console.log(temp);
             var htm1 = '<a href="#" data-role="selected-item">';
             var htm2 = '</a>';
             $.each(temp, function (i, val) {
-               // console.log(val);
-               // debugger;
-                var final = htm1 + val + htm2;
-                $("div.sel-anchor").append(final);
+                // console.log(val);
+                // debugger;
+                // console.log("i-->" + i);
+                // console.log(val);
+                // console.log(temp);
+
+                if (temp[i] == "") {
+                    return true;
+                }
+                else {
+                    var final = htm1 + val + htm2;
+                    $("div.sel-anchor").append(final);
+                }
+
+
             });
 
         },
