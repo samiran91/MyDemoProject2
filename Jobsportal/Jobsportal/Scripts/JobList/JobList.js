@@ -34,7 +34,50 @@ $(document).ready(function () {
 
    });
     Search();
+
+    $("#txt_keyword").autocomplete({
+
+        source: function (request, response) {
+            var data = $('#txt_keyword').val();
+            //debugger;
+            $.ajax({
+                url: '/Jobs/GetKeywordAutocompleteValue',
+
+                data: {
+                    Keyword: data
+                },
+                dataType: "json",
+                success: function (data) {
+                    debugger;
+                    //response($.map(JSON.parse(data), function (item) {
+                    //   debugger;
+                    //    return {  value: item.Keyowrd, id: item.id };
+                    //    debugger;
+                    //}));
+
+                    $.each($.parseJSON(data), function (idx, obj) {
+                       // alert(obj.Keyword);
+                        return { value: obj.Keyword };
+                    });
+
+                }
+            });
+        },
+
+        minLength: 2,
+
+        select: function (event, ui) {
+          //  $('#hdnPersonID').val(ui.item.id);
+        },
+        open: function () {
+            $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
+        },
+        close: function () {
+            $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+        }
+    });
 });
+
 window.addEventListener("beforeunload", function (e) {
    
 

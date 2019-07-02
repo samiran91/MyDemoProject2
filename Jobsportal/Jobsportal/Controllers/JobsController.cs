@@ -9,6 +9,7 @@ using System.Data;
 using Newtonsoft.Json;
 using System.Net.Mail;
 using System.Text;
+using System.Web.Script.Serialization;
 
 namespace Jobsportal.Controllers
 {
@@ -253,6 +254,28 @@ namespace Jobsportal.Controllers
             var J = Job.GetJobDescription(Jobno);
 
             return Json(J, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
+        public JsonResult GetKeywordAutocompleteValue(String Keyword)
+        {
+            List<DAL.Job.keywordSearch> list = new List<DAL.Job.keywordSearch>();
+            list = DAL.Job.FetchKeywordAutocompleteData(Keyword);
+
+            List<String> objlist = new List<string>();
+
+            //foreach (var item in list)
+            //{
+            //    String Keyowrd = item.Keyword;
+            //    objlist.Add(Keyowrd);
+            //}
+            
+            var jsonSerialiser = new JavaScriptSerializer();
+            var json = jsonSerialiser.Serialize(list);
+
+            return Json(json, JsonRequestBehavior.AllowGet);
         }
     }
 

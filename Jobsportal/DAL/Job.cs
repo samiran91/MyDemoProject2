@@ -91,6 +91,13 @@ namespace DAL
             public String ImgValue { get; set; }
         }
 
+        public class keywordSearch
+        {
+            public int ID { get; set; }
+
+            public String Keyword { get; set; }
+        }
+
         private const String DBOp = "@i_DBOP";
         private const String JobNum = "@JobNumber";
         private const string Keyword = "Keyword";
@@ -533,6 +540,44 @@ namespace DAL
             }
 
             return OBJ;
+        }
+
+
+        public static List<DAL.Job.keywordSearch> FetchKeywordAutocompleteData(String Keyword)
+        {
+            List<DAL.Job.keywordSearch> list = new List<DAL.Job.keywordSearch>();
+            
+            String connstring = Connection.GetConnectionString();
+            String sql_select = String.Format("SELECT ID,KEYOWRD from KEYWORD where KEYOWRD like '%{0}%' ", Keyword);
+            using (SqlConnection dbCon = new SqlConnection(connstring))
+            {
+                dbCon.Open();
+
+                using (SqlCommand dbCom = new SqlCommand(sql_select, dbCon))
+                {
+
+                    dbCom.CommandType = CommandType.Text;
+
+
+                    using (SqlDataReader wizReader = dbCom.ExecuteReader())
+                    {
+                        while (wizReader.Read())
+                        {
+                            var OBJ = new keywordSearch()
+                            {
+                                ID = Convert.ToInt32(wizReader["ID"]),
+                                Keyword = Convert.ToString(wizReader["KEYOWRD"]),
+                            };
+
+                            list.Add(OBJ);
+                        }
+
+                    }
+
+                }
+            }
+
+            return list;
         }
 
     }
