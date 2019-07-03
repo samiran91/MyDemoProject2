@@ -132,3 +132,24 @@ function phonenumber(Phone) {
     var regex = /^\d{10}$/;
     return regex.test(Phone);
 }
+
+function ResetPassword() {
+
+    var mob = $("#txt_ResetPassword").val();
+    debugger;
+    $.ajax({
+        type: "GET",
+        url:"/Login/GetResetPassword",
+        data: { ResetPasswordvalue: mob },
+        success: function (data) {
+            debugger;
+
+        },
+        error: function (ex) {
+            //var r = jQuery.parseJSON(response.responseText);
+            alert("Message: " + ex.Message);
+            alert("StackTrace: " + ex.StackTrace);
+            alert("ExceptionType: " + ex.ExceptionType);
+        }
+    });
+}

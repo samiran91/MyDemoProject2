@@ -78,5 +78,15 @@ namespace Jobsportal.Controllers
             return PartialView("_FooterTemplate");
         }
 
+        public String GetResetPassword(String ResetPasswordvalue)
+        {
+            String Msg = Users.GetResetPassword(ResetPasswordvalue);
+            return Msg;
+        }
+
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
     }
 }

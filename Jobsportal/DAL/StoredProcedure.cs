@@ -27,5 +27,7 @@ namespace DAL
 
         public const String USP_JOBIMNOTES_INSERTIMNOTES = "USP_JOBIMNOTES_INSERTIMNOTES";
 
+        public const String USP_RESETPASSWPRD = "USP_RESETPASSWPRD";
+
     }
 }

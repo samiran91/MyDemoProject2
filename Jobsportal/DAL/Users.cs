@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace DAL
 {
@@ -140,6 +143,111 @@ namespace DAL
 
             }
             return Usr;
+        }
+
+        public static String GetResetPassword(String ResetPasswordvalue)
+        {
+            string connstring = Connection.GetConnectionString();
+            String Msg = String.Empty;
+
+            using (SqlConnection dbCon = new SqlConnection(connstring))
+            {
+                dbCon.Open();
+
+                using (SqlCommand dbCom = new SqlCommand(StoredProcedure.USP_RESETPASSWPRD, dbCon))
+                {
+                    dbCom.CommandType = CommandType.StoredProcedure;
+                    dbCom.Parameters.Add("@MOBILENUMBER", SqlDbType.VarChar).Value = ResetPasswordvalue;
+
+                    using (SqlDataReader wizReader = dbCom.ExecuteReader())
+                    {
+
+
+                        while (wizReader.Read())
+                        {
+                            if (Convert.ToBoolean(wizReader["ReturnCode"]))
+                            {
+                                SendPasswordResetEmail(wizReader["Email"].ToString(), wizReader["USERNAME"].ToString(), wizReader["UniqueId"].ToString());
+                                Msg = "An email with instructions to reset your password is sent to your registered email";
+                            }
+                            else
+                            {
+
+                                Msg = "Mobile Number is not found!";
+                            }
+                        }
+
+
+
+
+
+                    }
+                }
+            }
+            return Msg;
+        }
+
+
+        private static void SendPasswordResetEmail(string ToEmail, string UserName, string UniqueId)
+        {
+
+            String EmailTemplatepath = Convert.ToString(HttpContext.Current.Server.MapPath("~/Content/ForgetPasswordEmailHtmlFile.html"));
+            String EmailTemplate = String.Empty;
+            EmailTemplate = ReadHtmlFile(EmailTemplatepath);
+            EmailTemplate = EmailTemplate.Replace("@@UserName@@", UserName);
+            EmailTemplate = EmailTemplate.Replace("@@GUID@@", UniqueId);
+            String MSubject = "Reset Password";
+
+            EmailServer emailconfigdata = EmailServer.GetEmailConfiguration();
+            SmtpClient client = new SmtpClient();
+            client.Port = Convert.ToInt32(emailconfigdata.Port);
+            client.Host = emailconfigdata.Host;
+            client.EnableSsl = emailconfigdata.SSL;
+            client.Timeout = 10000;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new System.Net.NetworkCredential(emailconfigdata.Email, emailconfigdata.Password);
+           
+            MailMessage mm = new MailMessage(emailconfigdata.Email, ToEmail, MSubject, EmailTemplate);
+
+            mm.BodyEncoding = UTF8Encoding.UTF8;
+            mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+            mm.Subject = MSubject;
+            mm.Body = EmailTemplate;
+            mm.IsBodyHtml = true;
+
+            try
+            {
+
+                client.Send(mm);
+            }
+            catch (Exception ex)
+            {
+                DALError.LogError("Users.SendPasswordResetEmail", ex);
+
+
+            }
+
+        }
+
+        private static String ReadHtmlFile(String htmlFilePath)
+        {
+            StringBuilder store = new StringBuilder();
+
+            try
+            {
+                using (StreamReader htmlReader = new StreamReader(htmlFilePath))
+                {
+                    String line;
+                    while ((line = htmlReader.ReadLine()) != null)
+                    {
+                        store.Append(line);
+                    }
+                }
+            }
+            catch (Exception ex) { }
+
+            return store.ToString();
         }
 
     }

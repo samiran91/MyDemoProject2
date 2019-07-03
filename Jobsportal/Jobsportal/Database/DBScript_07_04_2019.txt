@@ -1,0 +1,52 @@
+Create table ResetPasswordRequests
+(
+ Id UniqueIdentifier Primary key,
+ UserId int Foreign key references person(personid),
+ ResetRequestDateTime DateTime
+)
+
+
+
+
+CREATE PROC USP_RESETPASSWPRD(
+	@MOBILENUMBER VARCHAR(50)
+)
+AS
+BEGIN
+	BEGIN TRY
+
+	 DECLARE @USERNAME NVARCHAR(100);
+     DECLARE @EMAIL NVARCHAR(100);
+	 DECLARE @USERID INT;
+
+	 Select @USERNAME = NAME, @EMAIL = EMAIL, @USERID=PERSONID from PERSON where MOBILE = @MOBILENUMBER
+
+	  IF(@USERNAME IS NOT NULL)
+		BEGIN
+			--If username exists
+			DECLARE @GUID UniqueIdentifier
+			SET @GUID = NEWID()
+  
+			INSERT INTO ResetPasswordRequests(Id, UserId, ResetRequestDateTime) VALUES(@GUID, @USERID, GETDATE())
+  
+			SELECT 1 AS ReturnCode, @GUID AS UniqueId, @Email AS Email, @USERNAME AS USERNAME
+ END
+ ELSE
+ BEGIN
+			--If username does not exist
+			SELECT 0 AS ReturnCode, NULL AS UniqueId, NULL AS Email, NULL AS USERNAME
+ END
+
+	END TRY
+
+	BEGIN CATCH
+			DECLARE @ErrorMessage NVARCHAR(4000) ;
+				DECLARE @ErrorSeverity INT ;
+				DECLARE @ErrorState INT ;
+				SELECT  @ErrorMessage = ERROR_MESSAGE() ,
+						@ErrorSeverity = ERROR_SEVERITY() ,
+						@ErrorState = ERROR_STATE()
+				RAISERROR(@ErrorMessage,@ErrorSeverity,@ErrorState) ;
+       END CATCH
+
+END

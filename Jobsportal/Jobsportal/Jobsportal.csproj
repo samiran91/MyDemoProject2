@@ -168,6 +168,7 @@
     <Content Include="Content\EditJobDetail\EditJobDetail.css" />
     <Content Include="Content\FooterTemplate\FooterTemplate.css" />
     <Content Include="Content\FooterTemplate\FooterTemplate.min.css" />
+    <Content Include="Content\ForgetPasswordEmailHtmlFile.html" />
     <Content Include="Content\grid\grid.css" />
     <Content Include="Content\grid\grid.min.css" />
     <Content Include="Content\JobsPortalStyleSheets\JobsPortal.css" />
@@ -255,6 +256,7 @@
     <Content Include="Views\Shared\_JobPortalLayout.cshtml" />
     <Content Include="Views\Jobs\Job_Internal.cshtml" />
     <Content Include="Views\Shared\_JobPortalLayoutNoshellber.cshtml" />
+    <Content Include="Views\Login\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
