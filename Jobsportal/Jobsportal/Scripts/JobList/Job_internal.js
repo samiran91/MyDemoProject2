@@ -1,6 +1,7 @@
 ﻿
 $(document).ready(function () {
-   
+
+
 
     grid = $('#grid').grid({
         primaryKey: 'JOBNO',
@@ -25,6 +26,44 @@ $(document).ready(function () {
 
 
     });
+
+    $("#txtname").autocomplete({
+
+        source: function (request, response) {
+            var data = $("#txtname").val();
+           // debugger;
+            $.ajax({
+                url: "/Jobs/GetJobAutocompleteValue",
+
+                data: {
+                    Keyword: data
+                },
+                dataType: "json",
+                success: function (data) {
+                  //  debugger;
+                    response($.map(JSON.parse(data), function (item) {
+                        //  debugger;
+                        //return { label: item.JobNo, value: item.jobtitle };
+                        return { value: item };
+                    }));
+                }
+            });
+        },
+
+        minLength: 1,
+
+        select: function (event, ui) {
+            $("#txtname").val(ui.item.value);
+        },
+        open: function () {
+            $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
+        },
+        close: function () {
+            $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+        }
+    });
+
+
 });
 
 function Edit(e) {

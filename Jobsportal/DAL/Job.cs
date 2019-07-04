@@ -580,6 +580,46 @@ namespace DAL
             return list;
         }
 
+        public static List<String> GetJobAutocompleteValue(String Keyword)
+        {
+            List<String> list = new List<String>();
+
+            String connstring = Connection.GetConnectionString();
+            String sql_select = String.Format("select CONVERT(varchar(100),jobno)+' - '+JOBTITLE as JOBNUMANDTITLE from job where JOBNO like '%{0}%' or JOBTITLE like '%{0}%'", Keyword);
+
+            using (SqlConnection dbCon = new SqlConnection(connstring))
+            {
+                dbCon.Open();
+
+                using (SqlCommand dbCom = new SqlCommand(sql_select, dbCon))
+                {
+
+                    dbCom.CommandType = CommandType.Text;
+
+
+                    using (SqlDataReader wizReader = dbCom.ExecuteReader())
+                    {
+                        while (wizReader.Read())
+                        {
+                            //var OBJ = new Job()
+                            //{
+                            //    JobNo = Convert.ToInt32(wizReader["JOBNO"]),
+                            //    JobTitle = Convert.ToString(wizReader["JOBTITLE"]),
+                            //};
+                            
+                            String JobTitle = Convert.ToString(wizReader["JOBNUMANDTITLE"]);
+
+                            list.Add(JobTitle);
+                        }
+
+                    }
+
+                }
+            }
+
+            return list;
+        }
+
     }
 
 

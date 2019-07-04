@@ -263,15 +263,18 @@ namespace Jobsportal.Controllers
         {
             List<DAL.Job.keywordSearch> list = new List<DAL.Job.keywordSearch>();
             list = DAL.Job.FetchKeywordAutocompleteData(Keyword);
-
-            List<String> objlist = new List<string>();
-
-            //foreach (var item in list)
-            //{
-            //    String Keyowrd = item.Keyword;
-            //    objlist.Add(Keyowrd);
-            //}
             
+            var jsonSerialiser = new JavaScriptSerializer();
+            var json = jsonSerialiser.Serialize(list);
+
+            return Json(json, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetJobAutocompleteValue(String Keyword)
+        {
+            List<String> list = new List<String>();
+            list = DAL.Job.GetJobAutocompleteValue(Keyword);
+
             var jsonSerialiser = new JavaScriptSerializer();
             var json = jsonSerialiser.Serialize(list);
 

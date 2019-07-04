@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_JobPortalLayout.cshtml";
 }
 <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" media="all" />
+<link href="@Url.Content("~/Content/jquery-ui.css")" rel="stylesheet" type="text/css" media="all" />
 <link href="@Url.Content("~/Content/grid/grid.css")" rel="stylesheet" type="text/css" media="all" />
 
 <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" media="all" />
@@ -11,6 +12,9 @@
 
 
 <script src="@Url.Content("~/Scripts/jquery-3.3.1.min.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+
+
 <script src="@Url.Content("~/Scripts/grid/grid.min.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery-confirm.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/JobList/Job_internal.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
@@ -20,7 +24,7 @@
 <h2>Job List</h2>
 <div class="col-md-3">
 
-    <input id="txtname" type="text" placeholder="Search Job by typing " class="form-control">
+    <input id="txtname" type="text" placeholder="Search Job by typing " class="form-control" />
 
 
 
