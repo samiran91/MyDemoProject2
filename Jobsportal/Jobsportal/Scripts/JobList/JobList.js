@@ -1,6 +1,6 @@
 ﻿
 $(document).ready(function () {
-    debugger;
+   // debugger;
     var keyword = getCookie("keyword");
     var posted = getCookie("posted");
     var location = getCookie("location");
@@ -48,26 +48,19 @@ $(document).ready(function () {
                 },
                 dataType: "json",
                 success: function (data) {
-                    debugger;
-                    //response($.map(JSON.parse(data), function (item) {
-                    //   debugger;
-                    //    return {  value: item.Keyowrd, id: item.id };
-                    //    debugger;
-                    //}));
-
-                    $.each($.parseJSON(data), function (idx, obj) {
-                       // alert(obj.Keyword);
-                        return { value: obj.Keyword };
-                    });
-
+                  //  debugger;
+                    response($.map(JSON.parse(data), function (item) {
+                     //  debugger;
+                        return { label: item.Keyword, value: item.Keyword};
+                    }));
                 }
             });
         },
 
-        minLength: 2,
+        minLength: 1,
 
         select: function (event, ui) {
-          //  $('#hdnPersonID').val(ui.item.id);
+            $("#txt_keyword").val(ui.item.value);
         },
         open: function () {
             $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
@@ -92,7 +85,7 @@ window.addEventListener("beforeunload", function (e) {
     
 });
 function Search() {
-    debugger;
+   // debugger;
     var keyword = $("#txt_keyword").val();
     var posted = $("#ddl_posted").val();
     var location = $("#ddl_location").val();
