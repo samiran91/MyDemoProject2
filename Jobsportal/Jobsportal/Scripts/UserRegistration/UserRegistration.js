@@ -136,17 +136,40 @@ function phonenumber(Phone) {
 function ResetPassword() {
 
     var mob = $("#txt_ResetPassword").val();
-    debugger;
+
     $.ajax({
         type: "GET",
         url:"/Login/GetResetPassword",
         data: { ResetPasswordvalue: mob },
         success: function (data) {
-            debugger;
+
+            if (!(data == "Mobile Number is not found!")) {
+
+                $('#success-message_fp').css("display", "block");
+                $('#success-message-text_fp').text(data);
+
+                setTimeout(function () {
+
+                    $('#success-message_fp').css("display", "none");
+
+                }, 3000);
+            }
+            else {
+
+                $('#error-message_fp').css("display", "block");
+                $('#error-message-text_fp').text(data);
+                setTimeout(function () {
+
+                    $('#error-message_fp').css("display", "none");
+                   
+                }, 3000);
+
+            }
+
 
         },
         error: function (ex) {
-            //var r = jQuery.parseJSON(response.responseText);
+
             alert("Message: " + ex.Message);
             alert("StackTrace: " + ex.StackTrace);
             alert("ExceptionType: " + ex.ExceptionType);

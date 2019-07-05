@@ -168,7 +168,8 @@ namespace DAL
                             if (Convert.ToBoolean(wizReader["ReturnCode"]))
                             {
                                 SendPasswordResetEmail(wizReader["Email"].ToString(), wizReader["USERNAME"].ToString(), wizReader["UniqueId"].ToString());
-                                Msg = "An email with instructions to reset your password is sent to your registered email";
+
+                                Msg = "An email with instructions to reset your password is sent to your " + wizReader["Email"].ToString() + " email id";
                             }
                             else
                             {
@@ -193,6 +194,7 @@ namespace DAL
 
             String EmailTemplatepath = Convert.ToString(HttpContext.Current.Server.MapPath("~/Content/ForgetPasswordEmailHtmlFile.html"));
             String EmailTemplate = String.Empty;
+
             EmailTemplate = ReadHtmlFile(EmailTemplatepath);
             EmailTemplate = EmailTemplate.Replace("@@UserName@@", UserName);
             EmailTemplate = EmailTemplate.Replace("@@GUID@@", UniqueId);
@@ -207,7 +209,7 @@ namespace DAL
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.UseDefaultCredentials = false;
             client.Credentials = new System.Net.NetworkCredential(emailconfigdata.Email, emailconfigdata.Password);
-           
+
             MailMessage mm = new MailMessage(emailconfigdata.Email, ToEmail, MSubject, EmailTemplate);
 
             mm.BodyEncoding = UTF8Encoding.UTF8;
@@ -250,5 +252,61 @@ namespace DAL
             return store.ToString();
         }
 
+        public static String GetLogo()
+        {
+            return Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["Drashtalogourl"]);
+        }
+
+        public static bool IsPasswordResetLinkIsvalid(String QueryStringVal)
+        {
+            List<SqlParameter> paramList = new List<SqlParameter>()
+            {
+                new SqlParameter()
+                {
+                    ParameterName = "@GUID",
+                    Value = QueryStringVal
+                }
+            };
+
+            return ExecuteSP(StoredProcedure.USP_ISPASSWORDRESETLINKISVALID, paramList);
+        }
+
+        private static bool ExecuteSP(string SPName, List<SqlParameter> SPParameters)
+        {
+            string connstring = Connection.GetConnectionString();
+
+            using (SqlConnection con = new SqlConnection(connstring))
+            {
+                SqlCommand cmd = new SqlCommand(SPName, con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                foreach (SqlParameter parameter in SPParameters)
+                {
+                    cmd.Parameters.Add(parameter);
+                }
+
+                con.Open();
+                return Convert.ToBoolean(cmd.ExecuteScalar());
+            }
+        }
+
+        public static bool ChangeUserPassword(String GUID, String PasswordValue)
+        {
+            List<SqlParameter> paramList = new List<SqlParameter>()
+            {
+                new SqlParameter()
+                {
+                    ParameterName = "@GUID",
+                    Value = GUID
+                },
+                new SqlParameter()
+                {
+                    ParameterName = "@Password",
+                    Value = PasswordValue
+                }
+            };
+
+            return ExecuteSP(StoredProcedure.USP_CHANGEPASSWORD, paramList);
+        }
     }
 }

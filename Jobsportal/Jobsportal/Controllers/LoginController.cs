@@ -84,9 +84,25 @@ namespace Jobsportal.Controllers
             return Msg;
         }
 
+        [HttpGet]
         public ActionResult ResetPassword()
         {
+            var QueryStringVal = Request.QueryString["uid"].ToString();
+            Boolean Status = Users.IsPasswordResetLinkIsvalid(QueryStringVal);
+            if (!Status == true)
+            {
+                ViewBag.Message = "Link Expired";
+            }
+
             return View();
+        }
+
+        [HttpPost]
+        public Boolean ChangeUserPassword(String GUID, String PasswordValue)
+        {
+            Boolean Status = Users.ChangeUserPassword(GUID, PasswordValue);
+
+            return Status;
         }
     }
 }

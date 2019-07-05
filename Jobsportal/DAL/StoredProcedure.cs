@@ -29,5 +29,9 @@ namespace DAL
 
         public const String USP_RESETPASSWPRD = "USP_RESETPASSWPRD";
 
+        public const String USP_ISPASSWORDRESETLINKISVALID = "USP_ISPASSWORDRESETLINKISVALID";
+
+        public const String USP_CHANGEPASSWORD = "USP_CHANGEPASSWORD";
+
     }
 }
