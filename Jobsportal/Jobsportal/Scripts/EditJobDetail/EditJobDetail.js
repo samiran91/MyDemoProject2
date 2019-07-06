@@ -145,8 +145,9 @@ $(document).ready(function () {
         var JobTitle = $("#txt_JobTitle").val();
         var JobPostedDate = $("#txt_PostedDate").val();
         var JobApplyLink = $("#txt_AplyLink").val();
-        var JobDescp = $(".note-editable").text();
-
+        var Location = $("#txt_location").val();
+        var JobDescp = $(".note-editable").html();
+        alert(JobDescp);
         var Qual = [];
         var Str_Qual;
 
@@ -247,7 +248,15 @@ $(document).ready(function () {
 
             JobDetailValidate = 0;
         }
+        else if (Location == null || Location == "") {
+            $.alert({
+                type: 'red',
+                title: 'Alert!',
+                content: 'Please provide Location',
+            });
 
+            JobDetailValidate = 0;
+        }
         else if (JobDescp == null || JobDescp == "") {
             $.alert({
                 type: 'red',
@@ -298,6 +307,7 @@ $(document).ready(function () {
             JobDetails.Qualification = Str_Qual;
             JobDetails.JobImpDates = JobData;
             JobDetails.JobNotes = Documents;
+            JobDetails.Location = Location;
 
          //   console.log(JobDetails);
             //         debugger;
@@ -788,7 +798,29 @@ function CreateInvoice(e) {
     }
 }
 
+function formatDate(date) {
+    var datestr = parseJsonDate(date);
 
+    var d = new Date(datestr),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+function parseJsonDate(jsonDate) {
+
+    var fullDate = new Date(parseInt(jsonDate.substr(6)));
+    var twoDigitMonth = (fullDate.getMonth() + 1) + ""; if (twoDigitMonth.length == 1) twoDigitMonth = "0" + twoDigitMonth;
+
+    var twoDigitDate = fullDate.getDate() + ""; if (twoDigitDate.length == 1) twoDigitDate = "0" + twoDigitDate;
+    var currentDate = twoDigitMonth + "/" + twoDigitDate + "/" + fullDate.getFullYear();
+
+    return currentDate;
+};
 function UploadNotes() {
     // alert("a");
     var today = new Date();
@@ -848,6 +880,7 @@ function GetParameterValues(param) {
 } 
 
 function fetchJobDetails() {
+    debugger;
     var JobNumber = GetParameterValues('JobNo');
     if (JobNumber != null) {
         debugger;
@@ -863,8 +896,9 @@ function fetchJobDetails() {
                 // debugger;
                 $("#txt_JobNumber").val(data.JobNo);
                 $("#txt_JobTitle").val(data.JobTitle);
-                $("#txt_PostedDate").val(data.PostedDate);
+                $("#txt_PostedDate").val(formatDate(data.PostedDate));
                 $("#txt_AplyLink").val(data.ApplyLink);
+                $("#txt_location").val(data.Location);
                 $(".note-editable").text(data.JobDesc);
 
                 var Ql = data.Qualification;
@@ -892,7 +926,7 @@ function fetchJobDetails() {
                     var htm = '<tr id="addr' + j + '"><td id="srn' + j + '">' + j + '</td><td><input type="text" id="productcode_' + j + '" placeholder="Event" class="form-control product"><input type="hidden" id="productcode_stock_' + j + '" aria-hidden="true"></td><td><div><input class="form-control eventDt" type="date" id="evntDate_' + j + '" name="bday" required="" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"></div></td><td><span class="glyphicon glyphicon-remove" id="del_' + j + '" style="cursor: pointer;"></span></td></tr>'
                     $("#tab_logic tbody").append(htm);
                     $("#productcode_" + j).val(Evnts);
-                    $("#evntDate_" + j).val(EventDateTime);
+                    $("#evntDate_" + j).val(formatDate(EventDateTime));
                     //tablerow++;
                 }
 
@@ -924,5 +958,8 @@ function fetchJobDetails() {
                 alert("ExceptionType: " + ex.ExceptionType);
             }
         });
+    }
+    else {
+        $("#txt_JobNumber").val("Auto Assigned");
     }
 }

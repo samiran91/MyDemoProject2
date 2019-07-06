@@ -24,6 +24,8 @@ namespace DAL
 
         public String ApplyLink { get; set; }
 
+        public String Location { get; set; }
+
         public int Point { get; set; }
         public List<JOBIMPDATES> JobImpDates { get; set; }
         public List<JOBIMNOTES> JobNotes { get; set; }
@@ -101,7 +103,7 @@ namespace DAL
         private const String DBOp = "@i_DBOP";
         private const String JobNum = "@JobNumber";
         private const string Keyword = "Keyword";
-        private const string Location = "Location";
+        private const string LocationSearch = "Location";
 
         private const string Posted = "Posted";
         private const String JobEvents = "@STR_EVENTS";
@@ -126,6 +128,7 @@ namespace DAL
         private const String JobPostedDate = "@DT_JOBPOSTEDDATE";
         private const String JobQualification = "@STR_QUALIFICATION";
         private const String JobApplyLink = "@STR_APPLYLINK";
+       
         private const String Phoneno = "@phoneno";
 
         public static List<Job> GetJobList(SearchParam param = null)
@@ -150,7 +153,7 @@ namespace DAL
                     {
                         dbCom.Parameters.Add(Keyword, SqlDbType.VarChar).Value = param.Keyword;
 
-                        dbCom.Parameters.Add(Location, SqlDbType.VarChar).Value = param.Location;
+                        dbCom.Parameters.Add(LocationSearch, SqlDbType.VarChar).Value = param.Location;
                         dbCom.Parameters.Add(Posted, SqlDbType.Int).Value = param.Posted;
                     }
 
@@ -199,10 +202,12 @@ namespace DAL
                             {
                                 JobNo = (Int32)wizReader["JOBNO"],
                                 JobTitle = (String)wizReader["JOBTITLE"],
-                                JobDesc = HttpUtility.HtmlDecode((String)wizReader["JOBDESC"]),
+                                JobDesc = (String)wizReader["JOBDESC"],
                                 PostedDate = (DateTime)wizReader["POSTEDDATE"],
                                 Qualification = (String)wizReader["QUALIFICATION"],
                                 ApplyLink = (String)wizReader["APPLYLINK"],
+                                Location=Convert.ToString(wizReader["Location"]),
+
                             };
 
                             J.JobImpDates = Job.GetEventDateList(JobNumber);
@@ -435,17 +440,23 @@ namespace DAL
                     dbCom.Parameters.AddWithValue(CandidateIntrst, CPOBJ.Interests);
                     dbCom.Parameters.AddWithValue(DBOperation, 0);
                     dbCom.Parameters.AddWithValue(CandidateImage, CPOBJ.ImgValue);
-
-                    using (SqlDataReader wizReader = dbCom.ExecuteReader())
+                    try
                     {
-                        while (wizReader.Read())
+                        using (SqlDataReader wizReader = dbCom.ExecuteReader())
                         {
-                            OBJ = new CandidateProfile()
+                            while (wizReader.Read())
                             {
-                                Success = (Int32)wizReader["Success"],
-                                Message = (String)wizReader["Message"]
-                            };
+                                OBJ = new CandidateProfile()
+                                {
+                                    Success = (Int32)wizReader["Success"],
+                                    Message = (String)wizReader["Message"]
+                                };
+                            }
                         }
+                    }
+                    catch(Exception ex)
+                    {
+
                     }
                 }
 
@@ -468,10 +479,11 @@ namespace DAL
                     dbCom.CommandType = CommandType.StoredProcedure;
                     dbCom.Parameters.AddWithValue(JobTitl, JobDetails.JobTitle);
                     dbCom.Parameters.AddWithValue("@i_intJOBNO", JobDetails.JobNo);
-                    dbCom.Parameters.AddWithValue(JobDescrption, HttpUtility.HtmlDecode(JobDetails.JobDesc));
+                    dbCom.Parameters.AddWithValue(JobDescrption, JobDetails.JobDesc);
                     dbCom.Parameters.AddWithValue(JobPostedDate, JobDetails.PostedDate);
                     dbCom.Parameters.AddWithValue(JobQualification, JobDetails.Qualification);
                     dbCom.Parameters.AddWithValue(JobApplyLink, JobDetails.ApplyLink);
+                    dbCom.Parameters.AddWithValue("@STR_Location", JobDetails.Location);
 
                     try
                     {

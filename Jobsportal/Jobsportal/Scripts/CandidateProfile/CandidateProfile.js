@@ -424,6 +424,7 @@ function SaveCandidateInfo() {
             },
 
             error: function (response) {
+                debugger;
                 $.alert({
                     type: 'RED',
                     title: 'Failed!',
