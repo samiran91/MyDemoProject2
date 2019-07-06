@@ -20,7 +20,22 @@
 <script src="@Url.Content("~/Scripts/jquery-confirm.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/CandidateProfile/CandidateProfile.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
 
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgF5lBDcNfgIwXm3w4cO2qXXggmYAp928&libraries=places"></script>
 
+
+<script>
+    google.maps.event.addDomListener(window, 'load', initialize);
+    function initialize() {
+        var input = document.getElementById('txt_candAddress');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.addListener('place_changed', function () {
+            var place = autocomplete.getPlace();
+            // place variable will have all the information you are looking for.
+          //  $('#lat').val(place.geometry['location'].lat());
+          //  $('#long').val(place.geometry['location'].lng());
+        });
+    }
+</script>
 
 <style>
 
@@ -285,8 +300,8 @@
             <form class="form-inline">
                 <div class="form-group col-md-12">
                     <label for="gstin" class="col-md-4">Address:</label>
-                    @*<input type="text" class="form-control col-md-4" id="txt_candAddress" placeholder="Address">*@
-                    <textarea class="form-control col-md-12" id="txt_candAddress" placeholder="Address" style="width:100%;resize:vertical;min-height:100px;max-height:100px;"></textarea>
+                    <input type="text" class="form-control col-md-4" id="txt_candAddress" placeholder="Address">
+                    @*<textarea class="form-control col-md-12" id="txt_candAddress" placeholder="Address" style="width:100%;resize:vertical;min-height:100px;max-height:100px;"></textarea>*@
                 </div>
             </form>
 

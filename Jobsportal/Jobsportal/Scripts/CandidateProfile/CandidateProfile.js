@@ -70,6 +70,7 @@ $(document).ready(function () {
     // debugger;
     FetchCandidateDetails();
 
+
 });
 
 
@@ -424,7 +425,7 @@ function SaveCandidateInfo() {
             },
 
             error: function (response) {
-                debugger;
+              //  debugger;
                 $.alert({
                     type: 'RED',
                     title: 'Failed!',
@@ -472,6 +473,7 @@ function parseJsonDate(jsonDate) {
 
     return currentDate;
 };
+
 function FetchCandidateDetails() {
 
 
@@ -485,7 +487,7 @@ function FetchCandidateDetails() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
-            debugger;
+          //  debugger;
             // var r = JSON.parse(data);
             $("#imagePreview").css("background-image", "url('" + data.ImgValue + "')");
             $("#txt_candName").val(data.Name);
@@ -534,3 +536,5 @@ function FetchCandidateDetails() {
         }
     });
 }
+
+
