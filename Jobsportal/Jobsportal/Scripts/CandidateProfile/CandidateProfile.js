@@ -7,7 +7,6 @@
 
 
     if (input.files && input.files[0]) {
-        debugger;
         var ImgUploadedFiles = input.files[0].name;
         ImgUploadedFiles = dateTime + "-" + ImgUploadedFiles;
 
@@ -27,7 +26,7 @@
             processData: false, // Not to process data  
             data: fileData,
             success: function (result) {
-                // alert(result);
+
             },
             error: function (err) {
                 alert(err.statusText);
@@ -49,7 +48,6 @@
 $(document).ready(function () {
 
     $("#imageUpload").change(function () {
-        // debugger;
         readURL(this);
     });
 
@@ -66,10 +64,8 @@ $(document).ready(function () {
         source: babyNames,
     });
 
-    // var PhoneNo = HttpContext.Current.User.Identity.Name;
-    // debugger;
+ 
     FetchCandidateDetails();
-
 
 });
 
@@ -288,8 +284,7 @@ function SaveCandidateInfo() {
         Str_Intrst = Intrest.toString();
     });
 
-    console.log(Str_Intrst);
-    // debugger;
+
     var ValidateCandidate = 1;
     var Name = $("#txt_candName").val();
     var Gender = $('#txt_candGender :selected').val();
@@ -309,22 +304,7 @@ function SaveCandidateInfo() {
         });
         ValidateCandidate = 0;
     }
-    //else if (DOB == null || DOB == "") {
-    //    $.alert({
-    //        type: 'red',
-    //        title: 'Alert!',
-    //        content: 'Please provide birth date',
-    //    });
-    //    ValidateCandidate = 0;
-    //}
-    //else if (Address == null || Address == "") {
-    //    $.alert({
-    //        type: 'red',
-    //        title: 'Alert!',
-    //        content: 'Please provide address',
-    //    });
-    //    ValidateCandidate = 0;
-    //}
+  
     else if (Email == null || Email == "") {
         $.alert({
             type: 'red',
@@ -343,48 +323,9 @@ function SaveCandidateInfo() {
         ValidateCandidate = 0;
     }
 
-    else if (Mobile == null || Mobile == "") {
-        $.alert({
-            type: 'red',
-            title: 'Alert!',
-            content: 'Please Provide mobile no',
-        });
-        ValidateCandidate = 0;
-    }
-    else if (!phonenumber(Mobile)) {
-        $.alert({
-            type: 'red',
-            title: 'Alert!',
-            content: 'Please provide a valid mobile number!!',
-        });
-        ValidateCandidate = 0;
-    }
+   
 
-    //else if (Qual == null || Qual == "") {
-    //    $.alert({
-    //        type: 'red',
-    //        title: 'Alert!',
-    //        content: 'Please provide qualifications',
-    //    });
-    //    ValidateCandidate = 0;
-    //}
-    //else if (Exp == null || Exp == "") {
-    //    $.alert({
-    //        type: 'red',
-    //        title: 'Alert!',
-    //        content: 'Please Provide your Experiance',
-    //    });
-    //    ValidateCandidate = 0;
-    //}
-
-    //else if (Str_Intrst == null || Str_Intrst == "") {
-    //    $.alert({
-    //        type: 'red',
-    //        title: 'Alert!',
-    //        content: 'Please provide interests',
-    //    });
-    //   // debugger;
-    //}
+   
 
     if (ValidateCandidate > 0) {
         var CandidateLogin = new Object();
@@ -394,46 +335,40 @@ function SaveCandidateInfo() {
         CandidateLogin.DOB = DOB;
         CandidateLogin.Address = Address;
         CandidateLogin.Email = Email;
-        CandidateLogin.Mobile = Mobile;
         CandidateLogin.Qualification = Qual;
         CandidateLogin.Experiance = Exp;
         CandidateLogin.Interests = Str_Intrst;
         CandidateLogin.ImgValue = ImgValue;
 
         console.log(CandidateLogin);
-        // debugger;
+        
         $.ajax({
             type: "POST",
-            url: "/Jobs/InsertCandidateRecord",
+            url: "/Jobs/SaveCandidateRecord",
             data: JSON.stringify(CandidateLogin),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                // debugger;
+             
 
 
-                if (response["Message"] == 'InsertSuccess') {
+                 
                     $.alert({
                         type: 'green',
                         title: 'Sucessfull!',
                         content: 'Profile Saved Successfully',
                     });
-                }
-                //$('input[type="text"]').val('');
-                //$("textarea").val('');
-                //  $("#txt_candDOB").val('dd/mm/yyyy');
+                
+              
             },
 
             error: function (response) {
-              //  debugger;
                 $.alert({
-                    type: 'RED',
+                    type: 'red',
                     title: 'Failed!',
                     content: 'Failed to Save!!',
                 });
-                //$('input[type="text"]').val('');
-                //$("textarea").val('');
-                // $("#txt_candDOB").val('dd/mm/yyyy');
+              
             }
         });
     }
@@ -473,32 +408,26 @@ function parseJsonDate(jsonDate) {
 
     return currentDate;
 };
-
 function FetchCandidateDetails() {
 
 
-    //  debugger;
     $.ajax({
         type: 'POST',
         url: '/Jobs/FetchCandidateDetails',
-        //data: {
-        //    JobNo: JobNumber
-        //},
+       
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
-          //  debugger;
-            // var r = JSON.parse(data);
+           
             $("#imagePreview").css("background-image", "url('" + data.ImgValue + "')");
             $("#txt_candName").val(data.Name);
             $("#txt_candGender").val(data.Gender);
             $("#txt_candDOB").val(formatDate(data.DOB));
             $("#txt_candAddress").val(data.Address);
             $("#txt_candEmail").val(data.Email);
-            $("#txt_candMobile").val(data.Mobile);
+          
             $("#txt_candQual").val(data.Qualification);
             $("#txt_candExp").val(data.Experiance);
-            // var Img = data.ImgValue;
             var arr = data.ImgValue.split('/');
             $('input[name=hiddeninputname]').val(arr[2]);
 
@@ -507,15 +436,9 @@ function FetchCandidateDetails() {
             var temp = new Array();
 
             temp = Intr.split(",");
-            // console.log(temp);
             var htm1 = '<a href="#" data-role="selected-item">';
             var htm2 = '</a>';
             $.each(temp, function (i, val) {
-                // console.log(val);
-                // debugger;
-                // console.log("i-->" + i);
-                // console.log(val);
-                // console.log(temp);
 
                 if (temp[i] == "") {
                     return true;
@@ -536,5 +459,3 @@ function FetchCandidateDetails() {
         }
     });
 }
-
-

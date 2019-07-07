@@ -3,25 +3,30 @@
     ViewBag.Title = "Candidate Profile";
     Layout = "~/Views/Shared/_JobPortalLayout.cshtml";
 }
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="A Kolkata based Software Start up that aims to deliver software solution that are Easy to use,Fast and Secure.We always use latest technologies and methodologies to ensure data is safe and secure in our software products." />
+    <meta name="keywords" content="Software Development Company in Kolkata,Web Designing Company in Kolkata, Web Development Company in Kolkata, SEO Services in Kolkata,Accounting Software in Kolkata,Cheap website design,GST supported billing software,Railway Jobs,Govt Jobs,Central Jobs,state Jobs,latest jobs,RRB, RRB Recruitment, Railway, Railway Recruitment, Railway Recruitment Board, RRB 2019, Railway Jobs, Railway Vacancy, Railway Recruitment 2019, RRB Recruitment 2019, Railway Jobs 2019, Railway Vacancy 2019" />
+    <meta name="author" content="Drashta Infotech" />
+    <meta name="Distribution" content="Global" />
+    <link rel="publisher" href="http://drashtainfotech.com" />
+    <link rel="canonical" href="http://drashtainfotech.com" />
+    <meta name="email" content="support@drashtainfotech.com" />
+    <meta name="Googlebot" content="all" />
+    <meta name="robots" content="all" />
+    <meta name="page-topic" content="Software Development Company in Kolkata|Website Development Company in Kolkata | Website Designing Company in Kolkata" />
+    <meta name="page-type" content="Rich Internet Media" />
+    <meta name="Rating" content="General" />
+    <meta name="site" content="Software Company in Kolkata" />
+    <meta name="revisit-after" content="3 days" />
+    @Styles.Render("~/Content/CandidateProfile")
+    @Scripts.Render("~/bundles/CandidateProfile")
+</head>
 
-<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" media="all" />
-<link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" media="all" />
-<link href="@Url.Content("~/Content/summernote.css")" rel="stylesheet" type="text/css" media="all" />
-<link href="@Url.Content("~/Content/EditJobDetail/EditJobDetail.css")" rel="stylesheet" type="text/css" media="all" />
-<link href="@Url.Content("~/Content/CandidateProfile/CandidateProfile.css")" rel="stylesheet" type="text/css" media="all" />
-<link href="@Url.Content("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")" rel="stylesheet" type="text/css" media="all" />
-<link href="@Url.Content("~/Content/jquery-confirm.css")" rel="stylesheet" type="text/css" media="all" />
 
-<script src="@Url.Content("~/Scripts/jquery.min.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/bootstrap.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/jquery-ui.min.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/lodash.underscore.min.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/jqueryui-multisearch.min.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/jquery-confirm.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/CandidateProfile/CandidateProfile.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgF5lBDcNfgIwXm3w4cO2qXXggmYAp928&libraries=places"></script>
-
 
 
 <script>
@@ -263,15 +268,13 @@
             </form>
             <form class="form-inline">
                 <div class="form-group col-md-6">
-                    <label for="companyname" class="col-md-4">Name:</label>
+                    <label for="candName" class="col-md-4">Name:</label>
                     <input type="text" class="form-control col-md-4" id="txt_candName" placeholder="Name">
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label for="gstin" class="col-md-4">Gender:</label>
-                    @*<input type="text" class="form-control col-md-4" id="txt_candGender" placeholder="Gender">*@
+                    <label for="Gender" class="col-md-4">Gender:</label>
                     <select id="txt_candGender" class="form-control">
-                        <option value="0">Select Gender</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                         <option value="Others">Others</option>
@@ -280,12 +283,12 @@
             </form>
             <form class="form-inline">
                 <div class="form-group col-md-6">
-                    <label for="companyname" class="col-md-4">Date of Birth:</label>
+                    <label for="DOB" class="col-md-4">Date of Birth:</label>
                     <input class="form-control" type="date" id="txt_candDOB" name="bday" value="1998-01-01" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label for="companyname" class="col-md-4">Email:</label>
+                    <label for="EMAIL" class="col-md-4">Email:</label>
                     <input type="text" class="form-control col-md-4" id="txt_candEmail" placeholder="Email">
                 </div>
             </form>
@@ -293,14 +296,14 @@
 
 
                 <div class="form-group col-md-6">
-                    <label for="gstin" class="col-md-4">Mobile:</label>
-                    <input type="text" class="form-control col-md-4" id="txt_candMobile" readonly placeholder="Mobile">
+                    <label for="phoneno" class="col-md-4">Phone No:</label>
+                    <input type="text" class="form-control col-md-4" id="txt_candMobile" readonly placeholder="Phone No" value="@System.Web.HttpContext.Current.User.Identity.Name">
                 </div>
             </form>
 
             <form class="form-inline">
                 <div class="form-group col-md-12">
-                    <label for="gstin" class="col-md-4">Address:</label>
+                    <label for="address" class="col-md-4">Address:</label>
                     <input type="text" class="form-control col-md-4" id="txt_candAddress" placeholder="Address">
                     @*<textarea class="form-control col-md-12" id="txt_candAddress" placeholder="Address" style="width:100%;resize:vertical;min-height:100px;max-height:100px;"></textarea>*@
                 </div>
@@ -331,7 +334,7 @@
         </div>
         <div class="panel-body collapse" id="panel_ProfExp">
             <form class="form-inline">
-                <label for="offc address" class="col-md-12">Working Experiance:</label>
+                <label for="workexp" class="col-md-12">Working Experiance:</label>
                 <div class="form-group col-md-12" style="padding:0;">
                     <textarea style="resize:vertical;min-height:100px;max-height:500px;" rows="4" cols="50" id="txt_candExp" align="left" placeholder="Working Experiance" class="form-control col-md-4"></textarea>
                 </div>
@@ -364,21 +367,7 @@
 
         </div>
     </div>
-    @*<div class="panel panel-primary">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" href="#panel_Settings">Settings:</a>
-            </h4>
-        </div>
-        <div class="panel-body collapse" id="panel_Settings">
-            <form class="form-inline">
-                <div class="form-group col-md-12" style="padding:0;">
-                    <label for="gstin" class="col-md-4">New Password:</label>
-                    <input type="text" class="form-control col-md-4" id="txt_cngPassword" placeholder="New Password">
-                </div>
-            </form>
-        </div>
-    </div>*@
+   
     <div class="text-center">
         <button type="button" id="SubmitCandidateDetail" onclick="SaveCandidateInfo()" class="btn btn-success Gap2"><span class="glyphicon glyphicon-off" style="padding-right:5px;"></span>Save</button>
     </div>
