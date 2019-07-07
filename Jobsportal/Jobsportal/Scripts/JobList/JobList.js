@@ -1,6 +1,5 @@
 ﻿
 $(document).ready(function () {
-   // debugger;
     var keyword = getCookie("keyword");
     var posted = getCookie("posted");
     var location = getCookie("location");
@@ -39,7 +38,6 @@ $(document).ready(function () {
 
         source: function (request, response) {
             var data = $('#txt_keyword').val();
-            //debugger;
             $.ajax({
                 url: '/Jobs/GetKeywordAutocompleteValue',
 
@@ -48,9 +46,7 @@ $(document).ready(function () {
                 },
                 dataType: "json",
                 success: function (data) {
-                  //  debugger;
                     response($.map(JSON.parse(data), function (item) {
-                     //  debugger;
                         return { label: item.Keyword, value: item.Keyword};
                     }));
                 }
@@ -85,7 +81,6 @@ window.addEventListener("beforeunload", function (e) {
     
 });
 function Search() {
-   // debugger;
     var keyword = $("#txt_keyword").val();
     var posted = $("#ddl_posted").val();
     var location = $("#ddl_location").val();

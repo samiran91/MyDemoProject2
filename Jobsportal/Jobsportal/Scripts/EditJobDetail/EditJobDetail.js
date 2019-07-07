@@ -2,7 +2,6 @@
 $(document).ready(function () {
 
     var i = 1;
-    // $(".quantity").spinner();
     $('.ui-spinner-button').click(function () {
         var id = $(this).siblings('input').attr('id')
         qtychanged(id);
@@ -65,80 +64,8 @@ $(document).ready(function () {
         self.init();
     })
 
-    //$("#SubmitJobDetail").click(function () {
-
-
-    //    var JobNumber = $("#txt_JobNumber").val();
-    //    var JobTitle = $("#txt_JobTitle").val();
-    //    var JobPostedDate = $("#txt_PostedDate").val();
-    //    var JobApplyLink = $("#txt_AplyLink").val();
-    //    var JobDescp = $(".note-editable").text();
-
-
-    //    var Qual = [];
-    //    var Str_Qual;
-
-    //    $("#myMultiSearch div.sel-anchor a").each(function () {
-    //        Qual.push($(this).text());
-    //        Str_Qual = Qual.toString();
-    //    });
-
-    //    var JobData = [];
-    //    var Str_JobData;
-
-    //    var mathedcount = 1;
-    //    var count = $('.product').length;
-    //    var loopcount = 1;
-    //    while (mathedcount <= count) {
-    //        var element = {};
-    //        element.Events = $("#productcode_" + loopcount).val();
-    //        element.EventDateTime = $("#evntDate_" + loopcount).val();
-    //        typeof (element.ProductCode != 'undefined')
-    //        {
-    //            JobData.push(element);
-    //            mathedcount++;
-    //        }
-
-    //        loopcount++;
-
-    //    }
-
-
-    //    var JobDetails = new Object();
-
-    //    JobDetails.JobNo = JobNumber;
-    //    JobDetails.JobTitle = JobTitle;
-    //    JobDetails.PostedDate = JobPostedDate;
-    //    JobDetails.ApplyLink = JobApplyLink;
-    //    JobDetails.JobDesc = JobDescp;
-    //    JobDetails.Qualification = Str_Qual;
-    //    JobDetails.JobImpDates = JobData;
-
-    //    console.log(JobDetails);
-    //    debugger;
-    //    $.ajax({
-    //        type: "POST",
-    //        url: "/Jobs/SaveJobDetails",
-    //        data: JSON.stringify(JobDetails),
-    //        contentType: "application/json; charset=utf-8",
-    //        dataType: "json",
-    //        success: function (response) {
-    //              debugger;
-    //            if (response["j"] == '1') {
-    //                alert("Inside Insert");
-    //            }
-    //        },
-
-    //        error: function (response) {
-    //        }
-    //    });
-
-
-    //});
-
 
     $("#SubmitJobDetail").click(function () {
-        debugger;
         var JobDetailValidate = 1;
 
          var JobNumber = $("#txt_JobNumber").val();
@@ -147,7 +74,6 @@ $(document).ready(function () {
         var JobApplyLink = $("#txt_AplyLink").val();
         var Location = $("#txt_location").val();
         var JobDescp = $(".note-editable").html();
-        alert(JobDescp);
         var Qual = [];
         var Str_Qual;
 
@@ -309,8 +235,6 @@ $(document).ready(function () {
             JobDetails.JobNotes = Documents;
             JobDetails.Location = Location;
 
-         //   console.log(JobDetails);
-            //         debugger;
             $.ajax({
                 type: "POST",
                 url: "/Jobs/SaveJobDetails",
@@ -318,8 +242,8 @@ $(document).ready(function () {
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    //         debugger;
-                    if (response["j"] == '1') {
+                   
+                    if (response["status"] == '3') {
                         $.alert({
                             type: 'green',
                             title: 'Sucessfull!',
@@ -332,18 +256,39 @@ $(document).ready(function () {
                         window.location.href = "/Jobs/Job_Internal";
                     }
 
-                    else if (response["j"] == '0') {
+                    else if (response["status"] == '2') {
                         $.alert({
-                            type: 'red',
-                            title: 'Failed!',
-                            content: 'Failed to Save!',
+                            type: 'warning',
+                            title: 'Alert!',
+                            content: 'Job Details and Important Dates Saved .But Failed to save Important Notes!',
                         });
 
                         $('input[type="text"]').val('');
                         $("textarea").val('');
                         $("#txt_PostedDate").val('mm/dd/yyyy');
                     }
-                    
+                    else if (response["status"] == '1') {
+                        $.alert({
+                            type: 'warning',
+                            title: 'Alert!',
+                            content: 'Job Details  Saved .But Failed to save Important Dates and  Important Notes!',
+                        });
+
+                        $('input[type="text"]').val('');
+                        $("textarea").val('');
+                        $("#txt_PostedDate").val('mm/dd/yyyy');
+                    }
+                    else if (response["status"] == '4') {
+                        $.alert({
+                            type: 'warning',
+                            title: 'Alert!',
+                            content: 'Job Details and Important Notes Saved .But Failed to save Important Dates!',
+                        });
+
+                        $('input[type="text"]').val('');
+                        $("textarea").val('');
+                        $("#txt_PostedDate").val('mm/dd/yyyy');
+                    }
                 },
 
                 error: function (response) {
@@ -880,10 +825,8 @@ function GetParameterValues(param) {
 } 
 
 function fetchJobDetails() {
-    debugger;
     var JobNumber = GetParameterValues('JobNo');
     if (JobNumber != null) {
-        debugger;
         $.ajax({
             type: 'GET',
             url: '/Jobs/FetchJobDetails',
@@ -893,13 +836,12 @@ function fetchJobDetails() {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
-                // debugger;
                 $("#txt_JobNumber").val(data.JobNo);
                 $("#txt_JobTitle").val(data.JobTitle);
                 $("#txt_PostedDate").val(formatDate(data.PostedDate));
                 $("#txt_AplyLink").val(data.ApplyLink);
                 $("#txt_location").val(data.Location);
-                $(".note-editable").text(data.JobDesc);
+                $(".note-editable").html(data.JobDesc);
 
                 var Ql = data.Qualification;
                 var temp = new Array();

@@ -31,7 +31,6 @@ $(document).ready(function () {
 
         source: function (request, response) {
             var data = $("#txtname").val();
-           // debugger;
             $.ajax({
                 url: "/Jobs/GetJobAutocompleteValue",
 
@@ -40,10 +39,7 @@ $(document).ready(function () {
                 },
                 dataType: "json",
                 success: function (data) {
-                  //  debugger;
                     response($.map(JSON.parse(data), function (item) {
-                        //  debugger;
-                        //return { label: item.JobNo, value: item.jobtitle };
                         return { value: item };
                     }));
                 }
@@ -67,7 +63,6 @@ $(document).ready(function () {
 });
 
 function Edit(e) {
-    debugger;
     window.location.href = "/Jobs/Editjobdetail?JobNo=" + e.data.record.JobNo;
     
 }

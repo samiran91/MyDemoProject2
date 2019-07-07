@@ -1,0 +1,16 @@
+1.Name Should be in Camel case and meaning full word for eg-usp_GetJob.
+2.No try catch in database or DAL
+3.Use No count on procedures
+4.Use Indention/Format in procedure
+5.Proper table structure and relationships.
+6.Use ExecuteNonquery for insert/update and reader for select.
+7.Do not use * in Select.
+8.Use Exception handaling on controller
+9.No warning in visual studio for any project
+10.No console error
+11.Log error using proper method
+12.Use minified and bundaling
+13. Keep Files properly structured.
+14.Use Authorization filter in methods
+15.Do not keep copy paste id in ux.
+16. Remove all debug statement from js

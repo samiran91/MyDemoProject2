@@ -10,7 +10,6 @@
 });
 
 function SignUp() {
-    //debugger;
     var SignUpValidator = 1;
     var Name = $("#txt_UsrName").val();
     var Phone = $("#txt_UsrPhone").val();
@@ -18,8 +17,6 @@ function SignUp() {
     var Password = $("#txt_UsrPassword").val();
 
     if (Name == null || Name == "") {
-       // $('#error-message_SignUP').css("display", "block");
-       // $('#error-message-text_SignUP').text("Invalid Username");
 
         $.alert({
             title: 'Alert!',
@@ -31,8 +28,6 @@ function SignUp() {
     }
 
     else if (Phone == null || Phone == "") {
-       // $('#error-message_SignUP').css("display", "block");
-       // $('#error-message-text_SignUP').text("Please provide Phone");
 
         $.alert({
             title: 'Alert!',
@@ -45,8 +40,6 @@ function SignUp() {
 
     else if (!phonenumber(Phone)) {
 
-       // $('#error-message_SignUP').css("display", "block");
-       // $('#error-message-text_SignUP').text("Please enter a valid Phone Number");
 
         $.alert({
             title: 'Alert!',
@@ -58,8 +51,7 @@ function SignUp() {
     }
 
     else if (Email == null || Email == "") {
-      //  $('#error-message_SignUP').css("display", "block");
-      //  $('#error-message-text_SignUP').text("Please Provide Email");
+
 
 
         $.alert({
@@ -73,8 +65,6 @@ function SignUp() {
 
     else if (!isEmail(Email)) {
 
-      //  $('#error-message_SignUP').css("display", "block");
-      //  $('#error-message-text_SignUP').text("Please enter a valid email id");
 
 
         $.alert({
@@ -95,7 +85,6 @@ function SignUp() {
         CandidateSignUp.Mobile = Phone;
         CandidateSignUp.Email = Email;
         CandidateSignUp.Password = Password;
-      //  debugger;
 
         $.ajax({
             type: "POST",
@@ -104,7 +93,6 @@ function SignUp() {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                debugger;
                 if (response["Message"] == 'InsertSuccess') {
                     window.location = "/Jobs/CandidateProfile";
                 }

@@ -42,7 +42,6 @@ namespace DAL
             {
                 string connstring = Connection.GetConnectionString();
 
-                //string sq_stmt = string.Format("Select Roles from Users where username='{0}' and password='{1}' and IsActive=1", username, password);
                 using (SqlConnection dbCon = new SqlConnection(connstring))
                 {
                     dbCon.Open();
@@ -79,7 +78,6 @@ namespace DAL
             string sp = "sp_GetUserDetail";
             string connstring = Connection.GetConnectionString();
             var p = new Users();
-            //string sq_stmt = string.Format("Select * from Users where username='{0}'", username);
             using (SqlConnection dbCon = new SqlConnection(connstring))
             {
                 dbCon.Open();
@@ -128,17 +126,7 @@ namespace DAL
                     dbCom.Parameters.AddWithValue(UserEmail, USROBJ.Email);
                     dbCom.Parameters.AddWithValue(UserPassword, USROBJ.Password);
 
-                    using (SqlDataReader wizReader = dbCom.ExecuteReader())
-                    {
-                        while (wizReader.Read())
-                        {
-                            Usr = new Users()
-                            {
-                                Success = (Int32)wizReader["Success"],
-                                Message = (String)wizReader["Message"]
-                            };
-                        }
-                    }
+                    dbCom.ExecuteNonQuery();
                 }
 
             }

@@ -100,7 +100,7 @@ namespace DAL
             public String Keyword { get; set; }
         }
 
-        private const String DBOp = "@i_DBOP";
+       
         private const String JobNum = "@JobNumber";
         private const string Keyword = "Keyword";
         private const string LocationSearch = "Location";
@@ -148,7 +148,6 @@ namespace DAL
                 {
 
                     dbCom.CommandType = CommandType.StoredProcedure;
-                    dbCom.Parameters.Add(DBOp, SqlDbType.VarChar).Value = 0;
                     if (param.Keyword != null)
                     {
                         dbCom.Parameters.Add(Keyword, SqlDbType.VarChar).Value = param.Keyword;
@@ -193,7 +192,7 @@ namespace DAL
                 {
 
                     dbCom.CommandType = CommandType.StoredProcedure;
-                    dbCom.Parameters.Add(DBOp, SqlDbType.VarChar).Value = JobNumber;
+                    dbCom.Parameters.Add("@Jobno ", SqlDbType.VarChar).Value = JobNumber;
                     using (SqlDataReader wizReader = dbCom.ExecuteReader())
                     {
                         while (wizReader.Read())
@@ -327,13 +326,13 @@ namespace DAL
         {
             String connstring = Connection.GetConnectionString();
 
-            Int32 RowAffected = 0;
-
+            int status = 0;
             using (SqlConnection dbCon = new SqlConnection(connstring))
             {
                 dbCon.Open();
 
                 Int32 JobNumber = SaveJobInfo(JobDetails);
+                status = 1;
                 if (JobDetails.JobNotes != null)
                 {
                     if (JobDetails.JobNotes.Count > 0)
@@ -356,20 +355,13 @@ namespace DAL
                                     dbCom.Parameters.AddWithValue("@STR_UPLODEDBY", item.Uplodedby);
                                     dbCom.Parameters.AddWithValue("@INT_INSERT", 0);
 
-                                    //var temp= dbCom.ExecuteNonQuery();
-                                    using (SqlDataReader wizReader = dbCom.ExecuteReader())
-                                    {
-                                        while (wizReader.Read())
-                                        {
-                                            var Success = (Int32)wizReader["SUCCESS"];
-                                            var Message = (String)wizReader["MESSAGE"];
-                                        }
-                                    }
+                                    dbCom.ExecuteNonQuery();
+                                    status = 2;
 
                                 }
-                                catch (Exception e)
+                                catch (Exception ex)
                                 {
-
+                                    DALError.LogError("Job.SaveJobDetails-SaveImpNotes", ex);
                                 }
                             }
 
@@ -385,23 +377,33 @@ namespace DAL
                         {
                             using (SqlCommand dbCom = new SqlCommand(StoredProcedure.USP_JOBEVENTDATETIME_INSERTJOBDETAILS, dbCon))
                             {
-
-                                dbCom.CommandType = CommandType.StoredProcedure;
-
                                 try
+
                                 {
+
+                                    dbCom.CommandType = CommandType.StoredProcedure;
+
+
 
                                     dbCom.Parameters.AddWithValue(JobEvents, item.Events);
                                     dbCom.Parameters.AddWithValue(JobEventsDT, item.EventDateTime);
                                     dbCom.Parameters.AddWithValue(InsertCondition, 0);
                                     dbCom.Parameters.AddWithValue(JobNum, JobNumber);
 
-                                    RowAffected = dbCom.ExecuteNonQuery();
-                                }
-                                catch (Exception e)
-                                {
 
+                                  dbCom.ExecuteNonQuery();
+                                    status = status + 1;
+                                    if(status!=3)
+                                    {
+                                        status = 4;
+                                    }
                                 }
+
+                                catch (Exception ex)
+                                {
+                                    DALError.LogError("Job.SaveJobDetails-SaveImpDates", ex);
+                                }
+
                             }
 
                         }
@@ -410,14 +412,13 @@ namespace DAL
 
             }
 
-            return RowAffected;
+            return status;
         }
 
-        public static CandidateProfile InsertCandidateRecord(CandidateProfile CPOBJ)
+        public static CandidateProfile SaveCandidate(CandidateProfile CPOBJ)
         {
             CandidateProfile OBJ = null;
 
-          //  String ImgPath = "~/CandidateImages/" + CPOBJ.ImgValue;
 
             String connstring = Connection.GetConnectionString();
             using (SqlConnection dbCon = new SqlConnection(connstring))
@@ -428,36 +429,20 @@ namespace DAL
                 {
 
                     dbCom.CommandType = CommandType.StoredProcedure;
-                    //dbCom.Parameters.AddWithValue(CandidatePERSONID, 000);
                     dbCom.Parameters.AddWithValue(CandidateName, CPOBJ.Name);
                     dbCom.Parameters.AddWithValue(CandidateGender, CPOBJ.Gender);
                     dbCom.Parameters.AddWithValue(CandidateDOB, CPOBJ.DOB);
                     dbCom.Parameters.AddWithValue(CandidateAddress, CPOBJ.Address);
                     dbCom.Parameters.AddWithValue(CandidateEmail, CPOBJ.Email);
-                    dbCom.Parameters.AddWithValue(CandidateMobile, CPOBJ.Mobile);
+                    dbCom.Parameters.AddWithValue(CandidateMobile,CPOBJ.Mobile);
                     dbCom.Parameters.AddWithValue(CandidateQual, CPOBJ.Qualification);
                     dbCom.Parameters.AddWithValue(CandidateExp, CPOBJ.Experiance);
                     dbCom.Parameters.AddWithValue(CandidateIntrst, CPOBJ.Interests);
-                    dbCom.Parameters.AddWithValue(DBOperation, 0);
                     dbCom.Parameters.AddWithValue(CandidateImage, CPOBJ.ImgValue);
-                    try
-                    {
-                        using (SqlDataReader wizReader = dbCom.ExecuteReader())
-                        {
-                            while (wizReader.Read())
-                            {
-                                OBJ = new CandidateProfile()
-                                {
-                                    Success = (Int32)wizReader["Success"],
-                                    Message = (String)wizReader["Message"]
-                                };
-                            }
-                        }
-                    }
-                    catch(Exception ex)
-                    {
 
-                    }
+                    dbCom.ExecuteNonQuery();
+                    
+                   
                 }
 
             }
@@ -485,20 +470,15 @@ namespace DAL
                     dbCom.Parameters.AddWithValue(JobApplyLink, JobDetails.ApplyLink);
                     dbCom.Parameters.AddWithValue("@STR_Location", JobDetails.Location);
 
-                    try
-                    {
-                        using (SqlDataReader wizReader = dbCom.ExecuteReader())
-                        {
-                            while (wizReader.Read())
-                            {
-                                JobNumber = Convert.ToInt32(wizReader[0]);
-                            }
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        
-                    }
+
+                    SqlParameter returnParameter = dbCom.Parameters.Add("@JOBNUMBER", SqlDbType.Int);
+                    returnParameter.Direction = ParameterDirection.Output;
+
+
+                    dbCom.ExecuteNonQuery();
+                    JobNumber = Convert.ToInt32(dbCom.Parameters["@JOBNUMBER"].Value);
+
+
 
                 }
             }
@@ -521,8 +501,7 @@ namespace DAL
                     dbCom.CommandType = CommandType.StoredProcedure;
                     dbCom.Parameters.AddWithValue(Phoneno, phoneno);
 
-                    try
-                    {
+                   
                         using (SqlDataReader wizReader = dbCom.ExecuteReader())
                         {
                             while (wizReader.Read())
@@ -534,7 +513,6 @@ namespace DAL
                                     DOB =Convert.ToDateTime(wizReader["DOB"]),
                                     Address = Convert.ToString(wizReader["ADDRESS"]),
                                     Email = Convert.ToString(wizReader["EMAIL"]),
-                                    Mobile = Convert.ToString(wizReader["MOBILE"]),
                                     Qualification = Convert.ToString(wizReader["QUALIFICATION"]),
                                     Experiance = Convert.ToString(wizReader["EXPERIANCE"]),
                                     Interests = Convert.ToString(wizReader["INTEREST"]),
@@ -542,11 +520,7 @@ namespace DAL
                                 };
                             }
                         }
-                    }
-                    catch (Exception e)
-                    {
-
-                    }
+                   
 
                 }
             }
@@ -613,11 +587,6 @@ namespace DAL
                     {
                         while (wizReader.Read())
                         {
-                            //var OBJ = new Job()
-                            //{
-                            //    JobNo = Convert.ToInt32(wizReader["JOBNO"]),
-                            //    JobTitle = Convert.ToString(wizReader["JOBTITLE"]),
-                            //};
                             
                             String JobTitle = Convert.ToString(wizReader["JOBNUMANDTITLE"]);
 

@@ -89,9 +89,8 @@ namespace Jobsportal.Controllers
         [HttpPost]
         public JsonResult SaveJobDetails(Job JobDetails)
         {
-            //String Success = string.Empty;
-            //String Message = string.Empty;
-            Int32 j = Job.SaveJobDetails(JobDetails);
+        
+            int status= Job.SaveJobDetails(JobDetails);
 
             SendEmailToCandidate_delegate d = null;
             d = new SendEmailToCandidate_delegate(SendEmailToCandidate);
@@ -99,7 +98,7 @@ namespace Jobsportal.Controllers
             IAsyncResult R = null;
             R = d.BeginInvoke(JobDetails.JobNo, JobDetails.JobTitle + " " + JobDetails.JobDesc + " " + JobDetails.Qualification, new AsyncCallback(TaskCompleted), null);
             
-            return Json(new { j }, JsonRequestBehavior.AllowGet);
+            return Json(new { status }, JsonRequestBehavior.AllowGet);
         }
         public void TaskCompleted(IAsyncResult R)
         {
@@ -179,11 +178,12 @@ namespace Jobsportal.Controllers
             return View();
         }
 
-        public JsonResult InsertCandidateRecord(Job.CandidateProfile OBJ)
+        public JsonResult SaveCandidateRecord(Job.CandidateProfile OBJ)
         {
-            Job.CandidateProfile CP = Job.InsertCandidateRecord(OBJ);
+            OBJ.Mobile = System.Web.HttpContext.Current.User.Identity.Name;
+            Job.CandidateProfile CP = Job.SaveCandidate(OBJ);
 
-            return Json(new { Success = Convert.ToString(CP.Success), Message = Convert.ToString(CP.Message) }, JsonRequestBehavior.AllowGet);
+            return Json(true);
         }
 
 
