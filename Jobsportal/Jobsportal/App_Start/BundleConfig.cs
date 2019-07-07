@@ -82,7 +82,6 @@ namespace Jobsportal
                       ));
             bundles.Add(new ScriptBundle("~/bundles/EditJob").Include(
                 "/Scripts/EditJobDetail/EditJobDetail.js"
-
                 ));
             bundles.Add(new ScriptBundle("~/bundles/UserReg").Include(
               "~/Scripts/UserRegistration/UserRegistration.js"

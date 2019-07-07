@@ -223,6 +223,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jqueryui-multisearch.js" />
     <Content Include="Scripts\jqueryui-multisearch.min.js" />
     <Content Include="Scripts\lodash.underscore.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />

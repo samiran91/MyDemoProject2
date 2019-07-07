@@ -20,10 +20,19 @@
     <meta name="Rating" content="General" />
     <meta name="site" content="Software Company in Kolkata" />
     <meta name="revisit-after" content="3 days" />
+
     @Styles.Render("~/Content/CandidateProfile")
     @Scripts.Render("~/bundles/CandidateProfile")
-</head>
 
+    <link href="@Url.Content("~/Content/EditJobDetail/EditJobDetail.css")" rel="stylesheet" type="text/css" media="all" />
+    <link href="@Url.Content("~/Content/CandidateProfile/CandidateProfile.css")" rel="stylesheet" type="text/css" media="all" />
+    <link href="@Url.Content("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")" rel="stylesheet" type="text/css" media="all" />
+
+
+    
+    <script src="@Url.Content("~/Scripts/lodash.underscore.min.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+
+</head>
 
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgF5lBDcNfgIwXm3w4cO2qXXggmYAp928&libraries=places"></script>

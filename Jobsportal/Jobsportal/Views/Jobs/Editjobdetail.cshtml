@@ -27,7 +27,9 @@
     @Scripts.Render("~/bundles/EditJob")
 </head>
 
-
+<link href="@Url.Content("~/Content/EditJobDetail/EditJobDetail.css")" rel="stylesheet" type="text/css" media="all" />
+<script src="@Url.Content("~/Scripts/EditJobDetail/EditJobDetail.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/summernote.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
 <style>
 
     .fixed-font {
