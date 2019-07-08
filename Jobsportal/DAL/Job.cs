@@ -100,6 +100,21 @@ namespace DAL
             public String Keyword { get; set; }
         }
 
+        public class Discussion
+        {
+            public int ID { get; set; }
+
+            public int ChatID { get; set; }
+
+            public String UserName { get; set; }
+
+            public Int32 JobNo { get; set; }
+
+            public String Messages { get; set; }
+
+            public DateTime MessageDateTime { get; set; }
+
+        }
        
         private const String JobNum = "@JobNumber";
         private const string Keyword = "Keyword";
@@ -599,6 +614,45 @@ namespace DAL
             }
 
             return list;
+        }
+
+        public static List<Discussion> FetchDiscussion(String Jobno)
+        {
+            
+            String connstring = Connection.GetConnectionString();
+
+            List<Discussion> D = new List<Discussion>();
+
+            using (SqlConnection dbCon = new SqlConnection(connstring))
+            {
+                dbCon.Open();
+
+                using (SqlCommand dbCom = new SqlCommand(StoredProcedure.usp_Job_GetJobDetails, dbCon))
+                {
+
+                    dbCom.CommandType = CommandType.StoredProcedure;
+  
+
+                    using (SqlDataReader wizReader = dbCom.ExecuteReader())
+                    {
+                        while (wizReader.Read())
+                        {
+                            var Chat = new Discussion()
+                            {
+                                ID = (Int32)wizReader["JOBNO"],
+                                ChatID = (Int32)wizReader["ChatID"],
+                                UserName = (String)wizReader["UserName"],
+                                JobNo = (Int32)wizReader["JobNo"],
+                                Messages = (String)wizReader["Messages"],
+                                MessageDateTime = Convert.ToDateTime(wizReader["MessageDateTime"]),
+                            };
+
+                            D.Add(Chat);
+                        }
+                    }
+                }
+            }
+            return D;
         }
 
     }

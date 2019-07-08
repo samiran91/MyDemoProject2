@@ -25,7 +25,7 @@ namespace Jobsportal.Controllers
         [HttpGet]
         public ActionResult ListJob()
         {
-            Utility.LogActivity("At List Job","ListJob");
+            Utility.LogActivity("At List Job", "ListJob");
             return View();
         }
 
@@ -80,7 +80,7 @@ namespace Jobsportal.Controllers
             return View();
         }
 
-       public ActionResult Job_Internal()
+        public ActionResult Job_Internal()
         {
             Utility.LogActivity("At Job_Internal", "Job_Internal");
             return View();
@@ -89,15 +89,15 @@ namespace Jobsportal.Controllers
         [HttpPost]
         public JsonResult SaveJobDetails(Job JobDetails)
         {
-        
-            int status= Job.SaveJobDetails(JobDetails);
+
+            int status = Job.SaveJobDetails(JobDetails);
 
             SendEmailToCandidate_delegate d = null;
             d = new SendEmailToCandidate_delegate(SendEmailToCandidate);
 
             IAsyncResult R = null;
             R = d.BeginInvoke(JobDetails.JobNo, JobDetails.JobTitle + " " + JobDetails.JobDesc + " " + JobDetails.Qualification, new AsyncCallback(TaskCompleted), null);
-            
+
             return Json(new { status }, JsonRequestBehavior.AllowGet);
         }
         public void TaskCompleted(IAsyncResult R)
@@ -105,16 +105,16 @@ namespace Jobsportal.Controllers
             // Write here code to handle the completion of
             // your asynchronous method
         }
-        public void SendEmailToCandidate(int jobno,string jobkeywords)
+        public void SendEmailToCandidate(int jobno, string jobkeywords)
         {
             DataSet Candidate = Utility.CandidateData();
 
             string[] jobwords = jobkeywords.Split(' ');
-            if(Candidate.Tables.Count>0)
+            if (Candidate.Tables.Count > 0)
             {
-                if(Candidate.Tables[0].Rows.Count>0)
+                if (Candidate.Tables[0].Rows.Count > 0)
                 {
-                    foreach(DataRow dr in Candidate.Tables[0].Rows)
+                    foreach (DataRow dr in Candidate.Tables[0].Rows)
                     {
                         string PerKeyword = dr["PerKeyword"].ToString();
                         string[] perwords = PerKeyword.Split(' ');
@@ -126,7 +126,7 @@ namespace Jobsportal.Controllers
                             mailcommonwords = mailcommonwords + "," + word;
                         }
 
-                        if(!string.IsNullOrEmpty(mailcommonwords))
+                        if (!string.IsNullOrEmpty(mailcommonwords))
                         {
                             EmailServer emailconfigdata = EmailServer.GetEmailConfiguration();
                             SmtpClient client = new SmtpClient();
@@ -141,7 +141,7 @@ namespace Jobsportal.Controllers
                             // string mailbody = "A New job has been posted.  You can apply the job using below link" + Environment.NewLine + System.Web.HttpContext.Current.Request.Url.Host + "/jobs/ JobDetails ? JNo = " + jobno + Environment.NewLine + "You are receiving mail because your profile contains these words " +"<b>"+ mailcommonwords+"</b>"+Environment.NewLine+ "Regards,"+ Environment.NewLine+"Drashta Infotech Team";
                             string mailbody = "A New job has been posted.  You can apply the job using below link" + Environment.NewLine + "http://jobhelperstage.drashtainfotech.com/" + "/jobs/ JobDetails ? JNo = " + jobno + Environment.NewLine + "You are receiving mail because your profile contains these words " + "<b>" + mailcommonwords + "</b>" + Environment.NewLine + "Regards," + Environment.NewLine + "Drashta Infotech Team";
                             MailMessage mm = new MailMessage(emailconfigdata.Email, Email, "Notification from  Drashta Infotech Job Helper portal ", mailbody);
-                           
+
                             mm.BodyEncoding = UTF8Encoding.UTF8;
                             mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
 
@@ -241,7 +241,7 @@ namespace Jobsportal.Controllers
         {
             string phoneno = System.Web.HttpContext.Current.User.Identity.Name;
             Job.CandidateProfile CP = Job.FetchCandidateDetails(phoneno);
-            if(CP.ImgValue != null)
+            if (CP.ImgValue != null)
             {
                 CP.ImgValue = "/CandidateImages/" + CP.ImgValue;
             }
@@ -263,7 +263,7 @@ namespace Jobsportal.Controllers
         {
             List<DAL.Job.keywordSearch> list = new List<DAL.Job.keywordSearch>();
             list = DAL.Job.FetchKeywordAutocompleteData(Keyword);
-            
+
             var jsonSerialiser = new JavaScriptSerializer();
             var json = jsonSerialiser.Serialize(list);
 
@@ -279,6 +279,16 @@ namespace Jobsportal.Controllers
             var json = jsonSerialiser.Serialize(list);
 
             return Json(json, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpGet]
+        public ActionResult FetchDiscussion(String JobNumber)
+        {
+            List<Job.Discussion> D = new List<Job.Discussion>();
+            D = DAL.Job.FetchDiscussion(JobNumber);
+
+            return PartialView("_FetchDiscussion",D);
         }
     }
 

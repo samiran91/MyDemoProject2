@@ -48,6 +48,9 @@ $(document).ready(function () {
         window.location.href = "/jobs";
     });
 
+    var JobNumber = GetParameterValues('JNo');
+    //FetchDiscussion(JobNumber);
+
 });
 
 
@@ -60,3 +63,25 @@ function GetParameterValues(param) {
         }
     }
 } 
+
+function FetchDiscussion(JobNumber) {
+  //  alert(JobNumber);
+    $.ajax({
+        type: 'GET',
+        url: '/Jobs/FetchDiscussion',
+        data: {
+            JobNo: JobNumber
+        },
+        success: function (data) {
+            debugger;
+           // window.location.href = data;
+        },
+        error: function (ex) {
+            var r = jQuery.parseJSON(response.responseText);
+            alert("Message: " + r.Message);
+            alert("StackTrace: " + r.StackTrace);
+            alert("ExceptionType: " + r.ExceptionType);
+        }
+    });
+
+}
