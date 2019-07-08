@@ -7,11 +7,11 @@
 
 @Scripts.Render("~/bundles/UserReg")
 
-
+<script src="@Url.Content("~/Scripts/UserRegistration/UserRegistration.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
 <script>
 
     function signin() {
-        debugger;
+        
         var Mobile = $('#phone').val();
 
         var password = $('#pwd').val();
@@ -27,16 +27,15 @@
             $('#error-message-text').text("Invalid Phone Number/Password");
         }
         else {
-            debugger;
             $.ajax({ url: "/Login/SignIn", type: "POST", data: { UserData: UserData } })
                 .done(function (data) {
 
                     if (data != false) {
                         if (Mobile == "admin") {
-                            window.location = "/Jobs/Editjobdetail";
+                            window.location = "/Candidate/Editjobdetail";
                         }
                         else {
-                            window.location = "/Jobs/CandidateProfile";
+                            window.location = "/Candidate/CandidateProfile";
 
                         }
                     }

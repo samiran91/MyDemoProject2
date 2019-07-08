@@ -2,18 +2,7 @@
 $(document).ready(function () {
 
     var i = 1;
-    $('.ui-spinner-button').click(function () {
-        var id = $(this).siblings('input').attr('id')
-        qtychanged(id);
-    });
-
-    $('.quantity').on('keyup keydown keypress blur change', function (e) {
-
-        var id = event.target.id;
-        qtychanged(id);
-
-
-    })
+  
     $("#add_row").click(function () {
         var count = $('.product').length;
         $('#tab_logic').append('<tr id="addr' + (count + 1) + '"></tr>');
@@ -21,18 +10,7 @@ $(document).ready(function () {
         $('#addr' + (Number(count) + Number(1))).html("<td id='srn_" + (count + 1) + "'>" + (count + 1) + "</td ><td><input type='text' id='productcode_" + (count + 1) + "'  placeholder='Event' class='form-control product' /> <input type='hidden' id='productcode_stock_" + (count + 1) + "' aria-hidden='true' /></td><td> <input class='form-control eventDt' type='date' id='evntDate_" + (count + 1) + "'name='evntDate' required pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}'></td><td> <span class='glyphicon glyphicon-remove'  id='del_" + (count + 1) + "'style='cursor: pointer;'></span></td>");
 
 
-        //$(".quantity").spinner();//for new row
-        $('.ui-spinner-button').click(function () {
-            var id = $(this).siblings('input').attr('id')
-            qtychanged(id);
-        });
-        $('.quantity').on('keyup keydown keypress blur change', function (e) {
-
-            var id = event.target.id;
-            qtychanged(id);
-
-
-        })
+     
 
         i++;
 
@@ -514,265 +492,13 @@ var babyNames = [
     { name: 'Zoe' }
 ];
 
-
-
-$("#txt_invdate").val(getFormattedDate(today()));
-
-
-$(document).on('click', '.glyphicon-remove', function (e) {
-    var id = this.id;
-    var delid = id.replace("del_", "");
-
-    var existingamount = $("#netvalue").text();
-    var deduction = $("#tax_" + delid).val();
-    $("#addr" + delid).remove();
-    var newamount = existingamount - deduction;
-    $("#netvalue").text(parseFloat(newamount).toFixed(2));
-    var count = $('.product').length;
-
-
-    var previtems = delid - 1;
-    var newcount = count;//Already 1 item deleted
-    var looprunning = newcount - previtems;
-    var nextid = delid;
-    for (var loopcounter = 0; loopcounter < looprunning; loopcounter++) {
-        nextid++;
-
-        $('#addr' + nextid).attr('id', 'addr' + (nextid - 1));
-        $('#productcode_' + nextid).attr('id', 'productcode_' + (nextid - 1));
-        $('#quantity_' + nextid).attr('id', 'quantity_' + (nextid - 1));
-        $('#rate_' + nextid).attr('id', 'rate_' + (nextid - 1));
-        $('#tax_' + nextid).attr('id', 'tax_' + (nextid - 1));
-        $('#del_' + nextid).attr('id', 'del_' + (nextid - 1));
-        $('#srn_' + nextid).attr('id', 'srn_' + (nextid - 1));
-
-        $('#srn_' + (nextid - 1)).text((nextid - 1));//id has been changed now set the new text
-
-    }
-
-});
-
-
-function today() {
-    return new Date();
-}
-
-
-
-// Get formatted date YYYY-MM-DD
-function getFormattedDate(date) {
-    return date.getFullYear()
-        + "-"
-        + ("0" + (date.getMonth() + 1)).slice(-2)
-        + "-"
-        + ("0" + date.getDate()).slice(-2);
-}
-
-function qtychanged(id) {
-
-    var i = id.replace("quantity_", "");
-    var rate = $("#rate_" + i).val();
-    var qty = $("#quantity_" + i).val();
-    var sto = $("#productcode_stock_" + i).val();
-    rate = parseFloat(rate);
-    qty = parseFloat(qty);
-    sto = parseFloat(sto);
-
-    if (sto >= qty) {
-        var tot = rate * qty;
-        $("#tax_" + i).val(parseFloat(tot).toFixed(2));
-        var netamount = 0.00;
-        var count = $('.total').length;
-        var loopcount = 1;
-        while (loopcount <= count) {
-            netamount = netamount + parseFloat($("#tax_" + loopcount).val());
-            loopcount++;
-
-        }
-
-        $("#netvalue").text(parseFloat(netamount).toFixed(2));
-    }
-    else {
-
-    }
-}
-
-function CreateInvoice(e) {
-    if (Validate()) {
-        var $loader = $("#loader");
-        $loader.gSpinner({
-
-            scale: .5
-
-        });
-        $.confirm({
-            title: 'Confirmation!',
-            content: 'Plese select yes to create the invoice.',
-            type: 'blue',
-            typeAnimated: true,
-            buttons: {
-                Yes: {
-
-                    action: function () {
-                        var InvoiceData = {
-
-                            InvoiceDate: $("#txt_invdate").val()
-                        };
-
-
-
-                        var ClientData = {
-
-                            ClientId: $("#txt_custgstin").val(),
-                            Name: $("#txt_custname").val(),
-                            Address: $("#txt_custaddr").val(),
-                            Email: $("#txt_custemail").val(),
-                            Phone: $("#txt_custphone").val(),
-                            iscontact: $("#chk_savecust").is(':checked')
-                        };
-                        //var productsData = [
-                        //             { ProductCode: "JioFI", Quantity: '1' },
-                        //             { ProductCode: "AIR4", Quantity: '2' }
-                        //];
-                        var productsData = [];
-                        var mathedcount = 1;
-                        var count = $('.product').length;
-                        var loopcount = 1;
-                        while (mathedcount <= count) {
-                            var element = {};
-                            element.ProductCode = $("#productcode_" + loopcount).val();
-                            element.Quantity = $("#quantity_" + loopcount).val();
-                            typeof (element.ProductCode != 'undefined')
-                            {
-                                productsData.push(element);
-                                mathedcount++;
-                            }
-                            loopcount++;
-
-                        }
-
-                        if (productsData[0].ProductCode.length > 0 && productsData.length > 0) {
-
-                            //  things = JSON.stringify({ 'things': things });
-                            $.ajax({ url: "Invoice/CreateInvoice", type: "POST", data: { invoice: InvoiceData, client: ClientData, products: productsData } })
-                                .success(function (response) {
-
-                                    $loader.gSpinner("hide");
-                                    if (response.invoiceno != null && response.PDFSuccess == true) {
-                                        $.confirm({
-                                            title: 'Sucessfull!',
-                                            closeIcon: true,
-                                            content: 'Invoice No-' + response.invoiceno + ' Created Sucessfully.' +
-                                                '<form action="" class="formName">' +
-                                                '<div class="form-group">' +
-                                                '<label>Forward To</label>' +
-                                                '<input type="email" placeholder="Email"  id="txt_fwdemail" value="' + ClientData.Email + '"class="email" required />' +
-                                                '</div>' +
-                                                '</form>',
-                                            type: 'green',
-                                            buttons: {
-                                                "Forward as Email": {
-
-                                                    action: function () {
-                                                        var sendto = this.$content.find('#txt_fwdemail').val();
-                                                        $.ajax({ url: "Invoice/ForwardEmail", type: "POST", data: { invoiceno: response.invoiceno, email: sendto } })
-                                                            .success(function (result) {
-
-                                                            })
-
-
-
-                                                    }
-                                                },
-                                                "DownLoad": {
-                                                    action: function () {
-
-                                                        //                    $.ajax({ url: "/Main/SavePDF", type: "POST", data: { invoiceno: result } })
-                                                        //.done(function (result) {
-                                                        window.location.href = "Invoice/DownLoad?invoiceno=" + response.invoiceno;
-
-                                                        //})
-                                                    }
-                                                }
-
-
-                                            }
-                                        });
-                                    }
-                                    else if (response.invoiceno != null && response.PDFSuccess == false) {
-                                        $.alert({
-                                            title: 'Alert!',
-                                            content: 'A invoice with invoice no ' + response.invoiceno + " created sucessfully,but due to some techinal reason failed to create the PDF",
-                                            type: 'warning',
-                                        });
-                                        $loader.gSpinner("hide");
-                                    }
-                                    else {
-                                        $.alert({
-                                            title: 'Alert!',
-                                            content: 'Failed to Create Invoice.!',
-                                            type: 'red',
-                                        });
-                                        $loader.gSpinner("hide");
-                                    }
-                                })
-                                .fail(function (response) {
-
-                                    $.alert({
-                                        title: 'Alert!',
-                                        content: 'Failed to Create Invoice.!',
-                                        type: 'red',
-                                    });
-                                    $loader.gSpinner("hide");
-                                });
-                        }
-                        else {
-                            $.alert('Atleast one product required for invoice creation ', 'Alert!');
-                            $loader.gSpinner("hide");
-                        }
-                    }
-                },
-                no: function () {
-                    $loader.gSpinner("hide");
-                }
-            }
-        });
-    }
-    else {
-        $.alert('Missing Input', 'Alert!');
-    }
-}
-
-function formatDate(date) {
-    var datestr = parseJsonDate(date);
-
-    var d = new Date(datestr),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-
-    return [year, month, day].join('-');
-}
-function parseJsonDate(jsonDate) {
-
-    var fullDate = new Date(parseInt(jsonDate.substr(6)));
-    var twoDigitMonth = (fullDate.getMonth() + 1) + ""; if (twoDigitMonth.length == 1) twoDigitMonth = "0" + twoDigitMonth;
-
-    var twoDigitDate = fullDate.getDate() + ""; if (twoDigitDate.length == 1) twoDigitDate = "0" + twoDigitDate;
-    var currentDate = twoDigitMonth + "/" + twoDigitDate + "/" + fullDate.getFullYear();
-
-    return currentDate;
-};
 function UploadNotes() {
     // alert("a");
     var today = new Date();
-   // console.log(today);
+    // console.log(today);
     var date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
     //var date1 = today.getDate() + "-" + (today.getMonth() + 1) + "-" + today.getFullYear();
-   // console.log(date);
+    // console.log(date);
     var time = today.getHours() + "-" + today.getMinutes() + "-" + today.getSeconds();
     var dateTime = date + "-" + time;
     var fileUpload = $("#importantNotesfile").get(0);
@@ -782,7 +508,7 @@ function UploadNotes() {
         modifiedfilename = dateTime + "-" + files[0].name;
     }
 
-   // debugger;
+    // debugger;
     var fileData = new FormData();
     // Looping over all files and add it to FormData object  
     for (var i = 0; i < files.length; i++) {
@@ -797,14 +523,14 @@ function UploadNotes() {
         data: fileData,
         success: function (result) {
 
-          //  debugger;
+            //  debugger;
             var count = $('.uplodednotes').length;
             var count1 = $('.uplodedby').length;
             var count2 = $('.uplodeddate').length;
             count++;
             count1++;
             count2++;
-            var htm = '<tr><td id="uplodednotes_' + count + '" class="uplodednotes">' + modifiedfilename + '</td><td id="uplodedby_' + count1 + '" class="uplodedby">Maynak Nandi</td><td id="uplodeddate_' + count2 +'" class="uplodeddate">' + date + '</td> <td> <i class="fa fa-times" aria-hidden="true"></i></td></tr>';
+            var htm = '<tr><td id="uplodednotes_' + count + '" class="uplodednotes">' + modifiedfilename + '</td><td id="uplodedby_' + count1 + '" class="uplodedby">Maynak Nandi</td><td id="uplodeddate_' + count2 + '" class="uplodeddate">' + date + '</td> <td> <i class="fa fa-times" aria-hidden="true"></i></td></tr>';
             $("#DocUpload tbody").append(htm);
             count++;
         },
@@ -814,15 +540,7 @@ function UploadNotes() {
     });
 }
 
-function GetParameterValues(param) {
-    var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    for (var i = 0; i < url.length; i++) {
-        var urlparam = url[i].split('=');
-        if (urlparam[0] == param) {
-            return urlparam[1];
-        }
-    }
-} 
+
 
 function fetchJobDetails() {
     var JobNumber = GetParameterValues('JobNo');

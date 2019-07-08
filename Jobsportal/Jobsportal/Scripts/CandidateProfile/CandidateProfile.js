@@ -20,7 +20,7 @@
         $('input[name=hiddeninputname]').val(ImgUploadedFiles);
 
         $.ajax({
-            url: '/Jobs/UploadFiles',
+            url: '/Candidate/UploadFiles',
             type: "POST",
             contentType: false, // Not to set any content header  
             processData: false, // Not to process data  
@@ -344,7 +344,7 @@ function SaveCandidateInfo() {
         
         $.ajax({
             type: "POST",
-            url: "/Jobs/SaveCandidateRecord",
+            url: "/Candidate/SaveCandidateRecord",
             data: JSON.stringify(CandidateLogin),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -413,7 +413,7 @@ function FetchCandidateDetails() {
 
     $.ajax({
         type: 'POST',
-        url: '/Jobs/FetchCandidateDetails',
+        url: '/Candidate/FetchCandidateDetails',
        
         contentType: "application/json; charset=utf-8",
         dataType: "json",

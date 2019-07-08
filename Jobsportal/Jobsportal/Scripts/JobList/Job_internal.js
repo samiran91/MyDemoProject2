@@ -63,12 +63,12 @@ $(document).ready(function () {
 });
 
 function Edit(e) {
-    window.location.href = "/Jobs/Editjobdetail?JobNo=" + e.data.record.JobNo;
+    window.location.href = "/Jobs/EditJobDetail_Admin?JobNo=" + e.data.record.JobNo;
     
 }
 
 function Add() {
-    window.location.href = "/Jobs/Editjobdetail";
+    window.location.href = "/Jobs/EditJobDetail_Admin";
 }
 function Search() {
     grid.reload({ searchString: $("#txtname").val() });

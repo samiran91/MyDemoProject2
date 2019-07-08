@@ -16,7 +16,12 @@ namespace Jobsportal.Controllers
         {
             return View();
         }
-
+        [HttpGet]
+        public ActionResult LoginRegistration()
+        {
+            DAL.Utility.LogActivity("At LoginRegistration", "LoginRegistration");
+            return View();
+        }
         [HttpPost]
         public JsonResult SignIn(Users userdata)
         {
@@ -42,12 +47,7 @@ namespace Jobsportal.Controllers
         }
 
 
-        [HttpGet]
-        public ActionResult LoginRegistration()
-        {
-            Utility.LogActivity("At LoginRegistration", "LoginRegistration");
-            return View();
-        }
+       
         public ActionResult SignOut()
         {
 
@@ -72,18 +72,7 @@ namespace Jobsportal.Controllers
         }
 
 
-        [HttpGet]
-        public ActionResult FooterTemplate()
-        {
-            return PartialView("_FooterTemplate");
-        }
-
-        public String GetResetPassword(String ResetPasswordvalue)
-        {
-            String Msg = Users.GetResetPassword(ResetPasswordvalue);
-            return Msg;
-        }
-
+       
         [HttpGet]
         public ActionResult ResetPassword()
         {
@@ -96,6 +85,13 @@ namespace Jobsportal.Controllers
 
             return View();
         }
+        public String GetResetPassword(String ResetPasswordvalue)
+        {
+            String Msg = Users.GetResetPassword(ResetPasswordvalue);
+            return Msg;
+        }
+
+        
 
         [HttpPost]
         public Boolean ChangeUserPassword(String GUID, String PasswordValue)
@@ -103,6 +99,13 @@ namespace Jobsportal.Controllers
             Boolean Status = Users.ChangeUserPassword(GUID, PasswordValue);
 
             return Status;
+        }
+
+
+        [HttpGet]
+        public ActionResult FooterTemplate()
+        {
+            return PartialView("_FooterTemplate");
         }
     }
 }

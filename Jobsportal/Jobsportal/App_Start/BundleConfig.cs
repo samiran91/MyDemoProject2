@@ -33,6 +33,7 @@ namespace Jobsportal
                     "~/Scripts/jquery-3.3.1.min.js",
                     "~/Scripts/bootstrap.js",
                     "~/Scripts/jquery-ui.js",
+                    "~/Scripts/utility.js",
                     "~/Scripts/grid/grid.js",
                     "~/Scripts/jquery-confirm.js",
                     "~/ Scripts/respond.js",
