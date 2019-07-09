@@ -77,7 +77,7 @@ namespace Jobsportal
                  "~/Scripts/CandidateProfile/CandidateProfile.js"
 
                  ));
-            bundles.Add(new StyleBundle("~/Content/CandidateProfile").Include(
+            bundles.Add(new StyleBundle("CandidateProfile").Include(
                       "~/Content/CandidateProfile/CandidateProfile.css"
 
                       ));

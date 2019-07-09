@@ -108,16 +108,17 @@ namespace Jobsportal.Controllers
 
             return PartialView("_FetchDiscussion", D);
         }
-    
 
-    #endregion
-    #region List Job Admin Page
 
-    public ActionResult ListJob_Admin()
+        #endregion
+        #region List Job Admin Page
+        [Authorize(Roles = "ADMIN")]
+        public ActionResult ListJob_Admin()
         {
             DAL.Utility.LogActivity("At Job_Internal", "Job_Internal");
             return View();
         }
+        [Authorize(Roles = "ADMIN")]
         public JsonResult GetJobAutocompleteValue(String Keyword)
         {
             List<String> list = new List<String>();
@@ -130,13 +131,13 @@ namespace Jobsportal.Controllers
         }
 
         #endregion
-#region Edit Job Details Admin Page
-
+        #region Edit Job Details Admin Page
+        [Authorize(Roles = "ADMIN")]
         public ActionResult EditJobDetail_Admin()
         {
             return View();
         }
-
+        [Authorize(Roles = "ADMIN")]
         public JsonResult FetchJobDetails(Int32 Jobno)
         {
             var J = Job.GetJobDescription(Jobno);
@@ -145,6 +146,7 @@ namespace Jobsportal.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "ADMIN")]
         public JsonResult SaveJobDetails(Job JobDetails)
         {
         
@@ -159,12 +161,13 @@ namespace Jobsportal.Controllers
             return Json(new { status }, JsonRequestBehavior.AllowGet);
         }
 
-
+        [Authorize(Roles = "ADMIN")]
         public void TaskCompleted(IAsyncResult R)
         {
             // Write here code to handle the completion of
             // your asynchronous method
         }
+        [Authorize(Roles = "ADMIN")]
         public void SendEmailToCandidate(int jobno,string jobkeywords)
         {
             DataSet Candidate = DAL.Utility.CandidateData();

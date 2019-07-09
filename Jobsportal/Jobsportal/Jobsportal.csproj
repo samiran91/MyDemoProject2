@@ -261,6 +261,7 @@
     <Content Include="Views\Shared\_JobPortalLayoutNoshellber.cshtml" />
     <Content Include="Views\Login\ResetPassword.cshtml" />
     <Content Include="Views\Candidate\CandidateProfile.cshtml" />
+    <Content Include="Views\Jobs\_FetchDiscussion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

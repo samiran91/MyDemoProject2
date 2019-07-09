@@ -16,6 +16,39 @@ $(document).ready(function () {
 
     });
 
+    $(document).on('click', '.glyphicon-remove', function (e) {
+        var id = this.id;
+        var delid = id.replace("del_", "");
+
+        var existingamount = $("#netvalue").text();
+        var deduction = $("#tax_" + delid).val();
+        $("#addr" + delid).remove();
+        var newamount = existingamount - deduction;
+        $("#netvalue").text(parseFloat(newamount).toFixed(2));
+        var count = $('.product').length;
+
+
+        var previtems = delid - 1;
+        var newcount = count;//Already 1 item deleted
+        var looprunning = newcount - previtems;
+        var nextid = delid;
+        for (var loopcounter = 0; loopcounter < looprunning; loopcounter++) {
+            nextid++;
+
+            $('#addr' + nextid).attr('id', 'addr' + (nextid - 1));
+            $('#productcode_' + nextid).attr('id', 'productcode_' + (nextid - 1));
+            $('#quantity_' + nextid).attr('id', 'quantity_' + (nextid - 1));
+            $('#rate_' + nextid).attr('id', 'rate_' + (nextid - 1));
+            $('#tax_' + nextid).attr('id', 'tax_' + (nextid - 1));
+            $('#del_' + nextid).attr('id', 'del_' + (nextid - 1));
+            $('#srn_' + nextid).attr('id', 'srn_' + (nextid - 1));
+
+            $('#srn_' + (nextid - 1)).text((nextid - 1));//id has been changed now set the new text
+
+        }
+
+    });
+
     $("#myMultiSearch").multisearch({
         source: babyNames,
     });
