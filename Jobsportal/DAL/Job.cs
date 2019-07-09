@@ -626,11 +626,12 @@ namespace DAL
             {
                 dbCon.Open();
 
-                using (SqlCommand dbCom = new SqlCommand(StoredProcedure.usp_Job_GetJobDetails, dbCon))
+                using (SqlCommand dbCom = new SqlCommand(StoredProcedure.USP_FETCHDISSCUSSIONTEXT, dbCon))
                 {
 
                     dbCom.CommandType = CommandType.StoredProcedure;
 
+                    dbCom.Parameters.AddWithValue("@JOBNO", Jobno);
 
                     using (SqlDataReader wizReader = dbCom.ExecuteReader())
                     {
@@ -638,12 +639,12 @@ namespace DAL
                         {
                             var Chat = new Discussion()
                             {
-                                ID = (Int32)wizReader["JOBNO"],
-                                ChatID = (Int32)wizReader["ChatID"],
-                                UserName = (String)wizReader["UserName"],
-                                JobNo = (Int32)wizReader["JobNo"],
-                                Messages = (String)wizReader["Messages"],
-                                MessageDateTime = Convert.ToDateTime(wizReader["MessageDateTime"]),
+                                ID = (Int32)wizReader["ID"],
+                                ChatID = (Int32)wizReader["CHATID"],
+                                UserName = (String)wizReader["USERNAME"],
+                                JobNo = (Int32)wizReader["JOBNO"],
+                                Messages = (String)wizReader["MESSAGES"],
+                                MessageDateTime = Convert.ToDateTime(wizReader["MSGDATETIME"]),
                             };
 
                             D.Add(Chat);
@@ -652,6 +653,33 @@ namespace DAL
                 }
             }
             return D;
+        }
+
+        public static Boolean InsertDiscussionMsg(DAL.Job.Discussion OBJ)
+        {
+            String connstring = Connection.GetConnectionString();
+            var status = false;
+            using (SqlConnection dbCon = new SqlConnection(connstring))
+            {
+                dbCon.Open();
+
+                using (SqlCommand dbCom = new SqlCommand(StoredProcedure.USP_INSERTDISSCUSSIONTEXT, dbCon))
+                {
+
+                    dbCom.CommandType = CommandType.StoredProcedure;
+
+                    dbCom.Parameters.AddWithValue("@JobNumber", OBJ.JobNo);
+                    dbCom.Parameters.AddWithValue("@USERNAME", OBJ.UserName);
+                    dbCom.Parameters.AddWithValue("@MESSAGES", OBJ.Messages);
+
+                    status = Convert.ToBoolean(dbCom.ExecuteNonQuery());
+
+
+                }
+
+            }
+
+            return status;
         }
 
     }

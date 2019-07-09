@@ -33,5 +33,10 @@ namespace DAL
 
         public const String USP_CHANGEPASSWORD = "usp_ChangePassword";
 
+        public const String USP_FETCHDISSCUSSIONTEXT = "USP_FETCHDISSCUSSIONTEXT";
+
+        public const String USP_INSERTDISSCUSSIONTEXT = "USP_INSERTDISSCUSSIONTEXT";
+
+
     }
 }

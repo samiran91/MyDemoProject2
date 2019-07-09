@@ -109,6 +109,13 @@ namespace Jobsportal.Controllers
             return PartialView("_FetchDiscussion", D);
         }
 
+        [HttpPost]
+        public Boolean InsertDiscussionMsg(DAL.Job.Discussion OBJ)
+        {
+            var status= DAL.Job.InsertDiscussionMsg(OBJ);
+            return status;
+        }
+
 
         #endregion
         #region List Job Admin Page

@@ -1,1 +1,35 @@
-﻿
+﻿@model List<DAL.Job.Discussion>
+<style>
+    table {
+        border-collapse: collapse;
+        border-collapse: separate;
+        border-spacing: 0 15px;
+    }
+    .td-right {
+        width: auto;
+        padding: 10px;
+        background: #dee9ff;
+        border-radius: 4px;
+        margin-bottom: 5px;
+        display: inline-block;
+    }
+</style>
+@if (Model != null)
+{
+    <table style="width:100%;">
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="width:10%; text-align:center;">
+                        <img height="46px" src="~/Images/Blankimage.png" />
+                    </td>
+                    <td class="td-right">@item.Messages</td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+}

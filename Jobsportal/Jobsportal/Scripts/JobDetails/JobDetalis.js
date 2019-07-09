@@ -49,27 +49,68 @@ $(document).ready(function () {
     });
 
     var JobNumber = GetParameterValues('JNo');
-    //FetchDiscussion(JobNumber);
+
+    FetchDiscussion(JobNumber);
 
 });
 
 function FetchDiscussion(JobNumber) {
-    //  alert(JobNumber);
+    
+     //alert(JobNumber);
     $.ajax({
         type: 'GET',
         url: '/Jobs/FetchDiscussion',
         data: {
-            JobNo: JobNumber
+            JobNumber: JobNumber
         },
         success: function (data) {
-            debugger;
-            // window.location.href = data;
+            
+            $("#FAQ-Community-Div").html('');
+            $("#FAQ-Community-Div").html(data);
+            
         },
         error: function (ex) {
             var r = jQuery.parseJSON(response.responseText);
             alert("Message: " + r.Message);
             alert("StackTrace: " + r.StackTrace);
             alert("ExceptionType: " + r.ExceptionType);
+        }
+    });
+}
+
+function GetParameterValues(param) {
+    var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for (var i = 0; i < url.length; i++) {
+        var urlparam = url[i].split('=');
+        if (urlparam[0] === param) {
+            return urlparam[1];
+        }
+    }
+} 
+
+function InsertMsgText() {
+    var JobNumber = GetParameterValues('JNo');
+    var Msg = $("#txt-FAQ-Comm").val();
+    var Discussion = new Object();
+
+    Discussion.UserName = 'anonymous';
+    Discussion.JobNo = JobNumber;
+    Discussion.Messages = Msg;
+
+    $.ajax({
+        type: "POST",
+        url: "/Jobs/InsertDiscussionMsg",
+        data: JSON.stringify(Discussion),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+
+            var JobNumber = GetParameterValues('JNo');
+            FetchDiscussion(JobNumber);
+        },
+
+        error: function (response) {
+            console.log(response);
         }
     });
 }
