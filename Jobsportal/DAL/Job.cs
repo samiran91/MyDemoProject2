@@ -95,7 +95,7 @@ namespace DAL
 
         public class keywordSearch
         {
-            public int ID { get; set; }
+   
 
             public String Keyword { get; set; }
         }
@@ -548,7 +548,7 @@ namespace DAL
             List<DAL.Job.keywordSearch> list = new List<DAL.Job.keywordSearch>();
             
             String connstring = Connection.GetConnectionString();
-            String sql_select = String.Format("SELECT ID,KEYOWRD from KEYWORD where KEYOWRD like '%{0}%' ", Keyword);
+            String sql_select = String.Format("SELECT KEYWORD from KEYWORD where KEYWORD like '%{0}%' ", Keyword);
             using (SqlConnection dbCon = new SqlConnection(connstring))
             {
                 dbCon.Open();
@@ -565,8 +565,8 @@ namespace DAL
                         {
                             var OBJ = new keywordSearch()
                             {
-                                ID = Convert.ToInt32(wizReader["ID"]),
-                                Keyword = Convert.ToString(wizReader["KEYOWRD"]),
+                               
+                                Keyword = Convert.ToString(wizReader["KEYWORD"]),
                             };
 
                             list.Add(OBJ);
