@@ -5,6 +5,7 @@
         border-collapse: separate;
         border-spacing: 0 15px;
     }
+
     .td-right {
         width: auto;
         padding: 10px;
@@ -14,6 +15,9 @@
         display: inline-block;
     }
 </style>
+
+
+
 @if (Model != null)
 {
     <table style="width:100%;">
@@ -21,15 +25,33 @@
 
             @foreach (var item in Model)
             {
-                <tr>
-                    <td style="width:10%; text-align:center;">
-                        <img height="46px" src="~/Images/NoImage.png" />
-                    </td>
-                    <td class="td-right">@item.Messages</td>
-                </tr>
+                if (item.MyMsg)
+                {
+                    <tr style="text-align:right;">
+
+
+                        <td style="display:inline-grid;">
+                            <img height="46px" src="~/Images/NoImage.png" />
+                            <span style="font-weight:bold;">@item.UserName</span>
+                        </td>
+                        <td class="td-right">@item.Messages<span  style="display:grid;">@item.MessageDateTime.ToString("dd/MM/yyyy h:mm tt")</span></td>
+                    </tr>
+                }
+
+                else
+                {
+                    <tr>
+                        <td style="display:inline-grid;">
+                            <img height="46px" src="~/Images/NoImage.png" />
+                            <span  style="font-weight:bold;">@item.UserName</span>
+                        </td>
+                        <td class="td-right">@item.Messages<span style="display:grid;">@item.MessageDateTime.ToString("dd/MM/yyyy h:mm tt")</span></td>
+                    </tr>
+                }
             }
 
         </tbody>
 
     </table>
 }
+

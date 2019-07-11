@@ -113,6 +113,8 @@ namespace DAL
 
             public DateTime MessageDateTime { get; set; }
 
+            public Boolean MyMsg { get; set; }
+
         }
 
         private const String JobNum = "@JobNumber";
@@ -142,7 +144,7 @@ namespace DAL
         private const String JobPostedDate = "@DT_JOBPOSTEDDATE";
         private const String JobQualification = "@STR_QUALIFICATION";
         private const String JobApplyLink = "@STR_APPLYLINK";
-       
+
         private const String Phoneno = "@phoneno";
 
         public static List<Job> GetJobList(SearchParam param = null)
@@ -219,7 +221,7 @@ namespace DAL
                                 PostedDate = (DateTime)wizReader["POSTEDDATE"],
                                 Qualification = (String)wizReader["QUALIFICATION"],
                                 ApplyLink = (String)wizReader["APPLYLINK"],
-                                Location=Convert.ToString(wizReader["Location"]),
+                                Location = Convert.ToString(wizReader["Location"]),
 
                             };
 
@@ -405,9 +407,9 @@ namespace DAL
                                     dbCom.Parameters.AddWithValue(JobNum, JobNumber);
 
 
-                                  dbCom.ExecuteNonQuery();
+                                    dbCom.ExecuteNonQuery();
                                     status = status + 1;
-                                    if(status!=3)
+                                    if (status != 3)
                                     {
                                         status = 4;
                                     }
@@ -448,15 +450,15 @@ namespace DAL
                     dbCom.Parameters.AddWithValue(CandidateDOB, CPOBJ.DOB);
                     dbCom.Parameters.AddWithValue(CandidateAddress, CPOBJ.Address);
                     dbCom.Parameters.AddWithValue(CandidateEmail, CPOBJ.Email);
-                    dbCom.Parameters.AddWithValue(CandidateMobile,CPOBJ.Mobile);
+                    dbCom.Parameters.AddWithValue(CandidateMobile, CPOBJ.Mobile);
                     dbCom.Parameters.AddWithValue(CandidateQual, CPOBJ.Qualification);
                     dbCom.Parameters.AddWithValue(CandidateExp, CPOBJ.Experiance);
                     dbCom.Parameters.AddWithValue(CandidateIntrst, CPOBJ.Interests);
                     dbCom.Parameters.AddWithValue(CandidateImage, CPOBJ.ImgValue);
 
                     dbCom.ExecuteNonQuery();
-                    
-                   
+
+
                 }
 
             }
@@ -504,7 +506,7 @@ namespace DAL
             CandidateProfile OBJ = null;
 
             String connstring = Connection.GetConnectionString();
-            
+
             using (SqlConnection dbCon = new SqlConnection(connstring))
             {
                 dbCon.Open();
@@ -515,26 +517,26 @@ namespace DAL
                     dbCom.CommandType = CommandType.StoredProcedure;
                     dbCom.Parameters.AddWithValue(Phoneno, phoneno);
 
-                   
-                        using (SqlDataReader wizReader = dbCom.ExecuteReader())
+
+                    using (SqlDataReader wizReader = dbCom.ExecuteReader())
+                    {
+                        while (wizReader.Read())
                         {
-                            while (wizReader.Read())
+                            OBJ = new CandidateProfile()
                             {
-                                OBJ = new CandidateProfile()
-                                {
-                                    Name = Convert.ToString(wizReader["NAME"]),
-                                    Gender = Convert.ToString(wizReader["GENDER"]),
-                                    DOB =Convert.ToDateTime(wizReader["DOB"]),
-                                    Address = Convert.ToString(wizReader["ADDRESS"]),
-                                    Email = Convert.ToString(wizReader["EMAIL"]),
-                                    Qualification = Convert.ToString(wizReader["QUALIFICATION"]),
-                                    Experiance = Convert.ToString(wizReader["EXPERIANCE"]),
-                                    Interests = Convert.ToString(wizReader["INTEREST"]),
-                                    ImgValue = Convert.ToString(wizReader["IMGPATH"])
-                                };
-                            }
+                                Name = Convert.ToString(wizReader["NAME"]),
+                                Gender = Convert.ToString(wizReader["GENDER"]),
+                                DOB = Convert.ToDateTime(wizReader["DOB"]),
+                                Address = Convert.ToString(wizReader["ADDRESS"]),
+                                Email = Convert.ToString(wizReader["EMAIL"]),
+                                Qualification = Convert.ToString(wizReader["QUALIFICATION"]),
+                                Experiance = Convert.ToString(wizReader["EXPERIANCE"]),
+                                Interests = Convert.ToString(wizReader["INTEREST"]),
+                                ImgValue = Convert.ToString(wizReader["IMGPATH"])
+                            };
                         }
-                   
+                    }
+
 
                 }
             }
@@ -546,7 +548,7 @@ namespace DAL
         public static List<DAL.Job.keywordSearch> FetchKeywordAutocompleteData(String Keyword)
         {
             List<DAL.Job.keywordSearch> list = new List<DAL.Job.keywordSearch>();
-            
+
             String connstring = Connection.GetConnectionString();
             String sql_select = String.Format("SELECT KEYWORD from KEYWORD where KEYWORD like '%{0}%' ", Keyword);
             using (SqlConnection dbCon = new SqlConnection(connstring))
@@ -601,7 +603,7 @@ namespace DAL
                     {
                         while (wizReader.Read())
                         {
-                            
+
                             String JobTitle = Convert.ToString(wizReader["JOBNUMANDTITLE"]);
 
                             list.Add(JobTitle);
@@ -619,7 +621,7 @@ namespace DAL
         {
 
             String connstring = Connection.GetConnectionString();
-
+            
             List<Discussion> D = new List<Discussion>();
 
             using (SqlConnection dbCon = new SqlConnection(connstring))
@@ -637,15 +639,22 @@ namespace DAL
                     {
                         while (wizReader.Read())
                         {
-                            var Chat = new Discussion()
+                            Discussion Chat = new Discussion();
+                            Chat.ID = (Int32)wizReader["ID"];
+                            Chat.ChatID = (Int32)wizReader["CHATID"];
+                            Chat.UserName = (String)wizReader["USERNAME"];
+                            Chat.JobNo = (Int32)wizReader["JOBNO"];
+                            Chat.Messages = (String)wizReader["MESSAGES"];
+                            Chat.MessageDateTime = Convert.ToDateTime(wizReader["MSGDATETIME"]);
+                            Chat.MyMsg = false;
+
+                            if (HttpContext.Current.User.Identity != null)
                             {
-                                ID = (Int32)wizReader["ID"],
-                                ChatID = (Int32)wizReader["CHATID"],
-                                UserName = (String)wizReader["USERNAME"],
-                                JobNo = (Int32)wizReader["JOBNO"],
-                                Messages = (String)wizReader["MESSAGES"],
-                                MessageDateTime = Convert.ToDateTime(wizReader["MSGDATETIME"]),
-                            };
+                                if (Chat.UserName == System.Web.HttpContext.Current.User.Identity.Name.ToString())
+                                {
+                                    Chat.MyMsg = true;
+                                }
+                            }
 
                             D.Add(Chat);
                         }
