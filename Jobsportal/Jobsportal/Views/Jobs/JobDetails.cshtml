@@ -95,11 +95,13 @@
 
             </div>
             <div id="FAQC" class="tab-pane fade">
-                @*<p style=" border: 1px solid #bcbbbc; padding: 10px; margin: 10px 0 0 0;"></p>*@
-                <div class="input-icons">
-                    <textarea class="input-field" id="txt-FAQ-Comm" ></textarea><button type="button" onclick="InsertMsgText()" class="btn btn-success">Enter</button><a style="display:flex;align-items:center;" type="button" class="btn btn-success" href="@Url.Action("LoginRegistration","Login")" >Join Discussion</a>
-                </div>
                 <div id="FAQ-Community-Div"></div>
+                <h4 class="text-left">Post a Comment</h4>
+                <div class="input-icons">
+
+                    <textarea class="input-field" id="txt-FAQ-Comm" placeholder="Enter your comment..."></textarea><button type="button" onclick="InsertMsgText()" class="btn btn-success">Submit</button><a style="display:flex;align-items:center;" type="button" class="btn btn-success" href="@Url.Action("LoginRegistration","Login")">Join Discussion</a>
+                </div>
+
             </div>
         </div>
     </div>

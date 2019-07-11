@@ -110,10 +110,10 @@ namespace Jobsportal.Controllers
         }
 
         [HttpPost]
-        public Boolean InsertDiscussionMsg(DAL.Job.Discussion OBJ)
+        public JsonResult InsertDiscussionMsg(DAL.Job.Discussion OBJ)
         {
             var status= DAL.Job.InsertDiscussionMsg(OBJ);
-            return status;
+            return Json(status, JsonRequestBehavior.AllowGet);
         }
 
 
