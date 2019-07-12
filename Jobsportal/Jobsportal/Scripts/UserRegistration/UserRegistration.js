@@ -85,7 +85,6 @@ function SignUp() {
         CandidateSignUp.Mobile = Phone;
         CandidateSignUp.Email = Email;
         CandidateSignUp.Password = Password;
-
         $.ajax({
             type: "POST",
             url: "/Login/CandidateSignUp",
@@ -93,8 +92,9 @@ function SignUp() {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
+                
                 if (response["Message"] == 'InsertSuccess') {
-                    window.location = "/Jobs/CandidateProfile";
+                    window.location = "/Candidate/CandidateProfile";
                 }
                 else if (response["Message"] == 'MOBILE_EXISTS') {
                     $.alert({

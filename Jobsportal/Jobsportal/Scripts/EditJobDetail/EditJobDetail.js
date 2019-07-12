@@ -1,6 +1,6 @@
 ﻿
 $(document).ready(function () {
-
+    PopulateQals();
     var i = 1;
   
     $("#add_row").click(function () {
@@ -50,7 +50,7 @@ $(document).ready(function () {
     });
 
     $("#myMultiSearch").multisearch({
-        source: babyNames,
+        source: QualNames,
     });
 
     function HomeIndex() {
@@ -75,7 +75,7 @@ $(document).ready(function () {
         self.init();
     })
 
-
+   
     $("#SubmitJobDetail").click(function () {
         var JobDetailValidate = 1;
 
@@ -87,12 +87,19 @@ $(document).ready(function () {
         var JobDescp = $(".note-editable").html();
         var Qual = [];
         var Str_Qual;
-
+       
         $("#myMultiSearch div.sel-anchor a").each(function () {
+          
             Qual.push($(this).text());
-            Str_Qual = Qual.toString();
+            
         });
-
+        
+        var qualtextvalues = $("#txt_qual").val().split(",");
+        for (index = 0; index < qualtextvalues.length; index++) {
+            Qual.push(qualtextvalues[index]);
+            
+        } 
+        Str_Qual = Qual.toString();
         var JobData = [];
         var Str_JobData;
 
@@ -155,6 +162,7 @@ $(document).ready(function () {
             loopcount++;
 
         }
+        var comments = $("#txt_comments").val();
 
         if (JobTitle == null || JobTitle == "") {
             $.alert({
@@ -245,6 +253,7 @@ $(document).ready(function () {
             JobDetails.JobImpDates = JobData;
             JobDetails.JobNotes = Documents;
             JobDetails.Location = Location;
+            JobDetails.comments = comments;
 
             $.ajax({
                 type: "POST",
@@ -264,10 +273,10 @@ $(document).ready(function () {
                         $('input[type="text"]').val('');
                         $("textarea").val('');
                         $("#txt_PostedDate").val('mm/dd/yyyy');
-                        window.location.href = "/Jobs/Job_Internal";
+                        window.location.href = "/Jobs/ListJob_Admin";
                     }
 
-                    else if (response["status"] == '2') {
+                    else if (response["status"] == '4') {
                         $.alert({
                             type: 'warning',
                             title: 'Alert!',
@@ -289,7 +298,7 @@ $(document).ready(function () {
                         $("textarea").val('');
                         $("#txt_PostedDate").val('mm/dd/yyyy');
                     }
-                    else if (response["status"] == '4') {
+                    else if (response["status"] == '2') {
                         $.alert({
                             type: 'warning',
                             title: 'Alert!',
@@ -321,208 +330,32 @@ $(document).ready(function () {
     fetchJobDetails();
 
 });
+function PopulateQals() {
+   $.ajax({
+       url: '/Jobs/GetDegreeList',
 
-var babyNames = [
-    { name: 'Aaliyah' },
-    { name: 'Aaron' },
-    { name: 'Abigail' },
-    { name: 'Adam' },
-    { name: 'Addison' },
-    { name: 'Adrian' },
-    { name: 'Aiden' },
-    { name: 'Alex' },
-    { name: 'Alexa' },
-    { name: 'Alexander' },
-    { name: 'Alexandra' },
-    { name: 'Alexis' },
-    { name: 'Alice' },
-    { name: 'Allison' },
-    { name: 'Alyssa' },
-    { name: 'Amelia' },
-    { name: 'Andrew' },
-    { name: 'Anna' },
-    { name: 'Annabelle' },
-    { name: 'Anthony' },
-    { name: 'Aria' },
-    { name: 'Arianna' },
-    { name: 'Asher' },
-    { name: 'Aubrey' },
-    { name: 'Audrey' },
-    { name: 'Austin' },
-    { name: 'Ava' },
-    { name: 'Avery' },
-    { name: 'Bailey' },
-    { name: 'Bella' },
-    { name: 'Benjamin' },
-    { name: 'Bentley' },
-    { name: 'Blake' },
-    { name: 'Brandon' },
-    { name: 'Brayden' },
-    { name: 'Brianna' },
-    { name: 'Brody' },
-    { name: 'Brooke' },
-    { name: 'Brooklyn' },
-    { name: 'Caleb' },
-    { name: 'Cameron' },
-    { name: 'Caroline' },
-    { name: 'Carson' },
-    { name: 'Carter' },
-    { name: 'Charlie' },
-    { name: 'Charlotte' },
-    { name: 'Chase' },
-    { name: 'Chloe' },
-    { name: 'Christian' },
-    { name: 'Christopher' },
-    { name: 'Claire' },
-    { name: 'Clara' },
-    { name: 'Cole' },
-    { name: 'Colin' },
-    { name: 'Colton' },
-    { name: 'Connor' },
-    { name: 'Cooper' },
-    { name: 'Daniel' },
-    { name: 'David' },
-    { name: 'Declan' },
-    { name: 'Dominic' },
-    { name: 'Dylan' },
-    { name: 'Easton' },
-    { name: 'Eleanor' },
-    { name: 'Elena' },
-    { name: 'Eli' },
-    { name: 'Eliana' },
-    { name: 'Elijah' },
-    { name: 'Elise' },
-    { name: 'Elizabeth' },
-    { name: 'Ella' },
-    { name: 'Ellie' },
-    { name: 'Emily' },
-    { name: 'Emma' },
-    { name: 'Ethan' },
-    { name: 'Eva' },
-    { name: 'Evan' },
-    { name: 'Evelyn' },
-    { name: 'Gabriel' },
-    { name: 'Gabriella' },
-    { name: 'Gavin' },
-    { name: 'Gianna' },
-    { name: 'Grace' },
-    { name: 'Grayson' },
-    { name: 'Hailey' },
-    { name: 'Hannah' },
-    { name: 'Harper' },
-    { name: 'Harrison' },
-    { name: 'Hayden' },
-    { name: 'Henry' },
-    { name: 'Hudson' },
-    { name: 'Hunter' },
-    { name: 'Ian' },
-    { name: 'Isaac' },
-    { name: 'Isabella' },
-    { name: 'Isabelle' },
-    { name: 'Isaiah' },
-    { name: 'Isla' },
-    { name: 'Jace' },
-    { name: 'Jack' },
-    { name: 'Jackson' },
-    { name: 'Jacob' },
-    { name: 'Jake' },
-    { name: 'James' },
-    { name: 'Jasmine' },
-    { name: 'Jason' },
-    { name: 'Jayden' },
-    { name: 'Jeremiah' },
-    { name: 'John' },
-    { name: 'Jonathan' },
-    { name: 'Jordan' },
-    { name: 'Joseph' },
-    { name: 'Joshua' },
-    { name: 'Julia' },
-    { name: 'Julian' },
-    { name: 'Kaitlyn' },
-    { name: 'Kate' },
-    { name: 'Kayla' },
-    { name: 'Kaylee' },
-    { name: 'Kendall' },
-    { name: 'Kennedy' },
-    { name: 'Kylie' },
-    { name: 'Landon' },
-    { name: 'Lauren' },
-    { name: 'Layla' },
-    { name: 'Leah' },
-    { name: 'Leo' },
-    { name: 'Levi' },
-    { name: 'Liam' },
-    { name: 'Lillian' },
-    { name: 'Lily' },
-    { name: 'Lincoln' },
-    { name: 'Logan' },
-    { name: 'Lucas' },
-    { name: 'Lucy' },
-    { name: 'Luke' },
-    { name: 'Lyla' },
-    { name: 'Mackenzie' },
-    { name: 'Madelyn' },
-    { name: 'Madison' },
-    { name: 'Makayla' },
-    { name: 'Maria' },
-    { name: 'Mason' },
-    { name: 'Matthew' },
-    { name: 'Max' },
-    { name: 'Maya' },
-    { name: 'Mia' },
-    { name: 'Micah' },
-    { name: 'Michael' },
-    { name: 'Mila' },
-    { name: 'Miles' },
-    { name: 'Molly' },
-    { name: 'Morgan' },
-    { name: 'Natalie' },
-    { name: 'Nathan' },
-    { name: 'Nathaniel' },
-    { name: 'Nevaeh' },
-    { name: 'Nicholas' },
-    { name: 'Noah' },
-    { name: 'Nolan' },
-    { name: 'Nora' },
-    { name: 'Oliver' },
-    { name: 'Olivia' },
-    { name: 'Owen' },
-    { name: 'Paige' },
-    { name: 'Parker' },
-    { name: 'Peyton' },
-    { name: 'Piper' },
-    { name: 'Quinn' },
-    { name: 'Reagan' },
-    { name: 'Reese' },
-    { name: 'Riley' },
-    { name: 'Riley' },
-    { name: 'Ruby' },
-    { name: 'Ryan' },
-    { name: 'Ryder' },
-    { name: 'Sadie' },
-    { name: 'Samantha' },
-    { name: 'Samuel' },
-    { name: 'Sarah' },
-    { name: 'Savannah' },
-    { name: 'Scarlett' },
-    { name: 'Sean' },
-    { name: 'Sebastian' },
-    { name: 'Sienna' },
-    { name: 'Sophia' },
-    { name: 'Sophie' },
-    { name: 'Stella' },
-    { name: 'Sydney' },
-    { name: 'Taylor' },
-    { name: 'Thomas' },
-    { name: 'Tristan' },
-    { name: 'Tyler' },
-    { name: 'Victoria' },
-    { name: 'Violet' },
-    { name: 'William' },
-    { name: 'Wyatt' },
-    { name: 'Xavier' },
-    { name: 'Zachary' },
-    { name: 'Zoe' }
+
+        dataType: "json",
+        success: function (data) {
+          
+           QualData = JSON.parse(data);
+           //$.each(data, function (i, item) {
+           //    babyNames.push(item.Keyword);
+           //});​
+           for (index = 0; index < QualData.length; index++) {
+               var element = {};
+               element.name = QualData[index].Keyword;
+
+               QualNames.push(element);
+           } 
+           
+                
+        }
+    });
+}
+var QualData = [];
+var QualNames= [
+   
 ];
 
 function UploadNotes() {
@@ -541,7 +374,7 @@ function UploadNotes() {
         modifiedfilename = dateTime + "-" + files[0].name;
     }
 
-    // debugger;
+   
     var fileData = new FormData();
     // Looping over all files and add it to FormData object  
     for (var i = 0; i < files.length; i++) {
@@ -556,7 +389,7 @@ function UploadNotes() {
         data: fileData,
         success: function (result) {
 
-            //  debugger;
+           
             var count = $('.uplodednotes').length;
             var count1 = $('.uplodedby').length;
             var count2 = $('.uplodeddate').length;
@@ -592,6 +425,7 @@ function fetchJobDetails() {
                 $("#txt_PostedDate").val(formatDate(data.PostedDate));
                 $("#txt_AplyLink").val(data.ApplyLink);
                 $("#txt_location").val(data.Location);
+                $("#txt_comments").val(data.Comments);
                 $(".note-editable").html(data.JobDesc);
 
                 var Ql = data.Qualification;
@@ -609,7 +443,7 @@ function fetchJobDetails() {
 
 
 
-                //debugger;
+                
                 $("#tab_logic tbody").html('');
                 var tablerow = $('#tab_logic tbody tr').length;
                 for (var i = 0; i < data.JobImpDates.length; i++) {

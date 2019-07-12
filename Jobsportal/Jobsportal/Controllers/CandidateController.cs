@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using DAL;
 using System.IO;
+using DAL;
+
 
 namespace Jobsportal.Controllers
 {
@@ -91,7 +92,7 @@ namespace Jobsportal.Controllers
             }
         }
 
-
         
+
     }
 }

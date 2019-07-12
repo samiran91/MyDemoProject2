@@ -46,7 +46,7 @@
 }
 
 $(document).ready(function () {
-
+    PopulateInterests();
     $("#imageUpload").change(function () {
         readURL(this);
     });
@@ -61,216 +61,35 @@ $(document).ready(function () {
     });
 
     $("#myMultiSearch").multisearch({
-        source: babyNames,
+        source: InterestNames,
     });
 
  
     FetchCandidateDetails();
 
 });
+function PopulateInterests()
+    {
+    $.ajax({
+        url: '/Jobs/GetKeywordAutocompleteValue',
 
+       
+        dataType: "json",
+        success: function (data) {
+            debugger;
+           InterestData = JSON.parse(data);
+           for (index = 0; index < InterestData.length; index++) {
+               var element = {};
+               element.name = InterestData[index].Keyword;
 
-var babyNames = [
-    { name: 'Aaliyah' },
-    { name: 'Aaron' },
-    { name: 'Abigail' },
-    { name: 'Adam' },
-    { name: 'Addison' },
-    { name: 'Adrian' },
-    { name: 'Aiden' },
-    { name: 'Alex' },
-    { name: 'Alexa' },
-    { name: 'Alexander' },
-    { name: 'Alexandra' },
-    { name: 'Alexis' },
-    { name: 'Alice' },
-    { name: 'Allison' },
-    { name: 'Alyssa' },
-    { name: 'Amelia' },
-    { name: 'Andrew' },
-    { name: 'Anna' },
-    { name: 'Annabelle' },
-    { name: 'Anthony' },
-    { name: 'Aria' },
-    { name: 'Arianna' },
-    { name: 'Asher' },
-    { name: 'Aubrey' },
-    { name: 'Audrey' },
-    { name: 'Austin' },
-    { name: 'Ava' },
-    { name: 'Avery' },
-    { name: 'Bailey' },
-    { name: 'Bella' },
-    { name: 'Benjamin' },
-    { name: 'Bentley' },
-    { name: 'Blake' },
-    { name: 'Brandon' },
-    { name: 'Brayden' },
-    { name: 'Brianna' },
-    { name: 'Brody' },
-    { name: 'Brooke' },
-    { name: 'Brooklyn' },
-    { name: 'Caleb' },
-    { name: 'Cameron' },
-    { name: 'Caroline' },
-    { name: 'Carson' },
-    { name: 'Carter' },
-    { name: 'Charlie' },
-    { name: 'Charlotte' },
-    { name: 'Chase' },
-    { name: 'Chloe' },
-    { name: 'Christian' },
-    { name: 'Christopher' },
-    { name: 'Claire' },
-    { name: 'Clara' },
-    { name: 'Cole' },
-    { name: 'Colin' },
-    { name: 'Colton' },
-    { name: 'Connor' },
-    { name: 'Cooper' },
-    { name: 'Daniel' },
-    { name: 'David' },
-    { name: 'Declan' },
-    { name: 'Dominic' },
-    { name: 'Dylan' },
-    { name: 'Easton' },
-    { name: 'Eleanor' },
-    { name: 'Elena' },
-    { name: 'Eli' },
-    { name: 'Eliana' },
-    { name: 'Elijah' },
-    { name: 'Elise' },
-    { name: 'Elizabeth' },
-    { name: 'Ella' },
-    { name: 'Ellie' },
-    { name: 'Emily' },
-    { name: 'Emma' },
-    { name: 'Ethan' },
-    { name: 'Eva' },
-    { name: 'Evan' },
-    { name: 'Evelyn' },
-    { name: 'Gabriel' },
-    { name: 'Gabriella' },
-    { name: 'Gavin' },
-    { name: 'Gianna' },
-    { name: 'Grace' },
-    { name: 'Grayson' },
-    { name: 'Hailey' },
-    { name: 'Hannah' },
-    { name: 'Harper' },
-    { name: 'Harrison' },
-    { name: 'Hayden' },
-    { name: 'Henry' },
-    { name: 'Hudson' },
-    { name: 'Hunter' },
-    { name: 'Ian' },
-    { name: 'Isaac' },
-    { name: 'Isabella' },
-    { name: 'Isabelle' },
-    { name: 'Isaiah' },
-    { name: 'Isla' },
-    { name: 'Jace' },
-    { name: 'Jack' },
-    { name: 'Jackson' },
-    { name: 'Jacob' },
-    { name: 'Jake' },
-    { name: 'James' },
-    { name: 'Jasmine' },
-    { name: 'Jason' },
-    { name: 'Jayden' },
-    { name: 'Jeremiah' },
-    { name: 'John' },
-    { name: 'Jonathan' },
-    { name: 'Jordan' },
-    { name: 'Joseph' },
-    { name: 'Joshua' },
-    { name: 'Julia' },
-    { name: 'Julian' },
-    { name: 'Kaitlyn' },
-    { name: 'Kate' },
-    { name: 'Kayla' },
-    { name: 'Kaylee' },
-    { name: 'Kendall' },
-    { name: 'Kennedy' },
-    { name: 'Kylie' },
-    { name: 'Landon' },
-    { name: 'Lauren' },
-    { name: 'Layla' },
-    { name: 'Leah' },
-    { name: 'Leo' },
-    { name: 'Levi' },
-    { name: 'Liam' },
-    { name: 'Lillian' },
-    { name: 'Lily' },
-    { name: 'Lincoln' },
-    { name: 'Logan' },
-    { name: 'Lucas' },
-    { name: 'Lucy' },
-    { name: 'Luke' },
-    { name: 'Lyla' },
-    { name: 'Mackenzie' },
-    { name: 'Madelyn' },
-    { name: 'Madison' },
-    { name: 'Makayla' },
-    { name: 'Maria' },
-    { name: 'Mason' },
-    { name: 'Matthew' },
-    { name: 'Max' },
-    { name: 'Maya' },
-    { name: 'Mia' },
-    { name: 'Micah' },
-    { name: 'Michael' },
-    { name: 'Mila' },
-    { name: 'Miles' },
-    { name: 'Molly' },
-    { name: 'Morgan' },
-    { name: 'Natalie' },
-    { name: 'Nathan' },
-    { name: 'Nathaniel' },
-    { name: 'Nevaeh' },
-    { name: 'Nicholas' },
-    { name: 'Noah' },
-    { name: 'Nolan' },
-    { name: 'Nora' },
-    { name: 'Oliver' },
-    { name: 'Olivia' },
-    { name: 'Owen' },
-    { name: 'Paige' },
-    { name: 'Parker' },
-    { name: 'Peyton' },
-    { name: 'Piper' },
-    { name: 'Quinn' },
-    { name: 'Reagan' },
-    { name: 'Reese' },
-    { name: 'Riley' },
-    { name: 'Riley' },
-    { name: 'Ruby' },
-    { name: 'Ryan' },
-    { name: 'Ryder' },
-    { name: 'Sadie' },
-    { name: 'Samantha' },
-    { name: 'Samuel' },
-    { name: 'Sarah' },
-    { name: 'Savannah' },
-    { name: 'Scarlett' },
-    { name: 'Sean' },
-    { name: 'Sebastian' },
-    { name: 'Sienna' },
-    { name: 'Sophia' },
-    { name: 'Sophie' },
-    { name: 'Stella' },
-    { name: 'Sydney' },
-    { name: 'Taylor' },
-    { name: 'Thomas' },
-    { name: 'Tristan' },
-    { name: 'Tyler' },
-    { name: 'Victoria' },
-    { name: 'Violet' },
-    { name: 'William' },
-    { name: 'Wyatt' },
-    { name: 'Xavier' },
-    { name: 'Zachary' },
-    { name: 'Zoe' }
+               InterestNames.push(element);
+           } 
+        }
+   });
+}
+var InterestData = [];
+var InterestNames= [
+   
 ];
 
 
@@ -281,11 +100,15 @@ function SaveCandidateInfo() {
 
     $("#myMultiSearch div.sel-anchor a").each(function () {
         Intrest.push($(this).text());
-        Str_Intrst = Intrest.toString();
+        
     });
 
+    var insttextvalues = $("#txt_inst").val().split(",");
+    for (index = 0; index < insttextvalues.length; index++) {
+        Intrest.push(insttextvalues[index]);
 
-    var ValidateCandidate = 1;
+    }
+    Str_Intrst = Intrest.toString();
     var Name = $("#txt_candName").val();
     var Gender = $('#txt_candGender :selected').val();
     var DOB = $("#txt_candDOB").val();
@@ -296,6 +119,7 @@ function SaveCandidateInfo() {
     var Exp = $("#txt_candExp").val();
     var ImgValue = $("#hdn_imgfname").val();
 
+    var ValidateCandidate = 1;
     if (Name == null || Name == "") {
         $.alert({
             type: 'red',
@@ -428,3 +252,5 @@ function FetchCandidateDetails() {
         }
     });
 }
+
+

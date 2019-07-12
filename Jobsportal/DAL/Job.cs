@@ -99,6 +99,8 @@ namespace DAL
 
             public String Keyword { get; set; }
         }
+
+
         public class Discussion
         {
             public int ID { get; set; }
@@ -222,6 +224,7 @@ namespace DAL
                                 Qualification = (String)wizReader["QUALIFICATION"],
                                 ApplyLink = (String)wizReader["APPLYLINK"],
                                 Location = Convert.ToString(wizReader["Location"]),
+                                Comments= Convert.ToString(wizReader["Comments"])
 
                             };
 
@@ -384,6 +387,10 @@ namespace DAL
                         }
                     }
                 }
+                else
+                {
+                    status = 2;
+                }
                 if (JobDetails.JobImpDates != null)
                 {
                     if (JobDetails.JobImpDates.Count > 0)
@@ -423,6 +430,14 @@ namespace DAL
                             }
 
                         }
+                    }
+                }
+                else
+                {
+                    status = status + 1;
+                    if (status != 3)
+                    {
+                        status = 4;
                     }
                 }
 
@@ -481,6 +496,7 @@ namespace DAL
                     dbCom.Parameters.AddWithValue(JobTitl, JobDetails.JobTitle);
                     dbCom.Parameters.AddWithValue("@i_intJOBNO", JobDetails.JobNo);
                     dbCom.Parameters.AddWithValue(JobDescrption, JobDetails.JobDesc);
+                    dbCom.Parameters.AddWithValue("@Comments", JobDetails.Comments);
                     dbCom.Parameters.AddWithValue(JobPostedDate, JobDetails.PostedDate);
                     dbCom.Parameters.AddWithValue(JobQualification, JobDetails.Qualification);
                     dbCom.Parameters.AddWithValue(JobApplyLink, JobDetails.ApplyLink);
@@ -569,6 +585,44 @@ namespace DAL
                             {
                                
                                 Keyword = Convert.ToString(wizReader["KEYWORD"]),
+                            };
+
+                            list.Add(OBJ);
+                        }
+
+                    }
+
+                }
+            }
+
+            return list;
+        }
+
+
+        public static List<DAL.Job.keywordSearch> GetDegreeList(String Keyword)
+        {
+            List<DAL.Job.keywordSearch> list = new List<DAL.Job.keywordSearch>();
+
+            String connstring = Connection.GetConnectionString();
+            String sql_select = String.Format("Select DegreeName from Degree where DegreeName like '%{0}%' ", Keyword);
+            using (SqlConnection dbCon = new SqlConnection(connstring))
+            {
+                dbCon.Open();
+
+                using (SqlCommand dbCom = new SqlCommand(sql_select, dbCon))
+                {
+
+                    dbCom.CommandType = CommandType.Text;
+
+
+                    using (SqlDataReader wizReader = dbCom.ExecuteReader())
+                    {
+                        while (wizReader.Read())
+                        {
+                            var OBJ = new keywordSearch()
+                            {
+
+                                Keyword = Convert.ToString(wizReader["DegreeName"]),
                             };
 
                             list.Add(OBJ);

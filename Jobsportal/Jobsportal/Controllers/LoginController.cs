@@ -5,7 +5,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-
+using System.Net.Mail;
+using System.IO;
+using System.Text;
 namespace Jobsportal.Controllers
 {
     public class LoginController : Controller
@@ -63,8 +65,11 @@ namespace Jobsportal.Controllers
         public JsonResult CandidateSignUp(Users USROBJ)
         {
             Users U = Users.CandidateSignUp(USROBJ);
-
-            SignIn(USROBJ);
+            if (U.Success == 1)
+            {
+                SendWelcomeEmail(USROBJ.Email, USROBJ.Displayname);
+                SignIn(USROBJ);
+            }
 
             return Json(new { Success = Convert.ToString(U.Success), Message = Convert.ToString(U.Message) }, JsonRequestBehavior.AllowGet);
 
@@ -106,6 +111,49 @@ namespace Jobsportal.Controllers
         public ActionResult FooterTemplate()
         {
             return PartialView("_FooterTemplate");
+        }
+
+        private void SendWelcomeEmail(string ToEmail, string UserName)
+        {
+
+
+            String EmailTemplatepath = Convert.ToString(Server.MapPath("~/html/Welcome.html"));
+            String EmailTemplate = String.Empty;
+
+            EmailTemplate = Jobsportal.Common.ReadHtmlFile(EmailTemplatepath);
+            EmailTemplate = EmailTemplate.Replace("@@UserName@@", UserName);
+            String MSubject = "Welcome to Drashta Infotech";
+
+            EmailServer emailconfigdata = EmailServer.GetEmailConfiguration();
+            SmtpClient client = new SmtpClient();
+            client.Port = Convert.ToInt32(emailconfigdata.Port);
+            client.Host = emailconfigdata.Host;
+            client.EnableSsl = emailconfigdata.SSL;
+            client.Timeout = 10000;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new System.Net.NetworkCredential(emailconfigdata.Email, emailconfigdata.Password);
+
+            MailMessage mm = new MailMessage(emailconfigdata.Email, ToEmail, MSubject, EmailTemplate);
+
+            mm.BodyEncoding = UTF8Encoding.UTF8;
+            mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+            mm.Subject = MSubject;
+            mm.Body = EmailTemplate;
+            mm.IsBodyHtml = true;
+
+            try
+            {
+
+                client.Send(mm);
+            }
+            catch (Exception ex)
+            {
+                DALError.LogError("Users.SendPasswordResetEmail", ex);
+
+
+            }
+
         }
     }
 }

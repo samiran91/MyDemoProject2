@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Edit Job Detail";
-                                         
+
     Layout = "~/Views/Shared/_JobPortalLayout.cshtml";
 }
 
@@ -23,13 +23,33 @@
     <meta name="Rating" content="General" />
     <meta name="site" content="Software Company in Kolkata" />
     <meta name="revisit-after" content="3 days" />
-    @Styles.Render("~/Content/EditJob")
-    @Scripts.Render("~/bundles/EditJob")
+    @*@Styles.Render("~/Content/EditJob")
+    @Scripts.Render("~/bundles/EditJob")*@
 </head>
+<script src="~/Scripts/jqueryui-multisearch.js"></script>
 
-<link href="@Url.Content("~/Content/EditJobDetail/EditJobDetail.css")" rel="stylesheet" type="text/css" media="all" />
+@*<link href="@Url.Content("~/Content/EditJobDetail/EditJobDetail.css")" rel="stylesheet" type="text/css" media="all" />
 <script src="@Url.Content("~/Scripts/EditJobDetail/EditJobDetail.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/summernote.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>*@
+
+
+<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" media="all" />
+<link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" media="all" />
+<link href="@Url.Content("~/Content/summernote.css")" rel="stylesheet" type="text/css" media="all" />
+<link href="@Url.Content("~/Content/EditJobDetail/EditJobDetail.css")" rel="stylesheet" type="text/css" media="all" />
+<link href="@Url.Content("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")" rel="stylesheet" type="text/css" media="all" />
+<link href="@Url.Content("~/Content/jquery-confirm.css")" rel="stylesheet" type="text/css" media="all" />
+
+<script src="@Url.Content("~/Scripts/jquery.min.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/bootstrap.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/respond.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui.min.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/lodash.underscore.min.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jqueryui-multisearch.min.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/summernote.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-confirm.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/EditJobDetail/EditJobDetail.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
+
 <style>
 
     .fixed-font {
@@ -166,11 +186,11 @@
         margin: 5px;
     }
 
-    input[type=file] + input {
-        padding: 7px 14px;
-        background-color: #40779e;
-        color: #ffffff;
-    }
+        input[type=file] + input {
+            padding: 7px 14px;
+            background-color: #40779e;
+            color: #ffffff;
+        }
 
     ::-webkit-file-upload-button {
         -webkit-appearance: none;
@@ -228,7 +248,7 @@
             </form>
 
 
-          
+
             <form class="form-inline">
                 <div class="form-group col-md-12">
                     <label for="AplyLink" class="col-md-4">Apply Link:</label>
@@ -257,7 +277,7 @@
                 <div class="form-group col-md-12">
                     <div id="myMultiSearch">
                         <div data-role="selected-list" class="sel-anchor">
-                            <input data-role="input" type="text" placeholder="Search Qualification..." />
+                            <input data-role="input" id="txt_qual" type="text" placeholder="Search Qualification..." />
                         </div>
 
                         <div data-role="picker" class="picker">
@@ -313,7 +333,7 @@
 
                                 <td>
 
-                                   
+
                                     <div>
                                         <input class="form-control eventDt" type="date" id="evntDate_1" name="bday" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
 
@@ -349,7 +369,7 @@
                     <input type="file" class="custom-file-input" id="importantNotesfile" aria-describedby="inputGroupFileAddon01" style="height: 30px; float:left;">
                     <button type="button" onclick="UploadNotes()" class="btn btn-success" style="float: right; margin:5px;"><i class="fa fa-upload" style="padding-right: 5px;" aria-hidden="true"></i>Upload</button>
                 </div>
-              
+
             </form>
             <form class="form-inline">
                 <div class="form-group col-md-12">
@@ -362,12 +382,10 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                     <div>
-                        <textarea placeholder="Comments" style="min-height:100px; max-height:100px; width:100%; margin-top:10px;border:1px solid #bcbbbc; border-radius: 4px; resize:vertical;"></textarea>
+                        <textarea placeholder="Comments" id="txt_comments" style="min-height:100px; max-height:100px; width:100%; margin-top:10px;border:1px solid #bcbbbc; border-radius: 4px; resize:vertical;"></textarea>
                     </div>
                 </div>
             </form>

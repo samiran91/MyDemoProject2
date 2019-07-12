@@ -111,7 +111,7 @@ namespace DAL
 
         public static Users CandidateSignUp(Users USROBJ)
         {
-            Users Usr = null;
+            Users Usr = new Users();
             String connstring = Connection.GetConnectionString();
             using (SqlConnection dbCon = new SqlConnection(connstring))
             {
@@ -126,11 +126,19 @@ namespace DAL
                     dbCom.Parameters.AddWithValue(UserEmail, USROBJ.Email);
                     dbCom.Parameters.AddWithValue(UserPassword, USROBJ.Password);
 
-                    dbCom.ExecuteNonQuery();
-                }
+                    using (SqlDataReader wizReader = dbCom.ExecuteReader())
+                    {
+                        while (wizReader.Read())
+                        {
+                            Usr.Success = Convert.ToInt32(wizReader["Success"]);
+                            Usr.Message = Convert.ToString(wizReader["Message"]);
+                        }
+                    }
 
+
+                }
+                return Usr;
             }
-            return Usr;
         }
 
         public static String GetResetPassword(String ResetPasswordvalue)
@@ -219,6 +227,8 @@ namespace DAL
             }
 
         }
+
+        
 
         private static String ReadHtmlFile(String htmlFilePath)
         {

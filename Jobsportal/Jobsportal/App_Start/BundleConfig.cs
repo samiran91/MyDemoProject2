@@ -9,7 +9,7 @@ namespace Jobsportal
         public static void RegisterBundles(BundleCollection bundles)
         {
 
-            BundleTable.EnableOptimizations = true;
+            BundleTable.EnableOptimizations = false;
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -39,9 +39,7 @@ namespace Jobsportal
                     "~/ Scripts/respond.js",
                     "~/Scripts/lodash.underscore.js",
                     "~/Scripts/jqueryui-multisearch.js"
-
-
-
+                    
                     ));
             bundles.Add(new StyleBundle("~/Content/Layout").Include(
                       "~/Content/bootstrap.css",
@@ -49,8 +47,9 @@ namespace Jobsportal
                       "~/Content/Site.css",
                       "~/Content/grid/grid.css",
                       "~/Content/jquery-confirm.css",
-                      "~/Content/summernote.css"
-                      
+                      "~/Content/summernote.css",
+                      "~/Content/font-awesome.css.css"
+                     
 
                       ));
             bundles.Add(new ScriptBundle("~/bundles/JobList").Include(
@@ -64,8 +63,8 @@ namespace Jobsportal
                   ));
 
 
-            bundles.Add(new ScriptBundle("~/bundles/JobInternal").Include(
-                  "~/Scripts/JobList/Job_internal.js"
+            bundles.Add(new ScriptBundle("~/bundles/ListJobAdmin").Include(
+                  "~/Scripts/JobList/ListJobAdmin.js"
 
                   ));
             bundles.Add(new StyleBundle("~/Content/JobList").Include(
@@ -77,12 +76,12 @@ namespace Jobsportal
                  "~/Scripts/CandidateProfile/CandidateProfile.js"
 
                  ));
-            bundles.Add(new StyleBundle("CandidateProfile").Include(
+            bundles.Add(new StyleBundle("~/Content/CandidateProfile").Include(
                       "~/Content/CandidateProfile/CandidateProfile.css"
 
                       ));
             bundles.Add(new ScriptBundle("~/bundles/EditJob").Include(
-                "/Scripts/EditJobDetail/EditJobDetail.js"
+                "~/Scripts/EditJobDetail/EditJobDetail.js"
                 ));
             bundles.Add(new ScriptBundle("~/bundles/UserReg").Include(
               "~/Scripts/UserRegistration/UserRegistration.js"
@@ -90,7 +89,6 @@ namespace Jobsportal
               ));
             bundles.Add(new StyleBundle("~/Content/EditJob").Include(
                       "~/Content/EditJobDetail/EditJobDetail.css"
-
                       ));
         }
     }

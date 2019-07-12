@@ -15,7 +15,7 @@ namespace DAL
 
         public const String usp_JOBIMNOTES_GetJobNotes = "usp_GetJobImpNotes";
 
-        public const String USP_JOBEVENTDATETIME_INSERTJOBDETAILS = "usp_GetJobImpDates";
+        public const String USP_JOBEVENTDATETIME_INSERTJOBDETAILS = "usp_SaveJobImpDates";
 
         public const String USP_PERSON_CANDIDATEINSERTUPDATE = "usp_SavePerson";
 
@@ -33,9 +33,9 @@ namespace DAL
 
         public const String USP_CHANGEPASSWORD = "usp_ChangePassword";
 
-        public const String USP_FETCHDISSCUSSIONTEXT = "USP_FETCHDISSCUSSIONTEXT";
+        public const String USP_FETCHDISSCUSSIONTEXT = "usp_FetchDiscussion";
 
-        public const String USP_INSERTDISSCUSSIONTEXT = "USP_INSERTDISSCUSSIONTEXT";
+        public const String USP_INSERTDISSCUSSIONTEXT = "usp_SaveDiscussion";
 
 
     }

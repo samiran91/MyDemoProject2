@@ -6,7 +6,7 @@ $(document).ready(function () {
 
     $("#JobApplyLink").click(function () {
         
-        var JobNumber = GetParameterValues('JNo');
+        var JobNumber = GetParameterValues('JobNo');
 
 
         $.confirm({
@@ -48,7 +48,7 @@ $(document).ready(function () {
         window.location.href = "/jobs";
     });
 
-    var JobNumber = GetParameterValues('JNo');
+    var JobNumber = GetParameterValues('JobNo');
 
     FetchDiscussion(JobNumber);
 
@@ -79,7 +79,7 @@ function FetchDiscussion(JobNumber) {
 
 function InsertMsgText() {
 
-    var JobNumber = GetParameterValues('JNo');
+    var JobNumber = GetParameterValues('JobNo');
     var Msg = $("#txt-FAQ-Comm").val();
     var Discussion = new Object();
 
@@ -95,7 +95,7 @@ function InsertMsgText() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (response) {
-            var JobNumber = GetParameterValues('JNo');
+            var JobNumber = GetParameterValues('JobNo');
             FetchDiscussion(JobNumber);
         },
 

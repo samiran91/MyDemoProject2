@@ -54,7 +54,7 @@ namespace DAL
         public static DataSet CandidateData()
         {
 
-            String sql_select = String.Format("Select ISNULL(QUALIFICATION,'') +' '+ISNULL(EXPERIANCE,'') +' '+ISNULL(INTEREST,'') as PerKeyword, EMAIL from PERSON");
+            String sql_select = String.Format("Select ISNULL(QUALIFICATION,'') +' '+ISNULL(EXPERIANCE,'') +' '+ISNULL(INTEREST,'') as PerKeyword, EMAIL,NAME from PERSON");
             String connstring = Connection.GetConnectionString();
             DataSet ds = new DataSet();
 

@@ -30,7 +30,7 @@ namespace Jobsportal.Controllers
             DAL.Utility.LogActivity("At List Job","ListJob");
             return View();
         }
-        public JsonResult GetJobList(int? page, int? limit, string sortBy, string direction, string searchString = null)
+        public JsonResult GetJobList(int? page, int? limit, string sortBy, string direction, string searchString = null,string searchfilteradmin=null)
         {
 
 
@@ -42,7 +42,11 @@ namespace Jobsportal.Controllers
             {
                 records = records.Where(q => q.Point > 0).ToList();
             }
-
+            if(searchfilteradmin!=null)
+            {
+                string jobno = searchfilteradmin.Split('-')[0].ToString().Trim();
+                records = records.Where(q => q.JobNo.ToString().Contains(jobno)).ToList();
+            }
 
             var total = records.ToList().Count();
             if (page.HasValue && limit.HasValue)
@@ -67,8 +71,8 @@ namespace Jobsportal.Controllers
         }
         public JsonResult GetKeywordAutocompleteValue(String Keyword)
         {
-            List<DAL.Job.keywordSearch> list = new List<DAL.Job.keywordSearch>();
-            list = DAL.Job.FetchKeywordAutocompleteData(Keyword);
+          List<DAL.Job.keywordSearch> list = new List<DAL.Job.keywordSearch>();
+         list = DAL.Job.FetchKeywordAutocompleteData(Keyword);
 
             var jsonSerialiser = new JavaScriptSerializer();
             var json = jsonSerialiser.Serialize(list);
@@ -77,7 +81,16 @@ namespace Jobsportal.Controllers
         }
 
 
+        public JsonResult GetDegreeList(String Keyword)
+        {
+            List<DAL.Job.keywordSearch> list = new List<DAL.Job.keywordSearch>();
+            list = DAL.Job.GetDegreeList(Keyword);
 
+            var jsonSerialiser = new JavaScriptSerializer();
+            var json = jsonSerialiser.Serialize(list);
+
+            return Json(json, JsonRequestBehavior.AllowGet);
+        }
 
         #endregion
 
@@ -190,6 +203,7 @@ namespace Jobsportal.Controllers
                         string[] perwords = PerKeyword.Split(' ');
                         string mailcommonwords = string.Empty;
                         string Email = dr["Email"].ToString();
+                        string Name = dr["Name"].ToString();
                         var commonwords = jobwords.Intersect(perwords);
                         foreach (string word in commonwords)
                         {
@@ -198,6 +212,12 @@ namespace Jobsportal.Controllers
 
                         if(!string.IsNullOrEmpty(mailcommonwords))
                         {
+                            String EmailTemplatepath = Convert.ToString(Server.MapPath("~/html/JobNotifcation.html"));
+                            String EmailTemplate = String.Empty;
+                            EmailTemplate = Jobsportal.Common.ReadHtmlFile(EmailTemplatepath);
+                            EmailTemplate = EmailTemplate.Replace("@@UserName@@", Name);
+                            EmailTemplate = EmailTemplate.Replace("@@ApplyLink@@", "http://jobhelperstage.drashtainfotech.com/jobs/JobDetails?JobNo="+jobno );
+                            EmailTemplate = EmailTemplate.Replace("@@mailcommonwords@@", mailcommonwords);
                             EmailServer emailconfigdata = EmailServer.GetEmailConfiguration();
                             SmtpClient client = new SmtpClient();
                             client.Port = Convert.ToInt32(emailconfigdata.Port);
@@ -209,11 +229,12 @@ namespace Jobsportal.Controllers
                             client.Credentials = new System.Net.NetworkCredential(emailconfigdata.Email, emailconfigdata.Password);
 
                             // string mailbody = "A New job has been posted.  You can apply the job using below link" + Environment.NewLine + System.Web.HttpContext.Current.Request.Url.Host + "/jobs/ JobDetails ? JNo = " + jobno + Environment.NewLine + "You are receiving mail because your profile contains these words " +"<b>"+ mailcommonwords+"</b>"+Environment.NewLine+ "Regards,"+ Environment.NewLine+"Drashta Infotech Team";
-                            string mailbody = "A New job has been posted.  You can apply the job using below link" + Environment.NewLine + "http://jobhelperstage.drashtainfotech.com/" + "/jobs/ JobDetails ? JNo = " + jobno + Environment.NewLine + "You are receiving mail because your profile contains these words " + "<b>" + mailcommonwords + "</b>" + Environment.NewLine + "Regards," + Environment.NewLine + "Drashta Infotech Team";
-                            MailMessage mm = new MailMessage(emailconfigdata.Email, Email, "Notification from  Drashta Infotech Job Helper portal ", mailbody);
+                            //string mailbody = "A New job has been posted.  You can apply the job using below link" + Environment.NewLine + "http://jobhelperstage.drashtainfotech.com/" + "/jobs/ JobDetails ? JNo = " + jobno + Environment.NewLine + "You are receiving mail because your profile contains these words " + "<b>" + mailcommonwords + "</b>" + Environment.NewLine + "Regards," + Environment.NewLine + "Drashta Infotech Team";
+                            MailMessage mm = new MailMessage(emailconfigdata.Email, Email, "Notification from  Drashta Infotech Job Helper portal ", EmailTemplate);
                            
                             mm.BodyEncoding = UTF8Encoding.UTF8;
                             mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+                            mm.IsBodyHtml = true;
 
                             try
                             {

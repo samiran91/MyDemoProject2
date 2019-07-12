@@ -14,27 +14,7 @@
   display: none;
 }
 .avatar-upload .avatar-edit input + label {
-  /*display: inline-block;
-                width: 34px;
-                height: 34px;
-                margin-bottom: 0;
-                border-radius: 100%;
-                background: #FFFFFF;
-                border: 1px solid transparent;
-                box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
-                cursor: pointer;
-                font-weight: normal;
-                transition: all .2s ease-in-out;*/
-  /*width: 170px;
-                height: 40px;
-                margin-bottom: 0;
-                margin-top: 130px;
-                background: #FFFFFF;
-                border: 1px solid transparent;
-                box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
-                cursor: pointer;
-                font-weight: normal;
-                transition: all 0.2s ease-in-out;*/
+
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -85,4 +65,238 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+
+ .fixed-font {
+    font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
+    font-size: 13px;
+}
+
+.list-unstyled {
+    padding-left: 10px;
+}
+
+input[data-role="input"] {
+    outline: none;
+    border: none;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857;
+    vertical-align: middle;
+    padding: 6px 12px;
+    height: 42px;
+}
+
+a.list-group-item.hover {
+    background-color: #F5F5F5;
+    text-decoration: none;
+}
+
+a.label-info {
+    margin: 4px 3px;
+    font-size: 14px;
+}
+
+    a.label-info.hover {
+        background-color: #31B0D5;
+    }
+
+    a.label-info.active {
+        background-color: #ADE0EE !important;
+    }
+
+    a.label-info .badge {
+        font-size: 9px;
+        padding: 1px 5px;
+    }
+
+ ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: black;
+    margin: 3px;
+}
+
+    a:hover, a.hover, li.hover a {
+        /*color: green;*/
+    }
+
+.picker {
+    border: 1px solid #bcbbbc;
+    border-radius: 4px;
+}
+
+ .form-inline {
+    margin-bottom: 0;
+}
+
+.panel-group .panel {
+    overflow: inherit;
+}
+
+ul.list-group {
+    list-style-type: none !important;
+}
+
+    ul.list-group li {
+        padding: 10px;
+        border-bottom: 1px solid #bcbbbc;
+    }
+
+.picker1 {
+    background-color: #f7f7f7;
+}
+
+table#tab_logic.table.table-bordered.table-hover thead tr th {
+    position: static !important;
+    text-align: left;
+}
+
+#myMultiSearch div.sel-anchor a {
+    padding: 8px;
+    background-color: #bcbbbc;
+    border-radius: 4px;
+    float: left;
+}
+
+#DocUpload {
+    width: 100%;
+    border: 1px solid #bcbbbc;
+    margin-top: 10px;
+}
+
+    #DocUpload thead tr th, #DocUpload tbody tr td {
+        padding: 8px;
+    }
+
+    #DocUpload thead tr th {
+        background-color: #bcbbbc;
+    }
+
+    #DocUpload tbody tr:nth-child(odd) {
+        background-color: #ffffff;
+    }
+
+    #DocUpload tbody tr:nth-child(even) {
+        background-color: #ffffff;
+    }
+
+
+div.input-group.my-3 {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 50%;
+}
+
+span#inputGroupFileAddon01.input-group-text {
+    display: flex;
+    align-items: center;
+    padding: .375rem .75rem;
+    margin-bottom: 0;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+div.custom-file {
+    display: flex;
+    align-items: center;
+}
+
+input#inputGroupFile01.custom-file-input {
+    margin-bottom: 0;
+    /* position: relative; */
+    z-index: 2;
+    width: 100%;
+    margin: 0;
+    opacity: 0;
+}
+
+label.custom-file-label {
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    width: 150px;
+    margin: 0;
+    text-align: center;
+    padding-left: 15px;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+
+.Gap {
+    margin-top: 50px;
+}
+
+.Gap2 {
+    margin-top: 20px !important;
+}
+
+.panel-heading .panel-title a {
+    font-size: 18px !important;
+    font-weight: bold !important;
+}
+
+h4 {
+    text-align: left !important;
+}
+
+.netamount {
+    font-size: 20px !important;
+}
+
+.invoice {
+    margin: auto;
+    display: block;
+    width: 30% !important;
+}
+
+.button-primary {
+    font-size: 15px;
+    padding: 7px 1em;
+    line-height: 30px;
+    display: block;
+    width: 100%;
+    background-color: #85C51F;
+    color: #fff;
+    border: 2px solid transparent;
+    transition: background-color .15s;
+}
+
+.quantity {
+    height: 22px !important;
 }

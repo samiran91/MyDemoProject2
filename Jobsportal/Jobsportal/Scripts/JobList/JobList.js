@@ -15,7 +15,6 @@ $(document).ready(function () {
         primaryKey: 'JOBNO',
         uiLibrary: "bootstrap",
         responsive: true,
-        
         dataSource: '/Jobs/GetJobList',
         columns: [
             { field: 'JobNo', title: 'Job Number', width:'25%',  priority: 3 },
@@ -32,8 +31,8 @@ $(document).ready(function () {
    
 
    });
+    
     Search();
-
     $("#txt_keyword").autocomplete({
 
         source: function (request, response) {
@@ -81,27 +80,24 @@ window.addEventListener("beforeunload", function (e) {
     
 });
 function Search() {
+    
     var keyword = $("#txt_keyword").val();
     var posted = $("#ddl_posted").val();
     var location = $("#ddl_location").val();
+ 
+    setCookie("keyword", keyword, 365);
+    setCookie("posted", posted, 365);
+    setCookie("location", location, 365);
     grid.reload({ searchString: keyword + "|" + posted+"|"+location });
 }
 function Signinpage() {
     window.location.href = "/Login/LoginRegistration";
 }
 function ApplyForJob(e) {
-   
+ 
+    
     var JobNumber = e.data.record.JobNo;
-    window.location.href = "/jobs/JobDetails?JNo=" + JobNumber;
+    window.location.href = "/jobs/JobDetails?JobNo=" + JobNumber;
 
 }
-function getCookie(name) {
-    var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-    return v ? v[2] : null;
-}
-function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    var expires = "expires=" + d.toUTCString();
-    document.cookie = cname + "=" + cvalue + "; " + expires;
-} 
+
