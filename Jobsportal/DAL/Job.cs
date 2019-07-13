@@ -300,7 +300,9 @@ namespace DAL
                             var K = new JOBIMNOTES()
                             {
                                 Title = Convert.ToString(wizReader["TITLE"]),
-                                DownloadLink = Convert.ToString(wizReader["DOWNLOADLINK"]),
+                                DownloadLink ="/Notes/" +Convert.ToString(wizReader["DOWNLOADLINK"]),
+                                Uplodedby= Convert.ToString(wizReader["UPLODEDBY"]),
+                                Uplodeddate=Convert.ToDateTime(wizReader["UPLODEDDATE"])
                             };
 
                             records.Add(K);
@@ -369,9 +371,9 @@ namespace DAL
 
                                     dbCom.Parameters.AddWithValue("@JobNumber", JobNumber);
                                     dbCom.Parameters.AddWithValue("@STR_TITLE", item.Title);
-                                    dbCom.Parameters.AddWithValue("@DT_UPLODEDDATE", item.Uplodeddate);
+                                    dbCom.Parameters.AddWithValue("@DT_UPLODEDDATE", DateTime.UtcNow);
                                     dbCom.Parameters.AddWithValue("@STR_DOWNLOADLINK", item.DownloadLink);
-                                    dbCom.Parameters.AddWithValue("@STR_UPLODEDBY", item.Uplodedby);
+                                    dbCom.Parameters.AddWithValue("@STR_UPLODEDBY", System.Web.HttpContext.Current.User.Identity.Name.ToString());
                                     dbCom.Parameters.AddWithValue("@INT_INSERT", 0);
 
                                     dbCom.ExecuteNonQuery();

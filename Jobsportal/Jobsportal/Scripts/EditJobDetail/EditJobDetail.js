@@ -149,8 +149,8 @@ $(document).ready(function () {
             element.Title = $("#uplodednotes_" + loopcount).text();
             element.Uplodedby = $("#uplodedby_" + loopcount).text();
             element.Uplodeddate = $("#uplodeddate_" + loopcount).text();
-            var dlink = $("#uplodednotes_" + loopcount).text();
-            element.DownloadLink = "/CandidateImages/" + dlink;
+            var dlink = $("#uplodednotes_" + loopcount+" a").prop("href").replace(/^.*[\\\/]/, '');
+            element.DownloadLink =   dlink;
 
             typeof (element.uplodednotes != 'undefined')
             {
@@ -370,7 +370,9 @@ function UploadNotes() {
     var fileUpload = $("#importantNotesfile").get(0);
     var files = fileUpload.files;
     var modifiedfilename = "";
+    var actualfilename = "";
     if (files.length > 0) {
+        actualfilename = files[0].name;
         modifiedfilename = dateTime + "-" + files[0].name;
     }
 
@@ -382,21 +384,21 @@ function UploadNotes() {
     }
 
     $.ajax({
-        url: '/Jobs/UploadFiles',
+        url: '/Jobs/UploadNotes',
         type: "POST",
         contentType: false, // Not to set any content header  
         processData: false, // Not to process data  
         data: fileData,
         success: function (result) {
 
-           
+            debugger;
             var count = $('.uplodednotes').length;
             var count1 = $('.uplodedby').length;
             var count2 = $('.uplodeddate').length;
             count++;
             count1++;
             count2++;
-            var htm = '<tr><td id="uplodednotes_' + count + '" class="uplodednotes">' + modifiedfilename + '</td><td id="uplodedby_' + count1 + '" class="uplodedby">Maynak Nandi</td><td id="uplodeddate_' + count2 + '" class="uplodeddate">' + date + '</td> <td> <i class="fa fa-times" aria-hidden="true"></i></td></tr>';
+            var htm = '<tr><td id="uplodednotes_' + count + '" class="uplodednotes"><a href= "' + "/Notes/" + modifiedfilename + '">' + actualfilename + '</a> ' + '</td><td id="uplodedby_' + count1 + '" class="uplodedby">'+result+'</td><td id="uplodeddate_' + count2 + '" class="uplodeddate">' + date + '</td> <td> <i class="fa fa-times" aria-hidden="true"></i></td></tr>';
             $("#DocUpload tbody").append(htm);
             count++;
         },
@@ -463,7 +465,7 @@ function fetchJobDetails() {
                     var Title = data.JobNotes[i].Title;
                     var DownloadLink = data.JobNotes[i].DownloadLink;
                     var UploadedBy = data.JobNotes[i].Uplodedby;
-                    var UplodedDT = data.JobNotes[i].Uplodeddate;
+                    var UplodedDT = formatDate(data.JobNotes[i].Uplodeddate);
 
 
                     var count = $('.uplodednotes').length;

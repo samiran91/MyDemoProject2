@@ -98,7 +98,7 @@ namespace Jobsportal.Controllers
         [HttpGet]
         public ActionResult JobDetails()
         {
-            Int32 QueryString = Convert.ToInt32(Request.QueryString["JNo"]);
+            Int32 QueryString = Convert.ToInt32(Request.QueryString["JobNo"]);
             var J = Job.GetJobDescription(QueryString);
             DAL.Utility.LogActivity("At JobDetails", "JobDetails");
             return View(J);
@@ -164,7 +164,53 @@ namespace Jobsportal.Controllers
 
             return Json(J, JsonRequestBehavior.AllowGet);
         }
+        [Authorize(Roles = "ADMIN,CANDIDATE")]
+        [HttpPost]
+        public JsonResult UploadNotes()
+        {
+            // Checking no of files injected in Request object  
+            if (Request.Files.Count > 0)
+            {
+                try
+                {
+                    //  Get all files from Request object
+                    string fname;
+                    HttpFileCollectionBase files = Request.Files;
+                    for (int i = 0; i < files.Count; i++)
+                    {
 
+
+                        HttpPostedFileBase file = files[i];
+
+
+                        // Checking for Internet Explorer  
+                        if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
+                        {
+                            string[] testfiles = file.FileName.Split(new char[] { '\\' });
+                            fname = testfiles[testfiles.Length - 1];
+                        }
+                        else
+                        {
+                            fname = file.FileName;
+                        }
+                        fname = Request.Files.AllKeys[0].ToString();
+                        // Get the complete folder path and store the file inside it.  
+                        fname = Path.Combine(Server.MapPath("~/Notes/"), fname);
+                        file.SaveAs(fname);
+                    }
+                    // Returns message that successfully uploaded  
+                    return Json(System.Web.HttpContext.Current.User.Identity.Name.ToString());
+                }
+                catch (Exception ex)
+                {
+                    return Json("File Upload Error occurred. Error details: " + ex.Message);
+                }
+            }
+            else
+            {
+                return Json("No files selected.");
+            }
+        }
         [HttpPost]
         [Authorize(Roles = "ADMIN")]
         public JsonResult SaveJobDetails(Job JobDetails)

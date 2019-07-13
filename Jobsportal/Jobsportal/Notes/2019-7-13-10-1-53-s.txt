@@ -1,0 +1,50 @@
+
+<add key="CrystalPath" value="C:\HRAdvocate_innovation\HRAdvocate\Crystal\" />
+
+<add key="CustCrystalPath" value="C:\HRAdvocate_innovation\HRAdvocate\CustCrystal\" />
+
+
+C:\HRAdvocate_innovation\HRAdvocate\bin\CrystalDecisions.CrystalReports.Engine.dll
+
+HR Entre Web - Error Alert: 
+26-09-2016 13:05:41 (local)
+26-09-2016 07:35:41 (UTC)
+
+-------------------------------------
+   NetBIOS Name: WEB4
+Local Host Name: WEB4
+ Current Domain: /LM/W3SVC/5/ROOT-1-131193486368887459
+     OS Version: Microsoft Windows NT 6.3.9600.0
+    CLR Version: 4.0.30319.42000
+
+-------------------------------------
+URL that caused error: /HRMS_Modules/Reports/Common/RunCustomizedCrystal.aspx?&reportname=4.EEO-1%20Report.rpt
+        Source/Target: System.Web::System.Web.HttpApplication.IExecutionStep.Execute
+  Inner Source/Target: CrystalDecisions.CrystalReports.Engine::.ctor
+      Portal/Tab Name: INNOVATION - HRIS PORTAL/Home
+     Application Path: C:\Program Files (x86)\IIS Express/Home
+
+    Portal Connection: server=WEB4;Trusted_Connection=false;database=portal_hra_innovation;UID=sa;PWD=hrms/Home
+
+-------------------------------------
+Company (web.config): Aleriajsd pvt ltd
+           User Name: hradmin
+
+-------------------------------------
+Stack Trace: 
+System.Web.HttpException (0x80004005): Exception of type 'System.Web.HttpException' was thrown. ---> System.IO.FileNotFoundException: Could not load file or assembly 'CrystalDecisions.ReportAppServer.ClientDoc, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304' or one of its dependencies. The system cannot find the file specified.
+File name: 'CrystalDecisions.ReportAppServer.ClientDoc, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304'
+   at CrystalDecisions.CrystalReports.Engine.ReportDocument..ctor()
+   at ASPNetPortal.HRMS_Modules.Reports.RunCustomizedCrystal..ctor() in c:\HRAdvocate_innovation\HRAdvocate\HRMS_Modules\Reports\Common\RunCustomizedCrystal.aspx.cs:line 39
+   at ASP.hrms_modules_reports_common_runcustomizedcrystal_aspx..ctor() in c:\Users\Web4 PC\AppData\Local\Temp\Temporary ASP.NET Files\root\e17c4ac6\f555f394\App_Web_lbzufpab.1.cs:line 0
+   at __ASP.FastObjectFactory_app_web_lbzufpab.Create_ASP_hrms_modules_reports_common_runcustomizedcrystal_aspx() in c:\Users\Web4 PC\AppData\Local\Temp\Temporary ASP.NET Files\root\e17c4ac6\f555f394\App_Web_lbzufpab.4.cs:line 0
+   at System.Web.Compilation.BuildResultCompiledType.CreateInstance()
+   at System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(VirtualPath virtualPath, Type requiredBaseType, HttpContext context, Boolean allowCrossApp)
+   at System.Web.UI.PageHandlerFactory.GetHandlerHelper(HttpContext context, String requestType, VirtualPath virtualPath, String physicalPath)
+   at System.Web.UI.PageHandlerFactory.GetHandler(HttpContext context, String requestType, String virtualPath, String path)
+   at System.Web.HttpApplication.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+
+
+   at System.Web.HttpApplication.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
