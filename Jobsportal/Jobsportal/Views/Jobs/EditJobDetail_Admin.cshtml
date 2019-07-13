@@ -28,6 +28,7 @@
 </head>
 <script src="~/Scripts/jqueryui-multisearch.js"></script>
 
+
 @*<link href="@Url.Content("~/Content/EditJobDetail/EditJobDetail.css")" rel="stylesheet" type="text/css" media="all" />
 <script src="@Url.Content("~/Scripts/EditJobDetail/EditJobDetail.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/summernote.js?v="+DateTime.Now.Ticks.ToString())" type="text/javascript"></script>*@
@@ -326,7 +327,7 @@
                                     1
                                 </td>
                                 <td>
-                                    <input type="text" id='productcode_1' placeholder='Event' class="form-control product" />
+                                    <input type="text" id='productcode_1' placeholder='Event' class="form-control product"  onchange="return UpdateStatus(this.id)" />
                                     <input type="hidden" id='productcode_stock_1' aria-hidden="true" />
 
                                 </td>
@@ -335,7 +336,7 @@
 
 
                                     <div>
-                                        <input class="form-control eventDt" type="date" id="evntDate_1" name="bday" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+                                        <input class="form-control eventDt" type="date" id="evntDate_1" name="bday" onchange="return UpdateStatus(this.id)"    required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
 
                                     </div>
                                 </td>

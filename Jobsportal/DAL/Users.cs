@@ -38,8 +38,10 @@ namespace DAL
         {
             string sp = "sp_TrySignIn";
             string Role = "Invalid";
+
             if (!(string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password)))
             {
+                String EncryptedPassword = PortalEncryption.Encrypt(password);
                 string connstring = Connection.GetConnectionString();
 
                 using (SqlConnection dbCon = new SqlConnection(connstring))
@@ -50,7 +52,7 @@ namespace DAL
                     {
                         dbCom.CommandType = CommandType.StoredProcedure;
                         dbCom.Parameters.Add("@username", SqlDbType.VarChar).Value = username;
-                        dbCom.Parameters.Add("@password", SqlDbType.VarChar).Value = password;
+                        dbCom.Parameters.Add("@password", SqlDbType.VarChar).Value = EncryptedPassword;
                         using (SqlDataReader wizReader = dbCom.ExecuteReader())
                         {
 
@@ -112,6 +114,7 @@ namespace DAL
         public static Users CandidateSignUp(Users USROBJ)
         {
             Users Usr = new Users();
+            String EncryptedPassword = PortalEncryption.Encrypt(USROBJ.Password);
             String connstring = Connection.GetConnectionString();
             using (SqlConnection dbCon = new SqlConnection(connstring))
             {
@@ -124,7 +127,7 @@ namespace DAL
                     dbCom.Parameters.AddWithValue(UserName, USROBJ.Username);
                     dbCom.Parameters.AddWithValue(UserMobile, USROBJ.Mobile);
                     dbCom.Parameters.AddWithValue(UserEmail, USROBJ.Email);
-                    dbCom.Parameters.AddWithValue(UserPassword, USROBJ.Password);
+                    dbCom.Parameters.AddWithValue(UserPassword, EncryptedPassword);
 
                     using (SqlDataReader wizReader = dbCom.ExecuteReader())
                     {

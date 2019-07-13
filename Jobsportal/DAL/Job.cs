@@ -28,7 +28,9 @@ namespace DAL
 
         public int Point { get; set; }
         public List<JOBIMPDATES> JobImpDates { get; set; }
+
         public List<JOBIMNOTES> JobNotes { get; set; }
+        
         public String Users { get; set; }
 
         public String Comments { get; set; }
@@ -41,14 +43,20 @@ namespace DAL
 
         public class JOBIMPDATES
         {
+            public int Id { get; set; }
             public int JobNo { get; set; }
             public String Events { get; set; }
 
             public DateTime EventDateTime { get; set; }
+
+            public int DBOP { get; set; }
         }
+
+       
 
         public class JOBIMNOTES
         {
+            public int Id { get; set; }
             public int JobNo { get; set; }
             public String Title { get; set; }
 
@@ -57,6 +65,7 @@ namespace DAL
             public String Uplodedby { get; set; }
 
             public DateTime Uplodeddate { get; set; }
+            public int DBOP { get; set; }
         }
         public class SearchParam
         {
@@ -225,7 +234,7 @@ namespace DAL
                                 ApplyLink = (String)wizReader["APPLYLINK"],
                                 Location = Convert.ToString(wizReader["Location"]),
                                 Comments= Convert.ToString(wizReader["Comments"])
-
+                                
                             };
 
                             J.JobImpDates = Job.GetEventDateList(JobNumber);
@@ -262,9 +271,10 @@ namespace DAL
                         {
                             var K = new JOBIMPDATES()
                             {
+                                Id= Convert.ToInt32(wizReader["Id"]),
                                 JobNo = JobNumber,
                                 Events = Convert.ToString(wizReader["EVENTS"]),
-                                EventDateTime = Convert.ToDateTime(wizReader["EVENTSDATETIME"]),
+                                EventDateTime = Convert.ToDateTime(wizReader["EVENTSDATETIME"])
                             };
 
                             records.Add(K);
@@ -299,6 +309,7 @@ namespace DAL
                         {
                             var K = new JOBIMNOTES()
                             {
+                                Id=Convert.ToInt32(wizReader["Id"]),
                                 Title = Convert.ToString(wizReader["TITLE"]),
                                 DownloadLink ="/Notes/" +Convert.ToString(wizReader["DOWNLOADLINK"]),
                                 Uplodedby= Convert.ToString(wizReader["UPLODEDBY"]),
@@ -374,8 +385,8 @@ namespace DAL
                                     dbCom.Parameters.AddWithValue("@DT_UPLODEDDATE", DateTime.UtcNow);
                                     dbCom.Parameters.AddWithValue("@STR_DOWNLOADLINK", item.DownloadLink);
                                     dbCom.Parameters.AddWithValue("@STR_UPLODEDBY", System.Web.HttpContext.Current.User.Identity.Name.ToString());
-                                    dbCom.Parameters.AddWithValue("@INT_INSERT", 0);
-
+                                    dbCom.Parameters.AddWithValue("@INT_INSERT", item.DBOP);
+                                    dbCom.Parameters.AddWithValue("Id", item.Id);
                                     dbCom.ExecuteNonQuery();
                                     status = 2;
 
@@ -412,9 +423,9 @@ namespace DAL
 
                                     dbCom.Parameters.AddWithValue(JobEvents, item.Events);
                                     dbCom.Parameters.AddWithValue(JobEventsDT, item.EventDateTime);
-                                    dbCom.Parameters.AddWithValue(InsertCondition, 0);
+                                    dbCom.Parameters.AddWithValue(InsertCondition, item.DBOP);
                                     dbCom.Parameters.AddWithValue(JobNum, JobNumber);
-
+                                    dbCom.Parameters.AddWithValue("Id", item.Id);
 
                                     dbCom.ExecuteNonQuery();
                                     status = status + 1;

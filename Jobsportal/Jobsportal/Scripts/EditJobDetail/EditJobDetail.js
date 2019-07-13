@@ -5,9 +5,9 @@ $(document).ready(function () {
   
     $("#add_row").click(function () {
         var count = $('.product').length;
-        $('#tab_logic').append('<tr id="addr' + (count + 1) + '"></tr>');
+        $('#tab_logic').append('<tr id="addr' + (count + 1) + '" data-idno="added"></tr>');
 
-        $('#addr' + (Number(count) + Number(1))).html("<td id='srn_" + (count + 1) + "'>" + (count + 1) + "</td ><td><input type='text' id='productcode_" + (count + 1) + "'  placeholder='Event' class='form-control product' /> <input type='hidden' id='productcode_stock_" + (count + 1) + "' aria-hidden='true' /></td><td> <input class='form-control eventDt' type='date' id='evntDate_" + (count + 1) + "'name='evntDate' required pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}'></td><td> <span class='glyphicon glyphicon-remove'  id='del_" + (count + 1) + "'style='cursor: pointer;'></span></td>");
+        $('#addr' + (Number(count) + Number(1))).html("<td id='srn_" + (count + 1) + "'>" + (count + 1) + "</td ><td><input type='text' id='productcode_" + (count + 1) + "'  placeholder='Event' class='form-control product' onchange='return UpdateStatus(this.id)' /> <input type='hidden' id='productcode_stock_" + (count + 1) + "' aria-hidden='true' onKeyUp='return UpdateStatus(this.id)'" + "  /></td><td> <input class='form-control eventDt' type='date' id='evntDate_" + (count + 1) + "'name='evntDate' onchange='return UpdateStatus(this.id)' required pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}'></td><td> <span class='glyphicon glyphicon-remove'  id='del_" + (count + 1) + "'style='cursor: pointer;'></span></td>");
 
 
      
@@ -15,10 +15,27 @@ $(document).ready(function () {
         i++;
 
     });
-
+    $(document).on('click', '.removenote', function (e) {
+        debugger;
+        var IdNo = $(this).closest('tr').data('idno');
+        $(this).closest('tr').remove();
+        var element = {};
+        element.id = IdNo;
+            DeleteNotes.push(element);
+    
+});
     $(document).on('click', '.glyphicon-remove', function (e) {
         var id = this.id;
         var delid = id.replace("del_", "");
+        var IdNo= $(this).closest('tr').data('idno');
+
+        var element = {};
+        element.id = IdNo;
+        element.status = "Deleted";
+        var exist = search(IdNo, RowStatus);
+        if (!exist) {
+            RowStatus.push(element);
+        }
 
         var existingamount = $("#netvalue").text();
         var deduction = $("#tax_" + delid).val();
@@ -101,18 +118,50 @@ $(document).ready(function () {
         } 
         Str_Qual = Qual.toString();
         var JobData = [];
+        debugger;
+        for (var i = 0; i < RowStatus.length; i++) {
+            if (RowStatus[i].status === "Deleted") {
+                var element = {};
+                element.Id = RowStatus[i].id;
+                element.Events = "Deleted";
+                element.DBOP = 3;
+                element.EventDateTime = new Date();
+                JobData.push(element);
+
+            }
+        }
         var Str_JobData;
 
         var mathedcount = 1;
         var count = $('.product').length;
         var loopcount = 1;
         while (mathedcount <= count) {
+            
+            debugger;
             var element = {};
+            element.Id = $("#addr" + loopcount).data('idno');
             element.Events = $("#productcode_" + loopcount).val();
             element.EventDateTime = $("#evntDate_" + loopcount).val();
+            element.DBOP = 4;
+            if (element.Id == 'added')
+                element.DBOP = 1;
+            debugger;
+            for (var i = 0; i < RowStatus.length; i++) {
+                if (element.Id == RowStatus[i].id && element.Id != 'added')
+                {
+                    if (RowStatus[i].status == "Modified" ) {
+                        element.DBOP = 2;
+
+                    }
+                    
+                }
+            }
             typeof (element.ProductCode != 'undefined')
             {
-                JobData.push(element);
+                if (element.DBOP != 4)
+                {
+                    JobData.push(element);
+                }
                 mathedcount++;
             }
 
@@ -142,16 +191,30 @@ $(document).ready(function () {
         var count = $('.uplodednotes').length;
         var count = $('.uplodedby').length;
         var count = $('.uplodeddate').length;
-
+        for (var i = 0; i < DeleteNotes.length; i++) {
+            
+                var element = {};
+                element.Id = DeleteNotes[i].id;
+                element.Title = "Deleted";
+                element.Uplodedby = "Deleted";
+                element.DownloadLink = "Deleted";
+                element.DBOP = 3;
+                element.Uplodeddate= new Date();
+                Documents.push(element);
+                mathedcount++;
+            
+        }
         var loopcount = 1;
         while (mathedcount <= count) {
             var element = {};
+            element.Id = $("#uplodednotes_" + loopcount).parent().data('idno');
             element.Title = $("#uplodednotes_" + loopcount).text();
             element.Uplodedby = $("#uplodedby_" + loopcount).text();
             element.Uplodeddate = $("#uplodeddate_" + loopcount).text();
             var dlink = $("#uplodednotes_" + loopcount+" a").prop("href").replace(/^.*[\\\/]/, '');
             element.DownloadLink =   dlink;
-
+            if (element.Id == 'added')
+                element.DBOP = 1;
             typeof (element.uplodednotes != 'undefined')
             {
                 Documents.push(element);
@@ -254,7 +317,8 @@ $(document).ready(function () {
             JobDetails.JobNotes = Documents;
             JobDetails.Location = Location;
             JobDetails.comments = comments;
-
+            
+            debugger;
             $.ajax({
                 type: "POST",
                 url: "/Jobs/SaveJobDetails",
@@ -328,6 +392,7 @@ $(document).ready(function () {
     });
 
     fetchJobDetails();
+   
 
 });
 function PopulateQals() {
@@ -357,7 +422,28 @@ var QualData = [];
 var QualNames= [
    
 ];
+var DeleteNotes = [];
+var RowStatus = [
 
+];
+function UpdateStatus(id) {
+    debugger;
+    var IdNo = $("#" + id).parentsUntil("tr").parent().data("idno");
+    if (IdNo != 'added') {
+        var element = {};
+        element.id = IdNo;
+        element.status = "Modified";
+    }
+    else {
+        var element = {};
+        element.id = IdNo;
+        element.status = "Added";
+    }
+    var exist = search(IdNo, RowStatus);
+       if(!exist)
+        RowStatus.push(element);
+    
+}
 function UploadNotes() {
     // alert("a");
     var today = new Date();
@@ -398,7 +484,7 @@ function UploadNotes() {
             count++;
             count1++;
             count2++;
-            var htm = '<tr><td id="uplodednotes_' + count + '" class="uplodednotes"><a href= "' + "/Notes/" + modifiedfilename + '">' + actualfilename + '</a> ' + '</td><td id="uplodedby_' + count1 + '" class="uplodedby">'+result+'</td><td id="uplodeddate_' + count2 + '" class="uplodeddate">' + date + '</td> <td> <i class="fa fa-times" aria-hidden="true"></i></td></tr>';
+            var htm = '<tr data-idno="added"><td id="uplodednotes_' + count + '" class="uplodednotes"><a href= "' + "/Notes/" + modifiedfilename + '">' + actualfilename + '</a> ' + '</td><td id="uplodedby_' + count1 + '" class="uplodedby">'+result+'</td><td id="uplodeddate_' + count2 + '" class="uplodeddate">' + date + '</td> <td> <i class="fa fa-times removenote" aria-hidden="true"></i></td></tr>';
             $("#DocUpload tbody").append(htm);
             count++;
         },
@@ -408,7 +494,17 @@ function UploadNotes() {
     });
 }
 
-
+function search(nameKey, myArray) {
+    for (var i = 0; i < myArray.length; i++) {
+        if (myArray[i].name === nameKey) {
+            return true;
+        }
+        else 
+            {
+                return false;
+            }
+    }
+}
 
 function fetchJobDetails() {
     var JobNumber = GetParameterValues('JobNo');
@@ -449,10 +545,11 @@ function fetchJobDetails() {
                 $("#tab_logic tbody").html('');
                 var tablerow = $('#tab_logic tbody tr').length;
                 for (var i = 0; i < data.JobImpDates.length; i++) {
+                    var Id= data.JobImpDates[i].Id;
                     var Evnts = data.JobImpDates[i].Events;
                     var EventDateTime = data.JobImpDates[i].EventDateTime;
                     var j = i + 1;
-                    var htm = '<tr id="addr' + j + '"><td id="srn' + j + '">' + j + '</td><td><input type="text" id="productcode_' + j + '" placeholder="Event" class="form-control product"><input type="hidden" id="productcode_stock_' + j + '" aria-hidden="true"></td><td><div><input class="form-control eventDt" type="date" id="evntDate_' + j + '" name="bday" required="" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"></div></td><td><span class="glyphicon glyphicon-remove" id="del_' + j + '" style="cursor: pointer;"></span></td></tr>'
+                    var htm = '<tr id="addr' + j + '"' + "data-idno=" + Id + '><td id="srn' + j + '">' + j + '</td><td><input type="text" id="productcode_' + j + '" placeholder="Event" onchange="return UpdateStatus(this.id)" class="form-control product"><input type="hidden" id="productcode_stock_' + j + '" aria-hidden="true"></td><td><div><input class="form-control eventDt" type="date" id="evntDate_' + j + '" name="bday" onchange="return UpdateStatus(this.id)" required="" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"></div></td><td><span class="glyphicon glyphicon-remove" id="del_' + j + '" style="cursor: pointer;"></span></td></tr>'
                     $("#tab_logic tbody").append(htm);
                     $("#productcode_" + j).val(Evnts);
                     $("#evntDate_" + j).val(formatDate(EventDateTime));
@@ -466,7 +563,7 @@ function fetchJobDetails() {
                     var DownloadLink = data.JobNotes[i].DownloadLink;
                     var UploadedBy = data.JobNotes[i].Uplodedby;
                     var UplodedDT = formatDate(data.JobNotes[i].Uplodeddate);
-
+                    var Id = data.JobNotes[i].Id;
 
                     var count = $('.uplodednotes').length;
                     var count1 = $('.uplodedby').length;
@@ -474,7 +571,7 @@ function fetchJobDetails() {
                     count++;
                     count1++;
                     count2++;
-                    var htm = '<tr><td id="uplodednotes_' + count + '" class="uplodednotes"><a href="' + DownloadLink + '">' + Title + '</a></td><td id="uplodedby_' + count1 + '" class="uplodedby">' + UploadedBy + '</td><td id="uplodeddate_' + count2 + '" class="uplodeddate">' + UplodedDT + '</td> <td> <i class="fa fa-times" aria-hidden="true"></i></td></tr>';
+                    var htm = '<tr data-idno=' + Id + '"><td id="uplodednotes_' + count + '" class="uplodednotes"><a href="' + DownloadLink + '">' + Title + '</a></td><td id="uplodedby_' + count1 + '" class="uplodedby">' + UploadedBy + '</td><td id="uplodeddate_' + count2 + '" class="uplodeddate">' + UplodedDT + '</td> <td> <i class="fa fa-times removenote" aria-hidden="true"></i></td></tr>';
                     $("#DocUpload tbody").append(htm);
 
                 }
