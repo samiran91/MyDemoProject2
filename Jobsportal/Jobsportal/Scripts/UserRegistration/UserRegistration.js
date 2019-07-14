@@ -114,15 +114,47 @@ function SignUp() {
 }
 
 
-function isEmail(Email) {
-    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    return regex.test(Email);
-}
+function signin() {
+
+    var Mobile = $('#phone').val();
+
+    var password = $('#pwd').val();
+    var UserData = {
+
+        Mobile: Mobile,
+        Password: password
+    };
+
+    if (Mobile == "" || password == "") {
+
+        $('#error-message').css("display", "block");
+        $('#error-message-text').text("Invalid Phone Number/Password");
+    }
+    else {
+        $.ajax({ url: "/Login/SignIn", type: "POST", data: { UserData: UserData } })
+            .done(function (data) {
+
+                if (data != false) {
+                    if (Mobile == "admin") {
+                        window.location = "/Jobs/ListJob_Admin";
+                    }
+                    else {
+                        window.location = "/Candidate/CandidateProfile";
+
+                    }
+                }
+                else {
+                    $('#error-message').css("display", "block");
+                    $('#error-message-text').text("Invalid Phone Number/Password");
+
+                }
+
+            })
+            .fail(function () {
 
 
-function phonenumber(Phone) {
-    var regex = /^\d{10}$/;
-    return regex.test(Phone);
+            });
+    }
 }
 
 function ResetPassword() {

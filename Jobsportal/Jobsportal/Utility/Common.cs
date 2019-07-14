@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Text;
 using System.IO;
+using DAL;
 namespace Jobsportal
 {
     public static class Common
@@ -23,7 +24,9 @@ namespace Jobsportal
                     }
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) {
+                DALError.LogError("Common.ReadHtmlFile", ex);
+            }
 
             return store.ToString();
         }

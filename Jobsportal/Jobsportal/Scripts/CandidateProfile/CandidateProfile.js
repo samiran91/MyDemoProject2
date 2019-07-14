@@ -76,7 +76,7 @@ function PopulateInterests()
        
         dataType: "json",
         success: function (data) {
-            debugger;
+            
            InterestData = JSON.parse(data);
            for (index = 0; index < InterestData.length; index++) {
                var element = {};
@@ -108,6 +108,7 @@ function SaveCandidateInfo() {
         Intrest.push(insttextvalues[index]);
 
     }
+   
     Str_Intrst = Intrest.toString();
     var Name = $("#txt_candName").val();
     var Gender = $('#txt_candGender :selected').val();
@@ -211,7 +212,7 @@ function FetchCandidateDetails() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
-           
+            
             $("#imagePreview").css("background-image", "url('" + data.ImgValue + "')");
             $("#txt_candName").val(data.Name);
             $("#txt_candGender").val(data.Gender);
@@ -222,7 +223,8 @@ function FetchCandidateDetails() {
             $("#txt_candQual").val(data.Qualification);
             $("#txt_candExp").val(data.Experiance);
             var arr = data.ImgValue.split('/');
-            $('input[name=hiddeninputname]').val(arr[2]);
+           
+            $('input[name=hiddeninputname]').val(arr[3]);
 
 
             var Intr = data.Interests;

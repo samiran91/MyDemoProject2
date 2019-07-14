@@ -47,20 +47,28 @@ namespace DAL
 
             catch(Exception ex)
             {
-                //To do
+                DALError.LogError("Utility.LogActivity", ex);
             }
     }
 
         public static DataSet CandidateData()
         {
-
-            String sql_select = String.Format("Select ISNULL(QUALIFICATION,'') +' '+ISNULL(EXPERIANCE,'') +' '+ISNULL(INTEREST,'') as PerKeyword, EMAIL,NAME from PERSON");
-            String connstring = Connection.GetConnectionString();
             DataSet ds = new DataSet();
+            try
+            {
+
+                String sql_select = String.Format("Select ISNULL(QUALIFICATION,'') +' '+ISNULL(EXPERIANCE,'') +' '+ISNULL(INTEREST,'') as PerKeyword, EMAIL,NAME from PERSON");
+                String connstring = Connection.GetConnectionString();
 
 
-            SqlDataAdapter adpt = new SqlDataAdapter(sql_select, connstring);
-            adpt.Fill(ds);
+
+                SqlDataAdapter adpt = new SqlDataAdapter(sql_select, connstring);
+                adpt.Fill(ds);
+            }
+            catch(Exception ex)
+            {
+                DALError.LogError("Utility.CandidateData", ex);
+            }
             return ds;
         }
     }

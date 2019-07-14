@@ -41,3 +41,161 @@
     .quantity {
         height: 22px !important;
     }
+ .fixed-font {
+    font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
+    font-size: 13px;
+}
+
+.list-unstyled {
+    padding-left: 10px;
+}
+
+input[data-role="input"] {
+    outline: none;
+    border: none;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857;
+    vertical-align: middle;
+    padding: 6px 12px;
+    height: 42px;
+}
+
+a.list-group-item.hover {
+    background-color: #F5F5F5;
+    text-decoration: none;
+}
+
+a.label-info {
+    margin: 4px 3px;
+    font-size: 14px;
+}
+
+    a.label-info.hover {
+        background-color: #31B0D5;
+    }
+
+    a.label-info.active {
+        background-color: #ADE0EE !important;
+    }
+
+    a.label-info .badge {
+        font-size: 9px;
+        padding: 1px 5px;
+    }
+
+ ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: black;
+    margin: 3px;
+}
+
+    a:hover, a.hover, li.hover a {
+        /*color: green;*/
+    }
+
+.picker {
+    border: 1px solid #bcbbbc;
+    border-radius: 4px;
+}
+
+ .form-inline {
+    margin-bottom: 0;
+}
+
+.panel-group .panel {
+    overflow: inherit;
+}
+
+ul.list-group {
+    list-style-type: none !important;
+}
+
+    ul.list-group li {
+        padding: 10px;
+        border-bottom: 1px solid #bcbbbc;
+    }
+
+.picker {
+    background-color: #f7f7f7;
+}
+
+table#tab_logic.table.table-bordered.table-hover thead tr th {
+    position: static !important;
+    text-align: left;
+}
+
+#myMultiSearch div.sel-anchor a {
+    padding: 8px;
+    background-color: #bcbbbc;
+    border-radius: 4px;
+    float: left;
+}
+
+#DocUpload {
+    width: 100%;
+    border: 1px solid #bcbbbc;
+    margin-top: 10px;
+}
+
+    #DocUpload thead tr th, #DocUpload tbody tr td {
+        padding: 8px;
+    }
+
+    #DocUpload thead tr th {
+        background-color: #bcbbbc;
+    }
+
+    #DocUpload tbody tr:nth-child(odd) {
+        background-color: #ffffff;
+    }
+
+    #DocUpload tbody tr:nth-child(even) {
+        background-color: #ffffff;
+    }
+
+ input[type=file], input[type=file] + input {
+    display: inline-block;
+    /*background-color: #f7f7f7;*/
+    /*border: 1px solid #bcbbbc;*/
+    font-size: 12px;
+    margin: 5px;
+}
+
+input[type=file] + input {
+    padding: 7px 14px;
+    background-color: #40779e;
+    color: #ffffff;
+}
+
+::-webkit-file-upload-button {
+    -webkit-appearance: none;
+    background-color: #40779e;
+    border: 1px solid #bcbbbc;
+    font-size: 12px;
+    padding: 7px 14px;
+    color: #ffffff;
+}
+
+::-ms-browse {
+    background-color: #40779e;
+    border: 1px solid #bcbbbc;
+    font-size: 12px;
+    padding: 7px 14px;
+    color: #ffffff;
+}
+
+input[type=file]::-ms-value {
+    border: none;
+}
+

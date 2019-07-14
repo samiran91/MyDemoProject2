@@ -36,7 +36,7 @@ namespace Jobsportal.Controllers
 
             return Json(CP, JsonRequestBehavior.AllowGet);
         }
-        
+        [Authorize(Roles = "ADMIN,CANDIDATE")]
         public JsonResult SaveCandidateRecord(Job.CandidateProfile OBJ)
         {
             OBJ.Mobile = System.Web.HttpContext.Current.User.Identity.Name;

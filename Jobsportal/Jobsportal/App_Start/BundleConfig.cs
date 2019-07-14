@@ -38,7 +38,9 @@ namespace Jobsportal
                     "~/Scripts/jquery-confirm.js",
                     "~/ Scripts/respond.js",
                     "~/Scripts/lodash.underscore.js",
-                    "~/Scripts/jqueryui-multisearch.js"
+                    "~/Scripts/jqueryui-multisearch.js",
+                    "~/Scripts/summernote.js"
+
                     
                     ));
             bundles.Add(new StyleBundle("~/Content/Layout").Include(
@@ -76,7 +78,7 @@ namespace Jobsportal
                  "~/Scripts/CandidateProfile/CandidateProfile.js"
 
                  ));
-            bundles.Add(new StyleBundle("~/Content/CandidateProfile").Include(
+            bundles.Add(new StyleBundle("~/Content/CandidateProfileStyle").Include(
                       "~/Content/CandidateProfile/CandidateProfile.css"
 
                       ));
@@ -87,6 +89,9 @@ namespace Jobsportal
               "~/Scripts/UserRegistration/UserRegistration.js"
 
               ));
+            bundles.Add(new StyleBundle("~/Content/UserRegStyle").Include(
+                    "~/Content/UserReg/userreg.css"
+                    ));
             bundles.Add(new StyleBundle("~/Content/EditJob").Include(
                       "~/Content/EditJobDetail/EditJobDetail.css"
                       ));

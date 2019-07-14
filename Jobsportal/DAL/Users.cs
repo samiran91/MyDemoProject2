@@ -11,7 +11,26 @@ using System.Web;
 
 namespace DAL
 {
-    public class Users
+
+    public class ResetPassword
+    {
+        public string Username { get; set; }
+
+
+        public string Displayname { get; set; }
+
+        public String Mobile { get; set; }
+
+        public String Email { get; set; }
+
+        public string UniqueId { get; set; }
+
+        public string Message { get; set; }
+
+
+    }
+
+        public class Users
     {
         public string Username { get; set; }
         public string Password { get; set; }
@@ -144,11 +163,11 @@ namespace DAL
             }
         }
 
-        public static String GetResetPassword(String ResetPasswordvalue)
+        public static ResetPassword GetResetPassword(String ResetPasswordvalue)
         {
             string connstring = Connection.GetConnectionString();
             String Msg = String.Empty;
-
+            ResetPassword Resetuser = new ResetPassword();
             using (SqlConnection dbCon = new SqlConnection(connstring))
             {
                 dbCon.Open();
@@ -166,14 +185,19 @@ namespace DAL
                         {
                             if (Convert.ToBoolean(wizReader["ReturnCode"]))
                             {
-                                SendPasswordResetEmail(wizReader["Email"].ToString(), wizReader["USERNAME"].ToString(), wizReader["UniqueId"].ToString());
+                                Resetuser.Message = "Sucessfull. To be Sent";
+                                Resetuser.Username = wizReader["USERNAME"].ToString();
+                                Resetuser.Email = wizReader["Email"].ToString();
+                                Resetuser.UniqueId = wizReader["UniqueId"].ToString();
 
-                                Msg = "An email with instructions to reset your password is sent to your " + wizReader["Email"].ToString() + " email id";
+
+
+                               
                             }
                             else
                             {
 
-                                Msg = "Mobile Number is not found!";
+                                Resetuser.Message = "Mobile Number is not found!";
                             }
                         }
 
@@ -184,79 +208,11 @@ namespace DAL
                     }
                 }
             }
-            return Msg;
+            return Resetuser;
         }
 
 
-        private static void SendPasswordResetEmail(string ToEmail, string UserName, string UniqueId)
-        {
-
-            String EmailTemplatepath = Convert.ToString(HttpContext.Current.Server.MapPath("~/Content/ForgetPasswordEmailHtmlFile.html"));
-            String EmailTemplate = String.Empty;
-
-            EmailTemplate = ReadHtmlFile(EmailTemplatepath);
-            EmailTemplate = EmailTemplate.Replace("@@UserName@@", UserName);
-            EmailTemplate = EmailTemplate.Replace("@@GUID@@", UniqueId);
-            String MSubject = "Reset Password";
-
-            EmailServer emailconfigdata = EmailServer.GetEmailConfiguration();
-            SmtpClient client = new SmtpClient();
-            client.Port = Convert.ToInt32(emailconfigdata.Port);
-            client.Host = emailconfigdata.Host;
-            client.EnableSsl = emailconfigdata.SSL;
-            client.Timeout = 10000;
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
-            client.Credentials = new System.Net.NetworkCredential(emailconfigdata.Email, emailconfigdata.Password);
-
-            MailMessage mm = new MailMessage(emailconfigdata.Email, ToEmail, MSubject, EmailTemplate);
-
-            mm.BodyEncoding = UTF8Encoding.UTF8;
-            mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
-            mm.Subject = MSubject;
-            mm.Body = EmailTemplate;
-            mm.IsBodyHtml = true;
-
-            try
-            {
-
-                client.Send(mm);
-            }
-            catch (Exception ex)
-            {
-                DALError.LogError("Users.SendPasswordResetEmail", ex);
-
-
-            }
-
-        }
-
-        
-
-        private static String ReadHtmlFile(String htmlFilePath)
-        {
-            StringBuilder store = new StringBuilder();
-
-            try
-            {
-                using (StreamReader htmlReader = new StreamReader(htmlFilePath))
-                {
-                    String line;
-                    while ((line = htmlReader.ReadLine()) != null)
-                    {
-                        store.Append(line);
-                    }
-                }
-            }
-            catch (Exception ex) { }
-
-            return store.ToString();
-        }
-
-        public static String GetLogo()
-        {
-            return Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["Drashtalogourl"]);
-        }
+       
 
         public static bool IsPasswordResetLinkIsvalid(String QueryStringVal)
         {
@@ -293,6 +249,7 @@ namespace DAL
 
         public static bool ChangeUserPassword(String GUID, String PasswordValue)
         {
+            string EncryptedPassword = PortalEncryption.Encrypt(PasswordValue);
             List<SqlParameter> paramList = new List<SqlParameter>()
             {
                 new SqlParameter()
@@ -303,7 +260,7 @@ namespace DAL
                 new SqlParameter()
                 {
                     ParameterName = "@Password",
-                    Value = PasswordValue
+                    Value =EncryptedPassword 
                 }
             };
 

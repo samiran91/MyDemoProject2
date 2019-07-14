@@ -92,11 +92,72 @@ namespace Jobsportal.Controllers
         }
         public String GetResetPassword(String ResetPasswordvalue)
         {
-            String Msg = Users.GetResetPassword(ResetPasswordvalue);
+            String Msg = String.Empty;
+            ResetPassword resetPassword = Users.GetResetPassword(ResetPasswordvalue);
+            Msg = resetPassword.Message;
+            if (resetPassword.Message.Contains("Sucessfull"))
+            {
+               var issent=SendPasswordResetEmail(resetPassword.Email, resetPassword.Username, resetPassword.UniqueId);
+                if(issent)
+                {
+                    Msg = "An email with instructions to reset your password is sent to  " + resetPassword.Email ;
+                }
+                else
+                {
+                    Msg = "Due to internal error a email with instructions  failed to send to  " + resetPassword.Email;
+                }
+            }
             return Msg;
         }
 
-        
+        private static bool SendPasswordResetEmail(string ToEmail, string UserName, string UniqueId)
+        {
+            bool issent = false;
+            String EmailTemplatepath = Convert.ToString(System.Web.HttpContext.Current.Server.MapPath("~/Content/ForgetPasswordEmailHtmlFile.html"));
+            String EmailTemplate = String.Empty;
+            String ResetLink = System.Web.HttpContext.Current.Request.Url.Host + "/Login/ResetPassword?uid=" + UniqueId;
+            EmailTemplate = Jobsportal.Common.ReadHtmlFile(EmailTemplatepath);
+            EmailTemplate = EmailTemplate.Replace("@@UserName@@", UserName);
+            EmailTemplate = EmailTemplate.Replace("@@ResetLink@@", ResetLink);
+            String MSubject = "Reset Password";
+
+            EmailServer emailconfigdata = EmailServer.GetEmailConfiguration();
+            SmtpClient client = new SmtpClient();
+            client.Port = Convert.ToInt32(emailconfigdata.Port);
+            client.Host = emailconfigdata.Host;
+            client.EnableSsl = emailconfigdata.SSL;
+            client.Timeout = 10000;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new System.Net.NetworkCredential(emailconfigdata.Email, emailconfigdata.Password);
+
+            MailMessage mm = new MailMessage(emailconfigdata.Email, ToEmail, MSubject, EmailTemplate);
+
+            mm.BodyEncoding = UTF8Encoding.UTF8;
+            mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+            mm.Subject = MSubject;
+            mm.Body = EmailTemplate;
+            mm.IsBodyHtml = true;
+
+            try
+            {
+
+                client.Send(mm);
+                issent = true;
+            }
+            catch (Exception ex)
+            {
+                DALError.LogError("Login.SendPasswordResetEmail", ex);
+
+
+            }
+            return issent;
+
+        }
+
+
+
+       
 
         [HttpPost]
         public Boolean ChangeUserPassword(String GUID, String PasswordValue)
@@ -149,7 +210,7 @@ namespace Jobsportal.Controllers
             }
             catch (Exception ex)
             {
-                DALError.LogError("Users.SendPasswordResetEmail", ex);
+                DALError.LogError("Login.SendWelcomeEmail", ex);
 
 
             }

@@ -13,7 +13,7 @@ using System.Web.Script.Serialization;
 
 namespace Jobsportal.Controllers
 {
-    public delegate void SendEmailToCandidate_delegate(int jobno, string jobkeywords);
+    public delegate void SendEmailToCandidate_delegate(int jobno, string jobkeywords,string host);
     public class JobsController : Controller
     {
         // GET: Jobs
@@ -217,12 +217,12 @@ namespace Jobsportal.Controllers
         {
         
             int status= Job.SaveJobDetails(JobDetails);
-
+            String host = System.Web.HttpContext.Current.Request.Url.Host;
             SendEmailToCandidate_delegate d = null;
             d = new SendEmailToCandidate_delegate(SendEmailToCandidate);
 
             IAsyncResult R = null;
-            R = d.BeginInvoke(JobDetails.JobNo, JobDetails.JobTitle + " " + JobDetails.JobDesc + " " + JobDetails.Qualification, new AsyncCallback(TaskCompleted), null);
+            R = d.BeginInvoke(JobDetails.JobNo, JobDetails.JobTitle + " " + JobDetails.JobDesc + " " + JobDetails.Qualification,host, new AsyncCallback(TaskCompleted), null);
             
             return Json(new { status }, JsonRequestBehavior.AllowGet);
         }
@@ -234,7 +234,7 @@ namespace Jobsportal.Controllers
             // your asynchronous method
         }
         [Authorize(Roles = "ADMIN")]
-        public void SendEmailToCandidate(int jobno,string jobkeywords)
+        public void SendEmailToCandidate(int jobno,string jobkeywords,string host)
         {
             DataSet Candidate = DAL.Utility.CandidateData();
 
@@ -262,7 +262,7 @@ namespace Jobsportal.Controllers
                             String EmailTemplate = String.Empty;
                             EmailTemplate = Jobsportal.Common.ReadHtmlFile(EmailTemplatepath);
                             EmailTemplate = EmailTemplate.Replace("@@UserName@@", Name);
-                            EmailTemplate = EmailTemplate.Replace("@@ApplyLink@@", "http://jobhelperstage.drashtainfotech.com/jobs/JobDetails?JobNo="+jobno );
+                            EmailTemplate = EmailTemplate.Replace("@@ApplyLink@@", host+"/jobs/JobDetails?JobNo="+jobno );
                             EmailTemplate = EmailTemplate.Replace("@@mailcommonwords@@", mailcommonwords);
                             EmailServer emailconfigdata = EmailServer.GetEmailConfiguration();
                             SmtpClient client = new SmtpClient();
@@ -289,7 +289,7 @@ namespace Jobsportal.Controllers
                             }
                             catch (Exception ex)
                             {
-                                DALError.LogError("Invoice.ForwardEmail", ex);
+                                DALError.LogError("Jobs.SendEmailToCandidate", ex);
 
 
                             }

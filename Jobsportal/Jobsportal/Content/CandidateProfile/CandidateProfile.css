@@ -98,15 +98,15 @@ a.label-info {
     font-size: 14px;
 }
 
-    a.label-info.hover {
+a.label-info.hover {
         background-color: #31B0D5;
     }
 
-    a.label-info.active {
+a.label-info.active {
         background-color: #ADE0EE !important;
     }
 
-    a.label-info .badge {
+a.label-info .badge {
         font-size: 9px;
         padding: 1px 5px;
     }
@@ -127,7 +127,7 @@ a {
     margin: 3px;
 }
 
-    a:hover, a.hover, li.hover a {
+a:hover, a.hover, li.hover a {
         /*color: green;*/
     }
 
@@ -175,19 +175,19 @@ table#tab_logic.table.table-bordered.table-hover thead tr th {
     margin-top: 10px;
 }
 
-    #DocUpload thead tr th, #DocUpload tbody tr td {
+ #DocUpload thead tr th, #DocUpload tbody tr td {
         padding: 8px;
     }
 
-    #DocUpload thead tr th {
+ #DocUpload thead tr th {
         background-color: #bcbbbc;
     }
 
-    #DocUpload tbody tr:nth-child(odd) {
+ #DocUpload tbody tr:nth-child(odd) {
         background-color: #ffffff;
     }
 
-    #DocUpload tbody tr:nth-child(even) {
+ #DocUpload tbody tr:nth-child(even) {
         background-color: #ffffff;
     }
 
