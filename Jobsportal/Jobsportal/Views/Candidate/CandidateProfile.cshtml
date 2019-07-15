@@ -50,142 +50,145 @@
 </script>
 
 
-<h2>Candidate Profile</h2>
-<div class="panel-group">
+<div class="container">
+    <h2>Candidate Profile</h2>
+    <div class="panel-group">
 
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" href="#panel_Info">Basic Information:</a>
-            </h4>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" href="#panel_Info">Basic Information:</a>
+                </h4>
 
-        </div>
-        <div class="panel-body collapse in" id="panel_Info">
-            <form class="form-inline">
-                <div class="form-group col-md-9" style="width:80%;"></div>
-                <div class="form-group col-md-3 imgdiv" style="width:20%;">
-                    <div class="avatar-upload text-right">
-                        <div class="avatar-edit">
-                            <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
-                            <label for="imageUpload" class="text-center">
-                                <span><i class="fa fa-camera" aria-hidden="true" style="font-size:26px; color: #000000;"></i></span>
-                            </label>
+            </div>
+            <div class="panel-body collapse in" id="panel_Info">
+                <form class="form-inline">
+                    <div class="form-group col-md-9"></div>
+                    <div class="form-group col-md-3 imgdiv">
+                        <div class="avatar-upload text-right">
+                            <div class="avatar-edit">
+                                <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+                                <label for="imageUpload" class="text-center">
+                                    <span><i class="fa fa-camera" aria-hidden="true" style="font-size:26px; color: #000000;"></i></span>
+                                </label>
+                            </div>
+                            <div class="avatar-preview">
+                                <div id="imagePreview" style="background-image: url('../../Images/NoImage.png');">
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="avatar-preview">
-                            <div id="imagePreview" style="background-image: url('../../Images/NoImage.png');">
+                    </div>
+                </form>
+                <form class="form-inline">
+                    <div class="form-group col-md-6">
+                        <label for="candName" class="col-md-4">Name:</label>
+                        <input type="text" class="form-control col-md-4" id="txt_candName" placeholder="Name">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="Gender" class="col-md-4">Gender:</label>
+                        <select id="txt_candGender" class="form-control">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                </form>
+                <form class="form-inline">
+                    <div class="form-group col-md-6">
+                        <label for="DOB" class="col-md-4">Date of Birth:</label>
+                        <input class="form-control" type="date" id="txt_candDOB" name="bday" value="1998-01-01" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="EMAIL" class="col-md-4">Email:</label>
+                        <input type="text" class="form-control col-md-4" id="txt_candEmail" placeholder="Email">
+                    </div>
+                </form>
+                <form class="form-inline">
+
+
+                    <div class="form-group col-md-6">
+                        <label for="phoneno" class="col-md-4">Phone No:</label>
+                        <input type="text" class="form-control col-md-4" id="txt_candMobile" readonly placeholder="Phone No" value="@System.Web.HttpContext.Current.User.Identity.Name">
+                    </div>
+                </form>
+
+                <form class="form-inline">
+                    <div class="form-group col-md-12">
+                        <label for="address" class="col-md-4">Address:</label>
+                        <input type="text" class="form-control col-md-4" id="txt_candAddress" placeholder="Address">
+                        @*<textarea class="form-control col-md-12" id="txt_candAddress" placeholder="Address" style="width:100%;resize:vertical;min-height:100px;max-height:100px;"></textarea>*@
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" href="#panel_EduQual">Educational Qualification:</a>
+                </h4>
+            </div>
+            <div class="panel-body collapse" id="panel_EduQual">
+                <form class="form-inline">
+                    <label for="offc address" class="col-md-12">Educational Qualification:</label>
+                    <div class="form-group col-md-12" style="padding:0;">
+                        <textarea style="resize:vertical;min-height:100px;max-height:500px;" rows="4" cols="50" id="txt_candQual" align="left" placeholder="Educational Qualification" class="form-control col-md-4"></textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" href="#panel_ProfExp">Working Experiance:</a>
+                </h4>
+            </div>
+            <div class="panel-body collapse" id="panel_ProfExp">
+                <form class="form-inline">
+                    <label for="workexp" class="col-md-12">Working Experiance:</label>
+                    <div class="form-group col-md-12" style="padding:0;">
+                        <textarea style="resize:vertical;min-height:100px;max-height:500px;" rows="4" cols="50" id="txt_candExp" align="left" placeholder="Working Experiance" class="form-control col-md-4"></textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" href="#panel_Intrst">Interests:</a>
+                </h4>
+            </div>
+            <div class="panel-body collapse" id="panel_Intrst">
+
+                <form class="form-inline">
+                    <div class="form-group col-md-12">
+                        <div id="myMultiSearch">
+                            <div data-role="selected-list" class="sel-anchor">
+                                <input data-role="input" id="txt_inst" type="text" placeholder="Search Interests..." />
+                            </div>
+
+                            <div data-role="picker" class="picker1">
+                                <ul class="list-group" data-role="picker-list"></ul>
                             </div>
                         </div>
 
                     </div>
-                </div>
-            </form>
-            <form class="form-inline">
-                <div class="form-group col-md-6">
-                    <label for="candName" class="col-md-4">Name:</label>
-                    <input type="text" class="form-control col-md-4" id="txt_candName" placeholder="Name">
-                </div>
 
-                <div class="form-group col-md-6">
-                    <label for="Gender" class="col-md-4">Gender:</label>
-                    <select id="txt_candGender" class="form-control">
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Others">Others</option>
-                    </select>
-                </div>
-            </form>
-            <form class="form-inline">
-                <div class="form-group col-md-6">
-                    <label for="DOB" class="col-md-4">Date of Birth:</label>
-                    <input class="form-control" type="date" id="txt_candDOB" name="bday" value="1998-01-01" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
-                </div>
+                </form>
 
-                <div class="form-group col-md-6">
-                    <label for="EMAIL" class="col-md-4">Email:</label>
-                    <input type="text" class="form-control col-md-4" id="txt_candEmail" placeholder="Email">
-                </div>
-            </form>
-            <form class="form-inline">
-
-
-                <div class="form-group col-md-6">
-                    <label for="phoneno" class="col-md-4">Phone No:</label>
-                    <input type="text" class="form-control col-md-4" id="txt_candMobile" readonly placeholder="Phone No" value="@System.Web.HttpContext.Current.User.Identity.Name">
-                </div>
-            </form>
-
-            <form class="form-inline">
-                <div class="form-group col-md-12">
-                    <label for="address" class="col-md-4">Address:</label>
-                    <input type="text" class="form-control col-md-4" id="txt_candAddress" placeholder="Address">
-                    @*<textarea class="form-control col-md-12" id="txt_candAddress" placeholder="Address" style="width:100%;resize:vertical;min-height:100px;max-height:100px;"></textarea>*@
-                </div>
-            </form>
-
+            </div>
         </div>
-    </div>
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" href="#panel_EduQual">Educational Qualification:</a>
-            </h4>
-        </div>
-        <div class="panel-body collapse" id="panel_EduQual">
-            <form class="form-inline">
-                <label for="offc address" class="col-md-12">Educational Qualification:</label>
-                <div class="form-group col-md-12" style="padding:0;">
-                    <textarea style="resize:vertical;min-height:100px;max-height:500px;" rows="4" cols="50" id="txt_candQual" align="left" placeholder="Educational Qualification" class="form-control col-md-4"></textarea>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" href="#panel_ProfExp">Working Experiance:</a>
-            </h4>
-        </div>
-        <div class="panel-body collapse" id="panel_ProfExp">
-            <form class="form-inline">
-                <label for="workexp" class="col-md-12">Working Experiance:</label>
-                <div class="form-group col-md-12" style="padding:0;">
-                    <textarea style="resize:vertical;min-height:100px;max-height:500px;" rows="4" cols="50" id="txt_candExp" align="left" placeholder="Working Experiance" class="form-control col-md-4"></textarea>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" href="#panel_Intrst">Interests:</a>
-            </h4>
-        </div>
-        <div class="panel-body collapse" id="panel_Intrst">
 
-            <form class="form-inline">
-                <div class="form-group col-md-12">
-                    <div id="myMultiSearch">
-                        <div data-role="selected-list" class="sel-anchor">
-                            <input data-role="input" id="txt_inst" type="text" placeholder="Search Interests..." />
-                        </div>
-
-                        <div data-role="picker" class="picker1">
-                            <ul class="list-group" data-role="picker-list"></ul>
-                        </div>
-                    </div>
-
-                </div>
-
-            </form>
-
+        <div class="text-center">
+            <button type="button" id="SubmitCandidateDetail" onclick="SaveCandidateInfo()" class="btn btn-success Gap2"><span class="glyphicon glyphicon-off" style="padding-right:5px;"></span>Save</button>
         </div>
+
     </div>
 
-    <div class="text-center">
-        <button type="button" id="SubmitCandidateDetail" onclick="SaveCandidateInfo()" class="btn btn-success Gap2"><span class="glyphicon glyphicon-off" style="padding-right:5px;"></span>Save</button>
-    </div>
-
+    <input id="hdn_imgfname" type="hidden" name="hiddeninputname" value="" />
 </div>
 
-<input id="hdn_imgfname" type="hidden" name="hiddeninputname" value="" />
 

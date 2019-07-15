@@ -59,7 +59,8 @@
         }
 
         h4 {
-            text-align: center;
+            /*text-align: center;*/
+            text-align: left;  /*MN: Should be left align*/
             font: bold;
         }
 
@@ -78,6 +79,17 @@
         #myNavbarleft {
             padding: 0 !important;
         }
+
+        .ddmenudiv div.dropdown {
+            line-height: 60px;
+        }
+
+            .ddmenudiv div.dropdown > a {
+                background: #bcbbbc;
+                padding: 10px;
+                border-radius: 4px;
+                text-decoration: none;
+            }
     </style>
     @Styles.Render("~/Content/Layout")
     @Scripts.Render("~/bundles/Layout")
@@ -90,7 +102,7 @@
             </a>
             
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-2 ddmenudiv">
             <div class="dropdown">
                 <a href="JavaScript:Void(0);" class="dropdown-toggle" data-toggle="dropdown">
                     <span class="white"> Welcome Candidate</span>
@@ -103,7 +115,7 @@
                 <ul class="dropdown-menu">
 
 
-                    <li><a href="/Login/SignOut"><i class="fa fa-check-square" aria-hidden="true"></i> Sign Out</a></li>
+                    <li><a href="/Login/SignOut"><i class="fas fa-sign-out-alt"></i> Sign Out</a></li>
 
 
                 </ul>

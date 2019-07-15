@@ -10,12 +10,12 @@ $(document).ready(function () {
 
         dataSource: '/Jobs/GetJobList',
         columns: [
-            { field: 'JobNo', title: 'Job Number', width: 200, priority: 3 },
+            { field: 'JobNo', title: 'Job Number', priority: 3 },
             { field: 'JobTitle', title: 'Job Title', sortable: true, priority: 1 },
-            { field: 'PostedDate', title: 'Posted Date', width: 200, sortable: true, type: 'date', priority: 2 },
+            { field: 'PostedDate', title: 'Posted Date', sortable: true, type: 'date', priority: 2 },
             {
                 field: "Edit", title: "", width: 34, type: "icon",
-                icon: "fal fa-pencil fa-2X", tooltip: "Edit", events: { "click": Edit }
+                icon: "fas fa-edit fa-2X", tooltip: "Edit", events: { "click": Edit }
             },
             {
                 field: "Delete", title: "", width: 34, type: "icon",
