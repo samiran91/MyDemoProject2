@@ -1,6 +1,6 @@
 ﻿@model List<DAL.Job.Discussion>
 <style>
-    table {
+    table.fetchDiscussiontbl {
         border-collapse: collapse;
         border-collapse: separate;
         border-spacing: 0 15px;
@@ -20,7 +20,7 @@
 
 @if (Model != null)
 {
-    <table style="width:100%;">
+    <table style="width:100%;" class="fetchDiscussiontbl">
         <tbody>
 
             @foreach (var item in Model)

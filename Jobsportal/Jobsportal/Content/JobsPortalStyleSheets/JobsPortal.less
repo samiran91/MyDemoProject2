@@ -10,7 +10,8 @@ body {
 
 #ListJobs-wrap {
     .pad-all {
-        padding: 15px;
+        padding: 5px;
+        height: 62px;
     }
 
     input[type=text], select {
@@ -18,10 +19,18 @@ body {
         height: 32px;
         border: 1px solid #bcbbbc;
         border-radius: 4px;
-    }   
+    }
 
     .link-navigator {
         cursor: pointer;
+    }
+
+    .srch-btn-height {
+        height: 62px;
+        vertical-align: middle;
+        display: flex;
+        align-items: flex-end;
+        justify-content:center;
     }
 }
 
@@ -50,6 +59,24 @@ body {
         padding: 10px 10px 10px 15px;
         background-color: #bcbbbc;
         font-size: 16px;
+    }
+
+    .jobreturn-div {
+        width: 50%;
+        float: left;
+        text-align: left;
+        padding: 10px;
+    }
+
+    .JobApplyLink-div {
+        width: 50%;
+        float: right;
+        text-align: left;
+        padding: 10px;
+    }
+
+    .btn {
+        border-radius:0 !important;
     }
 }
 
@@ -90,11 +117,46 @@ body {
         min-height: 40px;
         border: 1px solid #bcbbbc;
         border-radius: 0px;
-        padding:2px;
+        padding: 4px;
+        border-radius: 3px;
     }
 
     .btn-success {
         border-radius: 0;
         margin-left: 2px;
+    }
+}
+
+@media only screen and (max-width: 460px) {
+    #ListJobs-wrap .srch-btn-height {
+        height:46px;
+    }
+}
+
+@media (orientation: portrait) {
+
+    .input-icons {
+        display: block !important;
+        text-align: center !important;
+
+        .btn-success {
+            margin-top: 5px;
+            display: inline-block !important;
+
+        }
+    }
+
+    .jobreturn-div {
+        text-align: right !important;
+        padding: 6px !important;
+    }
+
+    .JobApplyLink-div {
+        text-align: left !important;
+        padding: 6px !important;
+    }
+
+    #insertbtn {
+        margin-right:5px;
     }
 }

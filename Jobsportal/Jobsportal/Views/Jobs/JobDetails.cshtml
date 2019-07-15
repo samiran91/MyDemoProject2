@@ -100,7 +100,7 @@
                 <h4 class="text-left">Post a Comment</h4>
                 <div class="input-icons">
 
-                    <textarea class="input-field" id="txt-FAQ-Comm" placeholder="Enter your comment..."></textarea><button type="button" onclick="InsertMsgText()" class="btn btn-success">Submit</button><a style="display:flex;align-items:center;" type="button" class="btn btn-success" href="@Url.Action("LoginRegistration","Login")">Join Discussion</a>
+                    <textarea class="input-field" id="txt-FAQ-Comm" placeholder="Enter your comment..."></textarea><button type="button" id="insertbtn" onclick="InsertMsgText()" class="btn btn-success">Submit</button><a style="display:flex;align-items:center;" type="button" class="btn btn-success" href="@Url.Action("LoginRegistration","Login")">Join Discussion</a>
                 </div>
 
             </div>
@@ -109,8 +109,8 @@
 
     <div class="text-center" style="padding:5px;">
 
-        <div style="width: 50%; float: left; text-align: left; padding: 10px;"><button type="button" id="JobReturn" class="btn btn-success">Return Back to Job List</button></div>
-        <div style="width: 50%; float: right; text-align: left; padding: 10px;"><button type="button" id="JobApplyLink" class="btn btn-success">Apply</button></div>
+        <div class="jobreturn-div"><button type="button" id="JobReturn" class="btn btn-success">Back to Job List</button></div>
+        <div class="JobApplyLink-div"><button type="button" id="JobApplyLink" class="btn btn-success">Apply</button></div>
 
     </div>
 </div>
