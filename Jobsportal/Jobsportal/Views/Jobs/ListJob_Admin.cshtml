@@ -23,60 +23,10 @@
     <link rel="icon" href="~/Images/Drashta.png" type="image/gif" sizes="16x16">
     @Styles.Render("~/Content/JobList")
     @Scripts.Render("~/bundles/ListJobAdmin")
-
-    <style>
-        .divalign {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .btn-success {
-            height: 34px;
-            margin: 10px 0;
-        }
-
-        #txtname {
-            margin: 10px;
-            margin-left: 0;
-        }
-        .glyphicon {
-            padding-right: 5px;
-        }
-        .pad-left {
-            padding-left:0;
-        }
-        .pad-right {
-            padding-right: 0;
-        }
-        @@media (orientation: portrait) {
-            .divalign {
-                padding-left:0;
-                padding-right:0;
-            }
-
-            .pad-left {
-                padding-right:0 !important;
-            }
-        }
-    </style>
 </head>
 
-
-
-
-
-@*<div class="col-md-5"></div>*@
-@*<div class="col-md-2">
-    <button id="btnAdd" type="button" onclick="Add()" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add New Job</button>
-</div>*@
-@*<div style="height:50px"></div>*@
-
-
-
-
 <div class="container">
-    <div class="">
+    <div class="Listjob-admin-wrap">
         <h2>Job List</h2>
         <div>
             <div class="col-md-3 pad-left">

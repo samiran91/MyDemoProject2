@@ -2,6 +2,9 @@
   padding-bottom: 40px;
   padding-top: 50px;
 }
+#ListJobs-wrap {
+  margin-top: 30px;
+}
 #ListJobs-wrap .pad-all {
   padding: 5px;
   height: 62px;
@@ -23,10 +26,14 @@
   align-items: flex-end;
   justify-content: center;
 }
+#ListJobs-wrap .btn {
+  border-radius: 0 !important;
+}
 #JobDetails-wrap {
   border: 1px solid #bcbbbc;
   border-radius: 4px 4px 0 0;
   padding: 0;
+  margin-top: 30px;
 }
 #JobDetails-wrap .nav-tabs li.active a {
   color: #ffffff;
@@ -60,6 +67,18 @@
 }
 #JobDetails-wrap .btn {
   border-radius: 0 !important;
+}
+#JobDetails-wrap #Desc p:last-child {
+  margin: 10px;
+  text-align: justify;
+  border: 1px solid #bcbbbc;
+  padding: 10px;
+  margin: 10px 0 0 0;
+}
+#JobDetails-wrap .commentstxt {
+  margin: 10px 0;
+  background-color: #f8f8f8;
+  padding: 8px;
 }
 .impdates-tbl {
   width: 100% !important;
@@ -98,6 +117,29 @@
   border-radius: 0;
   margin-left: 2px;
 }
+.Listjob-admin-wrap .divalign {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.Listjob-admin-wrap .btn-success {
+  height: 34px;
+  margin: 10px 0;
+  border-radius: 0;
+}
+.Listjob-admin-wrap #txtname {
+  margin: 10px;
+  margin-left: 0;
+}
+.Listjob-admin-wrap .glyphicon {
+  padding-right: 5px;
+}
+.Listjob-admin-wrap .pad-left {
+  padding-left: 0;
+}
+.Listjob-admin-wrap .pad-right {
+  padding-right: 0;
+}
 @media only screen and (max-width: 460px) {
   #ListJobs-wrap .srch-btn-height {
     height: 46px;
@@ -122,5 +164,12 @@
   }
   #insertbtn {
     margin-right: 5px;
+  }
+  .divalign {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .pad-left {
+    padding-right: 0 !important;
   }
 }

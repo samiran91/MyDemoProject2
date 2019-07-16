@@ -199,3 +199,7 @@ input[type=file]::-ms-value {
     border: none;
 }
 
+.btn-success {
+    border-radius:0 !important;
+}
+

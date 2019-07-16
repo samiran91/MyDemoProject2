@@ -1,0 +1,90 @@
+﻿
+.icon-bar {
+    background-color: #fff !important;
+}
+
+
+li {
+    cursor: pointer;
+}
+
+
+.topicon {
+    padding-top: 5px;
+}
+
+.topmenu {
+    background: #3f4952;
+}
+
+.content {
+    /*text-align: center;*/
+    font-family: Arial san-serif;
+}
+
+.leftmenu {
+    background: #3f4952;
+}
+
+ul li a {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.white {
+    font: bold;
+    color: white;
+}
+
+#myNavbarleft {
+    min-height: 650px;
+}
+
+h4 {
+    /*text-align: center;
+    font: bold;*/
+}
+
+.footer {
+    background: #3f4952;
+    text-align: center;
+    font: bold;
+    color: white;
+}
+
+body {
+    padding-top: 0 !important;
+}
+
+#myNavbarleft {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+
+div.col-sm-2.leftmenu {
+    padding-right: 0;
+}
+
+.nav-stacked > li {
+    margin: 5px;
+}
+
+#FooterTemplate {
+    margin-top: 100px;
+}
+
+
+.ddmenudiv div.dropdown {
+    line-height: 60px;
+}
+
+    .ddmenudiv div.dropdown > a {
+        background: #bcbbbc;
+        padding: 10px;
+        border-radius: 4px;
+        text-decoration: none;
+    }
+
+.nav-stacked > li + li {
+    margin-left:5px !important;
+}

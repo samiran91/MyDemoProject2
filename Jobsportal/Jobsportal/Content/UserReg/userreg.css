@@ -1,5 +1,6 @@
 ﻿ button.btn.btn-success {
     margin: 5px;
+    border-radius: 0 !important;
 }
 
 .panel-height {

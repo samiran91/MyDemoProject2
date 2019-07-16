@@ -89,6 +89,9 @@
 #SubmitCandidateDetail {
   margin: 5px;
 }
+.btn-success {
+  border-radius: 0 !important;
+}
 @media (orientation: portrait) {
   .imgdiv {
     width: unset !important;
