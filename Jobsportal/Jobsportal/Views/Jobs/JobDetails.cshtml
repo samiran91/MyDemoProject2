@@ -24,6 +24,13 @@
     <link rel="icon" href="~/Images/Drashta.png" type="image/gif" sizes="16x16">
     @Styles.Render("~/Content/JobList")
     @Scripts.Render("~/bundles/JobDetalis")
+    
+    <script>
+        function JoinToDiscussion() {
+                
+        }
+
+    </script>
 </head>
 
 <div class="container">
@@ -104,7 +111,7 @@
                     <h4 class="text-left">Post a Comment</h4>
                     <div class="input-icons">
 
-                        <textarea class="input-field" id="txt-FAQ-Comm" placeholder="Enter your comment..."></textarea><button type="button" id="insertbtn" onclick="InsertMsgText()" class="btn btn-success">Submit</button><a style="display:flex;align-items:center;" type="button" class="btn btn-success" href="@Url.Action("LoginRegistration","Login")">Join Discussion</a>
+                        <textarea class="input-field" id="txt-FAQ-Comm" placeholder="Enter your comment..."></textarea><button type="button" id="insertbtn" onclick="InsertMsgText()" class="btn btn-success">Submit</button><button onclick="JoinToDiscussion()" style="display:flex;align-items:center;" type="button" class="btn btn-success">Join Discussion</button>
                     </div>
 
                 </div>

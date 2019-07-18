@@ -758,6 +758,36 @@ namespace DAL
             return status;
         }
 
+        public static String GetCurrentUserName(String UserName)
+        {
+            String connstring = Connection.GetConnectionString();
+            String Query = String.Format("SELECT P.NAME FROM Person P INNER JOIN Users U ON P.PERSONID = U.PERSONID WHERE U.USERNAME='{0}'", UserName);
+            String CurrentUserName = String.Empty;
+            using (SqlConnection dbCon = new SqlConnection(connstring))
+            {
+                dbCon.Open();
+
+                using (SqlCommand dbCom = new SqlCommand(Query, dbCon))
+                {
+
+                    dbCom.CommandType = CommandType.Text;
+
+
+                    using (SqlDataReader wizReader = dbCom.ExecuteReader())
+                    {
+                        while (wizReader.Read())
+                        {
+                            CurrentUserName = Convert.ToString(wizReader["NAME"]);
+                        }
+
+                    }
+
+                }
+            }
+
+            return CurrentUserName;
+        }
+
     }
 
 
