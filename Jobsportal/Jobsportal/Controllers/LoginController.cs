@@ -27,7 +27,9 @@ namespace Jobsportal.Controllers
         [HttpPost]
         public JsonResult SignIn(Users userdata)
         {
-            string role = Users.TrySignIn(userdata.Mobile, userdata.Password);
+            
+
+             string role = Users.TrySignIn(userdata.Mobile, userdata.Password);
             if (!role.Contains("Invalid"))
             {
                 userdata.Roles = role;
@@ -113,7 +115,7 @@ namespace Jobsportal.Controllers
         private static bool SendPasswordResetEmail(string ToEmail, string UserName, string UniqueId)
         {
             bool issent = false;
-            String EmailTemplatepath = Convert.ToString(System.Web.HttpContext.Current.Server.MapPath("~/Content/ForgetPasswordEmailHtmlFile.html"));
+            String EmailTemplatepath = Convert.ToString(System.Web.HttpContext.Current.Server.MapPath("~/html/ForgetPasswordEmailHtmlFile.html"));
             String EmailTemplate = String.Empty;
             String ResetLink = System.Web.HttpContext.Current.Request.Url.Host + "/Login/ResetPassword?uid=" + UniqueId;
             EmailTemplate = Jobsportal.Common.ReadHtmlFile(EmailTemplatepath);
