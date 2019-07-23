@@ -34,7 +34,7 @@
                             <img height="46px" src="~/Images/NoImage.png" />
                             <span style="font-weight:bold;">@item.UserName</span>
                         </td>
-                        <td class="td-right">@item.Messages<span  style="display:grid;">@item.MessageDateTime.ToString("dd/MM/yyyy h:mm tt")</span></td>
+                        <td class="td-right">@item.Messages<span  style="display:grid;">@item.MessageDateTime.ToLocalTime().ToString("dd/MM/yyyy h:mm tt")</span></td>
                     </tr>
                 }
 
@@ -45,7 +45,7 @@
                             <img height="46px" src="~/Images/NoImage.png" />
                             <span  style="font-weight:bold;">@item.UserName</span>
                         </td>
-                        <td class="td-right">@item.Messages<span style="display:grid;">@item.MessageDateTime.ToString("dd/MM/yyyy h:mm tt")</span></td>
+                        <td class="td-right">@item.Messages<span style="display:grid;">@item.MessageDateTime.ToLocalTime().ToString("dd/MM/yyyy h:mm tt")</span></td>
                     </tr>
                 }
             }

@@ -51,9 +51,13 @@ $(document).ready(function () {
     var JobNumber = GetParameterValues('JobNo');
 
     FetchDiscussion(JobNumber);
-
+    
 });
-
+function JoinToDiscussion() {
+    debugger;
+    var JobNumber = GetParameterValues('JobNo');
+    window.location.href = "/Login/LoginRegistration?FromJobNo=" + JobNumber;
+}
 function FetchDiscussion(JobNumber) {
 
     $.ajax({
@@ -63,7 +67,7 @@ function FetchDiscussion(JobNumber) {
             JobNumber: JobNumber
         },
         success: function (data) {
-            console.log(data);
+            debugger;
             $("#FAQ-Community-Div").html('');
             $("#FAQ-Community-Div").html(data);
             
