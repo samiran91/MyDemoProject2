@@ -579,7 +579,7 @@ namespace DAL
             List<DAL.Job.keywordSearch> list = new List<DAL.Job.keywordSearch>();
 
             String connstring = Connection.GetConnectionString();
-            String sql_select = String.Format("SELECT KEYWORD from KEYWORD where KEYWORD like '%{0}%' ", Keyword);
+            String sql_select = String.Format("Select keyword from (SELECT Keyword from KEYWORD union select [Subject] from [Subject] union select [DegreeName] from [Degree] ) as result where KEYWORD like '%{0}%' ", Keyword);
             using (SqlConnection dbCon = new SqlConnection(connstring))
             {
                 dbCon.Open();
@@ -597,7 +597,7 @@ namespace DAL
                             var OBJ = new keywordSearch()
                             {
                                
-                                Keyword = Convert.ToString(wizReader["KEYWORD"]),
+                                Keyword = Convert.ToString(wizReader["keyword"]),
                             };
 
                             list.Add(OBJ);
