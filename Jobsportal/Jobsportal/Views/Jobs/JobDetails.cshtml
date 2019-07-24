@@ -103,10 +103,22 @@
                 </div>
                 <div id="FAQC" class="tab-pane fade">
                     <div id="FAQ-Community-Div"></div>
-                    <h4 class="text-left">Post a Comment</h4>
+                    @if (string.IsNullOrEmpty(System.Web.HttpContext.Current.User.Identity.Name))
+    {
+                <h4 class="text-left">Post a Comment as Ananoymus</h4>
+}
+else
+
+{
+                <h4 class="text-left">Post a Comment as @System.Web.HttpContext.Current.User.Identity.Name</h4>
+}
                     <div class="input-icons">
 
-                        <textarea class="input-field" id="txt-FAQ-Comm" placeholder="Enter your comment..."></textarea><button type="button" id="insertbtn" onclick="InsertMsgText()" class="btn btn-success">Submit</button><button onclick="JoinToDiscussion()" style="display:flex;align-items:center;" type="button" class="btn btn-success">Join Discussion</button>
+                        <textarea class="input-field" id="txt-FAQ-Comm" placeholder="Enter your comment..."></textarea><button type="button" id="insertbtn" onclick="AddMsgText()" class="btn btn-success">Submit</button>
+                        @if (string.IsNullOrEmpty(System.Web.HttpContext.Current.User.Identity.Name))
+        {
+                <button onclick="JoinToDiscussion()" style="display:flex;align-items:center;" type="button" class="btn btn-success">Login & Join Discussion</button>
+}
                     </div>
 
                 </div>

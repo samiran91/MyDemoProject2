@@ -21,14 +21,20 @@ $(document).ready(function () {
                             JobNo: JobNumber
                         },
                         success: function (data) {
-                           
-                            window.location.href = data;
+                            if (validURL(data)) {
+                                window.location.href = data;
+                            }
+                            else {
+                                $.alert({
+                                    type: 'green',
+                                    title: 'Message!',
+                                    content: data,
+                                });
+                            }
+
                         },
                         error: function (ex) {
-                            var r = jQuery.parseJSON(response.responseText);
-                            alert("Message: " + r.Message);
-                            alert("StackTrace: " + r.StackTrace);
-                            alert("ExceptionType: " + r.ExceptionType);
+                            console.log("Eroor", ex.StackTrace);
                         }
                     }); 
                 },
@@ -54,7 +60,7 @@ $(document).ready(function () {
     
 });
 function JoinToDiscussion() {
-    debugger;
+    
     var JobNumber = GetParameterValues('JobNo');
     window.location.href = "/Login/LoginRegistration?FromJobNo=" + JobNumber;
 }
@@ -67,7 +73,7 @@ function FetchDiscussion(JobNumber) {
             JobNumber: JobNumber
         },
         success: function (data) {
-            debugger;
+            
             $("#FAQ-Community-Div").html('');
             $("#FAQ-Community-Div").html(data);
             
@@ -81,7 +87,7 @@ function FetchDiscussion(JobNumber) {
     });
 }
 
-function InsertMsgText() {
+function AddMsgText() {
 
     var JobNumber = GetParameterValues('JobNo');
     var Msg = $("#txt-FAQ-Comm").val();
@@ -94,13 +100,14 @@ function InsertMsgText() {
     $.ajax({
         
         type: "POST",
-        url: "/Jobs/InsertDiscussionMsg",
+        url: "/Jobs/AddDiscussionMsg",
         data: JSON.stringify(Discussion),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (response) {
             var JobNumber = GetParameterValues('JobNo');
             FetchDiscussion(JobNumber);
+            $("#txt-FAQ-Comm").val('');
         },
 
         error: function (response) {

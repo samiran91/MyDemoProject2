@@ -123,11 +123,15 @@ namespace Jobsportal.Controllers
         }
 
         [HttpPost]
-        public JsonResult InsertDiscussionMsg(DAL.Job.Discussion OBJ)
+        public JsonResult AddDiscussionMsg(DAL.Job.Discussion OBJ)
         {
-            if(System.Web.HttpContext.Current.User.Identity.Name!=null)
+            if(!String.IsNullOrEmpty(System.Web.HttpContext.Current.User.Identity.Name))
             {
                 OBJ.UserName = System.Web.HttpContext.Current.User.Identity.Name.ToString();
+            }
+            else
+            {
+                OBJ.UserName = "anonymous";
             }
             var status= DAL.Job.InsertDiscussionMsg(OBJ);
             return Json(status, JsonRequestBehavior.AllowGet);

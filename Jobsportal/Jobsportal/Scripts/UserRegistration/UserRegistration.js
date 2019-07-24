@@ -115,7 +115,7 @@ function SignUp() {
 
 
 function signin() {
-    debugger;
+   
 
     var Mobile = $('#phone').val();
 
@@ -134,13 +134,13 @@ function signin() {
     else {
         $.ajax({ url: "/Login/SignIn", type: "POST", data: { UserData: UserData } })
             .done(function (data) {
-                debugger;
+               
                 if (data != false) {
                     if (Mobile == "admin") {
                         window.location = "/Jobs/ListJob_Admin";
                     }
                     else {
-                        debugger;
+                    
                         var JobNumber = GetParameterValues('FromJobNo');
                         
                         if (JobNumber==null)

@@ -46,6 +46,7 @@
 }
 
 $(document).ready(function () {
+    debugger;
     PopulateInterests();
     $("#imageUpload").change(function () {
         readURL(this);
