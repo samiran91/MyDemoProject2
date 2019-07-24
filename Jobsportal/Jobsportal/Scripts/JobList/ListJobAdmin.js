@@ -76,6 +76,7 @@ function Search() {
 }
 
 function Remove(e) {
+    debugger;
     $.confirm({
         title: 'Alert!',
         content: 'Are you sure you want to delete?',
