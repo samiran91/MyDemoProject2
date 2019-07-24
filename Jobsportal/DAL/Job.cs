@@ -126,6 +126,10 @@ namespace DAL
 
             public Boolean MyMsg { get; set; }
 
+            public String DisplayName { get; set; }
+
+            public String ImgPath { get; set; }
+
         }
 
         private const String JobNum = "@JobNumber";
@@ -712,6 +716,8 @@ namespace DAL
                             Chat.UserName = (String)wizReader["USERNAME"];
                             Chat.JobNo = (Int32)wizReader["JOBNO"];
                             Chat.Messages = (String)wizReader["MESSAGES"];
+                            Chat.DisplayName = Convert.ToString(wizReader["DisplayName"]);
+                            Chat.ImgPath = Convert.ToString(wizReader["IMGPATH"]);
                             Chat.MessageDateTime = Convert.ToDateTime(wizReader["MSGDATETIME"]);
                             Chat.MyMsg = false;
 
@@ -721,6 +727,15 @@ namespace DAL
                                 {
                                     Chat.MyMsg = true;
                                 }
+                            }
+
+                            if(Chat.ImgPath==null || Chat.ImgPath=="")
+                            {
+                                Chat.ImgPath = "/images/NoImage.png";
+                            }
+                            else
+                            {
+                                Chat.ImgPath = "/images/CandidateImages/" + Chat.ImgPath;
                             }
 
                             D.Add(Chat);

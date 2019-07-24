@@ -31,8 +31,9 @@
 
 
                         <td style="display:inline-grid;">
-                            <img height="46px" src="~/Images/NoImage.png" />
-                            <span style="font-weight:bold;">@item.UserName</span>
+                            @*<img height="46px" src="~/Images/NoImage.png" />*@
+                            <img height="50px" width="50px" style="border-radius:50%;" src="@item.ImgPath" />
+                            <span style="font-weight:bold;">@item.DisplayName</span>
                         </td>
                         <td class="td-right">@item.Messages<span  style="display:grid;">@item.MessageDateTime.ToLocalTime().ToString("dd/MM/yyyy h:mm tt")</span></td>
                     </tr>
@@ -42,8 +43,8 @@
                 {
                     <tr>
                         <td style="display:inline-grid;">
-                            <img height="46px" src="~/Images/NoImage.png" />
-                            <span  style="font-weight:bold;">@item.UserName</span>
+                            <img height="50px" width="50px" style="border-radius:50%;" src="@item.ImgPath" />
+                            <span  style="font-weight:bold;">@item.DisplayName</span>
                         </td>
                         <td class="td-right">@item.Messages<span style="display:grid;">@item.MessageDateTime.ToLocalTime().ToString("dd/MM/yyyy h:mm tt")</span></td>
                     </tr>
