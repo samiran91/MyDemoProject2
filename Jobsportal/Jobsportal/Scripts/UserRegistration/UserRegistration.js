@@ -4,9 +4,9 @@
         window.location.href = "/jobs";
     });
 
-
-
-
+    if (window.location.search) {
+        $('#ResetPass').modal('show');
+    }
 });
 
 function SignUp() {
@@ -113,7 +113,6 @@ function SignUp() {
     }
 }
 
-
 function signin() {
    
 
@@ -211,4 +210,40 @@ function ResetPassword() {
             alert("ExceptionType: " + ex.ExceptionType);
         }
     });
+}
+
+function ChangePassword() {
+    var GUIDURL = GetParameterValues('uid');
+    var Password = $("#txt_fpassword").val();
+
+    $.ajax({
+        type: "POST",
+        url: "/Login/ChangeUserPassword",
+        data: { GUID: GUIDURL, PasswordValue: Password },
+
+        success: function (response) {
+            $('#success-message').css("display", "block");
+            $('#success-message-text').text("Password Change Successfully!!");
+
+            setTimeout(function () {
+
+                window.location = "/Login/LoginRegistration";
+
+            }, 3000);
+        },
+
+        error: function (response) {
+
+        }
+    });
+}
+
+function GetParameterValues(param) {
+    var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for (var i = 0; i < url.length; i++) {
+        var urlparam = url[i].split('=');
+        if (urlparam[0] == param) {
+            return urlparam[1];
+        }
+    }
 }

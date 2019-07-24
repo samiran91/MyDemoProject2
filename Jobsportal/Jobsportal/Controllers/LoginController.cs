@@ -117,7 +117,8 @@ namespace Jobsportal.Controllers
             bool issent = false;
             String EmailTemplatepath = Convert.ToString(System.Web.HttpContext.Current.Server.MapPath("~/html/ForgetPasswordEmailHtmlFile.html"));
             String EmailTemplate = String.Empty;
-            String ResetLink = System.Web.HttpContext.Current.Request.Url.Host + "/Login/ResetPassword?uid=" + UniqueId;
+            //String ResetLink = System.Web.HttpContext.Current.Request.Url.Host + "/Login/ResetPassword?uid=" + UniqueId;
+            String ResetLink = System.Web.HttpContext.Current.Request.Url.Host + "/Login/LoginRegistration?uid=" + UniqueId;
             EmailTemplate = Jobsportal.Common.ReadHtmlFile(EmailTemplatepath);
             EmailTemplate = EmailTemplate.Replace("@@UserName@@", UserName);
             EmailTemplate = EmailTemplate.Replace("@@ResetLink@@", ResetLink);
