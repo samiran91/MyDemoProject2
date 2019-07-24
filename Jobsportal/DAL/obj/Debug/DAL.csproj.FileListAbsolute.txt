@@ -23,7 +23,6 @@ D:\Maynak\SS\JobPortal_New\trunk\Jobsportal\Jobsportal\bin\DAL.pdb
 D:\Maynak\SS\JobPortal_New\trunk\Jobsportal\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
 F:\Personal\Code\trunk\Jobsportal\Jobsportal\bin\DAL.dll
 F:\Personal\Code\trunk\Jobsportal\Jobsportal\bin\DAL.pdb
-F:\Personal\Code\trunk\Jobsportal\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
 F:\Personal\Code\trunk\Jobsportal\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
 F:\Personal\Code\trunk\Jobsportal\DAL\obj\Debug\DAL.dll
 F:\Personal\Code\trunk\Jobsportal\DAL\obj\Debug\DAL.pdb

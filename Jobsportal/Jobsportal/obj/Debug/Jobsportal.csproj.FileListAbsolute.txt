@@ -235,7 +235,6 @@ F:\Personal\Code\trunk\Jobsportal\Jobsportal\bin\System.Web.WebPages.Deployment.
 F:\Personal\Code\trunk\Jobsportal\Jobsportal\bin\System.Web.WebPages.dll
 F:\Personal\Code\trunk\Jobsportal\Jobsportal\bin\System.Web.WebPages.Razor.dll
 F:\Personal\Code\trunk\Jobsportal\Jobsportal\bin\WebGrease.dll
-F:\Personal\Code\trunk\Jobsportal\Jobsportal\bin\DAL.pdb
 F:\Personal\Code\trunk\Jobsportal\Jobsportal\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 F:\Personal\Code\trunk\Jobsportal\Jobsportal\bin\System.Web.Helpers.xml
 F:\Personal\Code\trunk\Jobsportal\Jobsportal\bin\System.Web.Mvc.xml
