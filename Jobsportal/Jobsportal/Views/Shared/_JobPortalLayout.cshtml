@@ -18,7 +18,7 @@
             <a href="@Url.Action("listjob","jobs")">
                 <img src="~/Images/Drashta.png" height="60px" width="245px" />
             </a>
-            
+
         </div>
         <div class="col-sm-2 ddmenudiv">
             <div class="dropdown">
@@ -32,9 +32,9 @@
 
                 <ul class="dropdown-menu">
 
-
+                    <li><a  data-toggle="modal" href="#ChangePassword"><i class="fa fa-key"></i>Change Password</a></li>
                     <li><a href="/Login/SignOut"><i class="fas fa-sign-out-alt"></i> Sign Out</a></li>
-                    <li><a href="JavaScript:Void(0);"><i class="fas fa-sign-out-alt"></i>Change Password</a></li>
+
 
                 </ul>
 
@@ -80,6 +80,43 @@
         </div>
 
     </div>
+
+    <div id="ChangePassword" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Change Password</h4>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="form-group">
+                        <label>Old Password:</label>
+                        <input type="password" id="txt_OldPassword" placeholder="Please enter your old password" autofocus style="height:30px;border:1px solid #bcbbbc; border-radius:4px; width:50%; padding:5px;" />
+                    </div>
+                    <div class="form-group">
+                        <label>New Password:</label>
+                        <input type="password" id="txt_NewPassword" placeholder="Please enter your new password" autofocus style="height:30px;border:1px solid #bcbbbc; border-radius:4px; width:50%; padding:5px;" />
+                    </div>
+                    <button type="button" id="CngPasswor" onclick="ModifyPassword()" class="btn btn-success" data-toggle="modal">Save</button>
+                </div>
+                <div id="success-message" class="alert alert-success" style="display:none;">
+                    <button class="close" data-close="alert"></button>
+                    <span id="success-message-text" style="align-content:center"></span>
+                </div>
+
+                <div id="error-message" class="alert alert-danger" style="display:none;">
+                    <button class="close" data-close="alert"></button>
+                    <span id="error-message-text" style="align-content:center"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <section id="FooterTemplate">
         <div id="FooterTemplateDiv">
             @{ Html.RenderAction("FooterTemplate", "Login");}

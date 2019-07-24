@@ -61,3 +61,43 @@ function validURL(str) {
         '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
     return !!pattern.test(str);
 }
+
+function ModifyPassword() {
+    var OldPassword = $("#txt_OldPassword").val();
+    var NewPassword = $("#txt_NewPassword").val();
+
+    $.ajax({
+        type: "POST",
+        url: "/Login/ModifyPassword",
+        data: { OldPassword: OldPassword, NewPassword: NewPassword },
+
+        success: function (response) {
+            debugger;
+            
+            if (response != 'False') {
+                $('#success-message').css("display", "block");
+                $('#error-message').css("display", "none");
+                $('#success-message-text').text("Password Changed Successfully");
+                setTimeout(function () {
+
+                    window.location = "/Login/LoginRegistration";
+
+                }, 3000);
+            }
+            else {
+                $('#success-message').css("display", "none");
+                $('#error-message').css("display", "block");
+                $('#error-message-text').text("Failed to Change Password");
+                setTimeout(function () {
+
+                    $('#ChangePassword').modal('hide');
+
+                }, 3000);
+            }
+        },
+
+        error: function (response) {
+
+        }
+    });
+}

@@ -26,3 +26,4 @@ F:\Personal\Code\trunk\Jobsportal\Jobsportal\bin\DAL.pdb
 F:\Personal\Code\trunk\Jobsportal\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
 F:\Personal\Code\trunk\Jobsportal\DAL\obj\Debug\DAL.dll
 F:\Personal\Code\trunk\Jobsportal\DAL\obj\Debug\DAL.pdb
+F:\Personal\Code\trunk\Jobsportal\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache

@@ -112,7 +112,7 @@
                     else
 
                     {
-                        <h4 class="text-left">Post a Comment as @System.Web.HttpContext.Current.User.Identity.Name</h4>
+                        <h4 class="text-left">Post a Comment as @DAL.Job.GetCurrentUserName(System.Web.HttpContext.Current.User.Identity.Name.ToString())</h4>
                     }
                     <div class="input-icons">
 

@@ -31,7 +31,9 @@ namespace DAL
 
         public const String USP_ISPASSWORDRESETLINKISVALID = "usp_IsPwdResetLinkValid";
 
-        public const String USP_CHANGEPASSWORD = "usp_ChangePassword";
+        public const String USP_MODIFYPASSWORD = "usp_ModifyPassword";
+        public const String USP_CHANGEPASSWORDVIARESET = "usp_ChangePasswordViaReset";
+        
 
         public const String USP_FETCHDISSCUSSIONTEXT = "usp_FetchDiscussion";
 

@@ -117,8 +117,8 @@ namespace Jobsportal.Controllers
             bool issent = false;
             String EmailTemplatepath = Convert.ToString(System.Web.HttpContext.Current.Server.MapPath("~/html/ForgetPasswordEmailHtmlFile.html"));
             String EmailTemplate = String.Empty;
-            //String ResetLink = System.Web.HttpContext.Current.Request.Url.Host + "/Login/ResetPassword?uid=" + UniqueId;
             String ResetLink = System.Web.HttpContext.Current.Request.Url.Host + "/Login/LoginRegistration?uid=" + UniqueId;
+
             EmailTemplate = Jobsportal.Common.ReadHtmlFile(EmailTemplatepath);
             EmailTemplate = EmailTemplate.Replace("@@UserName@@", UserName);
             EmailTemplate = EmailTemplate.Replace("@@ResetLink@@", ResetLink);
@@ -163,13 +163,21 @@ namespace Jobsportal.Controllers
        
 
         [HttpPost]
-        public Boolean ChangeUserPassword(String GUID, String PasswordValue)
+        public Boolean ChangeUserPasswordViaReset(String GUID, String PasswordValue)
         {
-            Boolean Status = Users.ChangeUserPassword(GUID, PasswordValue);
+            Boolean Status = Users.ChangeUserPasswordViaReset(GUID, PasswordValue);
 
             return Status;
         }
+        [Authorize(Roles = "ADMIN,CANDIDATE")]
+        [HttpPost]
+        public Boolean ModifyPassword(string OldPassword, string NewPassword)
+        {
+            string UserName = System.Web.HttpContext.Current.User.Identity.Name;
+            Boolean Status = Users.ModifyPassword(UserName, OldPassword,NewPassword);
 
+            return Status;
+        }
 
         [HttpGet]
         public ActionResult FooterTemplate()

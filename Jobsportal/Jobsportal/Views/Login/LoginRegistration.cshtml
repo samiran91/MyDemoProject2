@@ -27,7 +27,7 @@
             <button type="button" class="btn btn-success" onclick="signin()">Sign In</button>
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ForgetPass">Forgot Password?</button>
             <button type="button" id="JobReturn" class="btn btn-success">Back to Job List</button>
-            <button type="button" id="CngPasswor" class="btn btn-success" data-toggle="modal" data-target="#ChangePassword">Change Password</button>
+       
         </div>
         <div id="error-message" class="alert alert-danger" style="display: none">
             <button class="close" data-close="alert"></button>
@@ -108,32 +108,7 @@
     </div>
 </div>
 
-<!-- Modal -->
-<div id="ChangePassword" class="modal fade" role="dialog">
-    <div class="modal-dialog">
 
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Change Password</h4>
-            </div>
-            <div class="modal-body text-center">
-                <div class="form-group">
-                    <label>Old Password:</label>
-                    <input type="text" id="txt_OldPassword" placeholder="Please enter your old password" autofocus style="height:30px;border:1px solid #bcbbbc; border-radius:4px; width:50%; padding:5px;" />
-                </div>
-                <div class="form-group">
-                    <label>Phone Number:</label>
-                    <input type="text" id="txt_NewPassword" placeholder="Please enter your new password" autofocus style="height:30px;border:1px solid #bcbbbc; border-radius:4px; width:50%; padding:5px;" />
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-
-    </div>
-</div>
 
 
 <div id="ResetPass" class="modal fade" role="dialog">
@@ -159,12 +134,12 @@
                         <tbody>
                             <tr>
                                 <td style="padding: 10px;">
-                                    <input type="text" id="txt_fpassword" autofocus placeholder="New Password" style="width:100%;height: 30px;border: 1px solid #bcbbbc;padding: 5px;border-radius: 4px;" />
+                                    <input type="password" id="txt_fpassword" autofocus placeholder="New Password" style="width:100%;height: 30px;border: 1px solid #bcbbbc;padding: 5px;border-radius: 4px;" />
                                 </td>
                             </tr>
                             <tr>
                                 <td style="text-align:center;padding: 10px;">
-                                    <input type="button" value="OK" onclick="ChangePassword()" style="background-color:#339933;border:0;padding:7px 14px; color:#ffffff;border-radius:4px;" />
+                                    <input type="button" value="OK" onclick="ChangePasswordViaReset()" style="background-color:#339933;border:0;padding:7px 14px; color:#ffffff;border-radius:4px;" />
                                 </td>
                             </tr>
                             <tr>

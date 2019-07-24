@@ -3,8 +3,10 @@
     $("#JobReturn").click(function () {
         window.location.href = "/jobs";
     });
+    var uid = GetParameterValues('uid');
 
-    if (window.location.search) {
+    if (uid != null) 
+    {
         $('#ResetPass').modal('show');
     }
 });
@@ -205,20 +207,18 @@ function ResetPassword() {
         },
         error: function (ex) {
 
-            alert("Message: " + ex.Message);
-            alert("StackTrace: " + ex.StackTrace);
-            alert("ExceptionType: " + ex.ExceptionType);
+            console.log(ex.Message);
         }
     });
 }
 
-function ChangePassword() {
+function ChangePasswordViaReset() {
     var GUIDURL = GetParameterValues('uid');
     var Password = $("#txt_fpassword").val();
 
     $.ajax({
         type: "POST",
-        url: "/Login/ChangeUserPassword",
+        url: "/Login/ChangeUserPasswordViaReset",
         data: { GUID: GUIDURL, PasswordValue: Password },
 
         success: function (response) {
@@ -238,12 +238,3 @@ function ChangePassword() {
     });
 }
 
-function GetParameterValues(param) {
-    var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    for (var i = 0; i < url.length; i++) {
-        var urlparam = url[i].split('=');
-        if (urlparam[0] == param) {
-            return urlparam[1];
-        }
-    }
-}

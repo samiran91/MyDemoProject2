@@ -247,7 +247,7 @@ namespace DAL
             }
         }
 
-        public static bool ChangeUserPassword(String GUID, String PasswordValue)
+        public static bool ChangeUserPasswordViaReset(String GUID, String PasswordValue)
         {
             string EncryptedPassword = PortalEncryption.Encrypt(PasswordValue);
             List<SqlParameter> paramList = new List<SqlParameter>()
@@ -264,7 +264,33 @@ namespace DAL
                 }
             };
 
-            return ExecuteSP(StoredProcedure.USP_CHANGEPASSWORD, paramList);
+            return ExecuteSP(StoredProcedure.USP_CHANGEPASSWORDVIARESET, paramList);
+        }
+
+        public static bool ModifyPassword(string UserName, string OldPassword, string NewPassword)
+        {
+            string EncryptedNewPassword = PortalEncryption.Encrypt(NewPassword);
+            string EncryptedOldPassword = PortalEncryption.Encrypt(OldPassword);
+            List<SqlParameter> paramList = new List<SqlParameter>()
+            {
+                new SqlParameter()
+                {
+                    ParameterName = "@OldPassword",
+                    Value = EncryptedOldPassword
+                },
+                new SqlParameter()
+                {
+                    ParameterName = "@NewPassword",
+                    Value =EncryptedNewPassword
+                },
+                 new SqlParameter()
+                {
+                    ParameterName = "@UserName",
+                    Value =UserName
+                }
+            };
+
+            return ExecuteSP(StoredProcedure.USP_MODIFYPASSWORD, paramList);
         }
     }
 }
