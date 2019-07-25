@@ -179,7 +179,7 @@ namespace Jobsportal.Controllers
             return Status;
         }
 
-        [HttpGet]
+        //[HttpGet]
         public ActionResult FooterTemplate()
         {
             return PartialView("_FooterTemplate");

@@ -76,19 +76,22 @@ function Search() {
 }
 
 function Remove(e) {
-    debugger;
+    //debugger;
     $.confirm({
         title: 'Alert!',
-        content: 'Are you sure you want to delete?',
+        content: 'Are you sure you want to delete??',
         type: 'red',
         typeAnimated: true,
         buttons: {
             Yes: {
-
+                
                 action: function () {
+                    debugger;
                     var ProductCode = e.data.record.ProductCode;
-                    $.ajax({ url: "#", type: "POST", data: { ProductCode: ProductCode } })
+                    debugger;
+                    $.ajax({ url: "/Jobs/RemoveJob", type: "POST", data: { ProductCode: ProductCode } })
                         .done(function () {
+
                             grid.reload();
                         })
                         .fail(function () {
@@ -102,6 +105,7 @@ function Remove(e) {
                 }
             },
             no: function () {
+                alert("");
             }
         }
     });

@@ -307,6 +307,13 @@ namespace Jobsportal.Controllers
                 }
             }
         }
+
+        [HttpPost]
+        public JsonResult RemoveJob(Int32 ProductCode)
+        {
+            Int32 status = DAL.Job.RemoveJob(ProductCode);
+            return Json(status, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
 
