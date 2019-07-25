@@ -44,7 +44,8 @@
             </ul>
             <div class="tab-content">
                 <div id="Desc" class="tab-pane fade in active">
-                    @Html.Raw(Model.JobDesc)
+                    @*@Html.Raw(Model.JobDesc)*@
+                    <p style="margin:10px; text-align:justify; border: 1px solid #bcbbbc; padding: 10px; margin: 10px 0 0 0;">@Html.Raw(Model.JobDesc)</p>
                 </div>
                 <div id="QualLevel" class="tab-pane fade">
                     <p style=" border: 1px solid #bcbbbc; padding: 10px; margin: 10px 0 0 0;">@Model.Qualification</p>
