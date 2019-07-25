@@ -309,10 +309,10 @@ namespace Jobsportal.Controllers
         }
 
         [HttpPost]
-        public JsonResult RemoveJob(Int32 ProductCode)
+        public void RemoveJob(Int32 JobNumber)
         {
-            Int32 status = DAL.Job.RemoveJob(ProductCode);
-            return Json(status, JsonRequestBehavior.AllowGet);
+            DAL.Job.RemoveJob(JobNumber);
+           // return Json(JsonRequestBehavior.AllowGet);
         }
         #endregion
 

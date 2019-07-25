@@ -79,7 +79,7 @@ function Remove(e) {
     //debugger;
     $.confirm({
         title: 'Alert!',
-        content: 'Are you sure you want to delete??',
+        content: 'Are you sure you want to delete?',
         type: 'red',
         typeAnimated: true,
         buttons: {
@@ -87,10 +87,15 @@ function Remove(e) {
                 
                 action: function () {
                     debugger;
-                    var ProductCode = e.data.record.ProductCode;
+                    var JobNumber = e.data.record.JobNo;
                     debugger;
-                    $.ajax({ url: "/Jobs/RemoveJob", type: "POST", data: { ProductCode: ProductCode } })
+                    $.ajax({ url: "/Jobs/RemoveJob", type: "POST", data: { JobNumber: JobNumber } })
                         .done(function () {
+                            $.alert({
+                                title: 'Alert!',
+                                content: 'Job Deleted Successfully!',
+                                type: 'green',
+                            });
 
                             grid.reload();
                         })

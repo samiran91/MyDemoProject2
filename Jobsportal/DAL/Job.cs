@@ -803,29 +803,27 @@ namespace DAL
             return CurrentUserName;
         }
 
-        public static Int32 RemoveJob(Int32 ProductCode)
+        public static void RemoveJob(Int32 JobNumber)
         {
             String connstring = Connection.GetConnectionString();
-            var status = 0;
+            
             using (SqlConnection dbCon = new SqlConnection(connstring))
             {
                 dbCon.Open();
 
-                using (SqlCommand dbCom = new SqlCommand(StoredProcedure.USP_INSERTDISSCUSSIONTEXT, dbCon))
+                using (SqlCommand dbCom = new SqlCommand(StoredProcedure.USP_REMOVEJOB, dbCon))
                 {
 
                     dbCom.CommandType = CommandType.StoredProcedure;
 
-                    dbCom.Parameters.AddWithValue("@ProductCode", ProductCode);
+                    dbCom.Parameters.AddWithValue("@JOBNUMBER", JobNumber);
 
 
-                    status = Convert.ToInt32(dbCom.ExecuteNonQuery());
-
+                    dbCom.ExecuteNonQuery();
 
                 }
 
             }
-            return status;
         }
     }
 

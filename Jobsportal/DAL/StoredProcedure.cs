@@ -39,6 +39,6 @@ namespace DAL
 
         public const String USP_INSERTDISSCUSSIONTEXT = "usp_SaveDiscussion";
 
-
+        public const String USP_REMOVEJOB = "USP_REMOVEJOB";
     }
 }
