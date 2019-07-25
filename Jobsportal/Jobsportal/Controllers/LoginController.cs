@@ -21,6 +21,22 @@ namespace Jobsportal.Controllers
         [HttpGet]
         public ActionResult LoginRegistration()
         {
+            if (Request.QueryString["uid"] != null)
+            {
+                var QueryStringVal = Request.QueryString["uid"].ToString();
+
+                if (QueryStringVal != null || QueryStringVal != "")
+                {
+                    Boolean Status = Users.IsPasswordResetLinkIsvalid(QueryStringVal);
+                    if (!Status == true)
+                    {
+                        ViewBag.Message = "Link Expired";
+                    }
+                }
+            }
+            
+            
+
             DAL.Utility.LogActivity("At LoginRegistration", "LoginRegistration");
             return View();
         }
