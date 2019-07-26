@@ -191,21 +191,7 @@ $(document).ready(function () {
 
         }
 
-        var EventCount = 0;
-        $("#tab_logic tr td input.product").each(function () {
-            var vlue = $(this).val();
-            if (vlue == null || vlue == "") {
-                EventCount++;
-            }
-        });
-
-        var EventDTCount = 0;
-        $("#tab_logic tr td input.eventDt").each(function () {
-            var vlue = $(this).val();
-            if (vlue == null || vlue == "") {
-                EventDTCount++;
-            }
-        });
+        
 
 
         var Documents = [];
@@ -310,25 +296,7 @@ $(document).ready(function () {
 
             JobDetailValidate = 0;
         }
-        else if (EventCount > 0) {
-            $.alert({
-                type: 'red',
-                title: 'Alert!',
-                content: 'Please provide events',
-            });
-
-            JobDetailValidate = 0;
-        }
-
-        else if (EventDTCount > 0) {
-            $.alert({
-                type: 'red',
-                title: 'Alert!',
-                content: 'Please provide events Date',
-            });
-
-            JobDetailValidate = 0;
-        }
+        
 
         if (JobDetailValidate > 0) {
             var JobDetails = new Object();
