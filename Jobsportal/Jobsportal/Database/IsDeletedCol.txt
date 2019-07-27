@@ -1,0 +1,3 @@
+Alter table Job Add IsDeleted bit Default 0
+
+Update Job Set IsDeleted=0
