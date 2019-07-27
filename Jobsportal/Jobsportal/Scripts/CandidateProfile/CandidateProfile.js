@@ -249,9 +249,7 @@ function FetchCandidateDetails() {
 
         },
         error: function (ex) {
-            alert("Message: " + ex.Message);
-            alert("StackTrace: " + ex.StackTrace);
-            alert("ExceptionType: " + ex.ExceptionType);
+            Console.log(ex.StackTrace);
         }
     });
 }

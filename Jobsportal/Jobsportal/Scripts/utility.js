@@ -72,7 +72,7 @@ function ModifyPassword() {
         data: { OldPassword: OldPassword, NewPassword: NewPassword },
 
         success: function (response) {
-            debugger;
+            
             
             if (response != 'False') {
                 $('#success-message').css("display", "block");

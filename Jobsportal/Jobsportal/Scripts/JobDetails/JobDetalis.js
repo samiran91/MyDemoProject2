@@ -65,12 +65,14 @@ function JoinToDiscussion() {
     window.location.href = "/Login/LoginRegistration?FromJobNo=" + JobNumber;
 }
 function FetchDiscussion(JobNumber) {
-
+    var current_date = new Date();
+    var gmt_offset = current_date.getTimezoneOffset() 
     $.ajax({
         type: 'GET',
         url: '/Jobs/FetchDiscussion',
         data: {
-            JobNumber: JobNumber
+            JobNumber: JobNumber,
+            OffSet:gmt_offset
         },
         success: function (data) {
             
@@ -79,10 +81,7 @@ function FetchDiscussion(JobNumber) {
             
         },
         error: function (ex) {
-            var r = jQuery.parseJSON(response.responseText);
-            alert("Message: " + r.Message);
-            alert("StackTrace: " + r.StackTrace);
-            alert("ExceptionType: " + r.ExceptionType);
+            console.log(ex.StackTrace);
         }
     });
 }
@@ -93,7 +92,7 @@ function AddMsgText() {
     var Msg = $("#txt-FAQ-Comm").val();
     var Discussion = new Object();
 
-    Discussion.UserName = 'anonymous';
+    Discussion.UserName = 'Anonymous';
     Discussion.JobNo = JobNumber;
     Discussion.Messages = Msg;
 

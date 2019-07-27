@@ -331,7 +331,12 @@ $(document).ready(function () {
                         $('input[type="text"]').val('');
                         $("textarea").val('');
                         $("#txt_PostedDate").val('mm/dd/yyyy');
-                        window.location.href = "/Jobs/ListJob_Admin";
+                        setTimeout(function () {
+
+                            window.location.href = "/Jobs/ListJob_Admin";
+
+                        }, 3000);
+                        
                     }
 
                     else if (response["status"] == '4') {

@@ -358,16 +358,17 @@ namespace DAL
             return ApplyLinkURL;
         }
 
-        public static Int32 SaveJobDetails(Job JobDetails)
+        public static List<int> SaveJobDetails(Job JobDetails)
         {
             String connstring = Connection.GetConnectionString();
-
+            List<int> ret = new List<int>();
             int status = 0;
+            Int32 JobNumber = JobDetails.JobNo;
             using (SqlConnection dbCon = new SqlConnection(connstring))
             {
                 dbCon.Open();
 
-                Int32 JobNumber = SaveJobInfo(JobDetails);
+               JobNumber  = SaveJobInfo(JobDetails);
                 status = 1;
                 if (JobDetails.JobNotes != null)
                 {
@@ -459,8 +460,9 @@ namespace DAL
                 }
 
             }
-
-            return status;
+            ret.Add(status);
+            ret.Add(JobNumber);
+            return ret;
         }
 
         public static CandidateProfile SaveCandidate(CandidateProfile CPOBJ)
@@ -688,7 +690,7 @@ namespace DAL
             return list;
         }
 
-        public static List<Discussion> FetchDiscussion(String Jobno)
+        public static List<Discussion> FetchDiscussion(string Jobno,int OffSetMinutes)
         {
 
             String connstring = Connection.GetConnectionString();
@@ -718,7 +720,7 @@ namespace DAL
                             Chat.Messages = (String)wizReader["MESSAGES"];
                             Chat.DisplayName = Convert.ToString(wizReader["DisplayName"]);
                             Chat.ImgPath = Convert.ToString(wizReader["IMGPATH"]);
-                            Chat.MessageDateTime = Convert.ToDateTime(wizReader["MSGDATETIME"]);
+                            Chat.MessageDateTime = Convert.ToDateTime(wizReader["MSGDATETIME"]).AddMinutes(-OffSetMinutes);//- beacuse offset return utc-localtime
                             Chat.MyMsg = false;
 
                             if (HttpContext.Current.User.Identity != null)

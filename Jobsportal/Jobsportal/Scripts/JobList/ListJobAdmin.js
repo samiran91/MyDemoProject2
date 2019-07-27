@@ -76,7 +76,7 @@ function Search() {
 }
 
 function Remove(e) {
-    //debugger;
+    
     $.confirm({
         title: 'Alert!',
         content: 'Are you sure you want to delete?',
@@ -86,14 +86,14 @@ function Remove(e) {
             Yes: {
                 
                 action: function () {
-                    debugger;
+                    
                     var JobNumber = e.data.record.JobNo;
-                    debugger;
+                    
                     $.ajax({ url: "/Jobs/RemoveJob", type: "POST", data: { JobNumber: JobNumber } })
                         .done(function () {
                             $.alert({
-                                title: 'Alert!',
-                                content: 'Job Deleted Successfully!',
+                                title: 'Successfully!',
+                                content: 'Job Deleted Successfully.',
                                 type: 'green',
                             });
 
@@ -101,8 +101,8 @@ function Remove(e) {
                         })
                         .fail(function () {
                             $.alert({
-                                title: 'Alert!',
-                                content: 'Failed to delete.!',
+                                title: 'Failed!',
+                                content: 'Failed to delete.',
                                 type: 'red',
                             });
                         });

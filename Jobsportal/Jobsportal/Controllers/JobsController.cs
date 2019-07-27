@@ -114,10 +114,10 @@ namespace Jobsportal.Controllers
         }
 
         [HttpGet]
-        public ActionResult FetchDiscussion(String JobNumber)
+        public ActionResult FetchDiscussion(String JobNumber,string OffSet)
         {
             List<Job.Discussion> D = new List<Job.Discussion>();
-            D = DAL.Job.FetchDiscussion(JobNumber);
+            D = DAL.Job.FetchDiscussion(JobNumber,Convert.ToInt32(OffSet));
 
             return PartialView("_FetchDiscussion", D);
         }
@@ -131,7 +131,7 @@ namespace Jobsportal.Controllers
             }
             else
             {
-                OBJ.UserName = "anonymous";
+                OBJ.UserName = "Anonymous";
             }
             var status= DAL.Job.InsertDiscussionMsg(OBJ);
             return Json(status, JsonRequestBehavior.AllowGet);
@@ -224,13 +224,15 @@ namespace Jobsportal.Controllers
         public JsonResult SaveJobDetails(Job JobDetails)
         {
         
-            int status= Job.SaveJobDetails(JobDetails);
+            List<int> retvalue= Job.SaveJobDetails(JobDetails);
             String host = System.Web.HttpContext.Current.Request.Url.Host;
+            int status = retvalue[0];
+            int JobNo = retvalue[1];
             SendEmailToCandidate_delegate d = null;
             d = new SendEmailToCandidate_delegate(SendEmailToCandidate);
 
             IAsyncResult R = null;
-            R = d.BeginInvoke(JobDetails.JobNo, JobDetails.JobTitle + " " + JobDetails.JobDesc + " " + JobDetails.Qualification,host, new AsyncCallback(TaskCompleted), null);
+            R = d.BeginInvoke(JobNo, JobDetails.JobTitle + " " + JobDetails.JobDesc + " " + JobDetails.Qualification,host, new AsyncCallback(TaskCompleted), null);
             
             return Json(new { status }, JsonRequestBehavior.AllowGet);
         }

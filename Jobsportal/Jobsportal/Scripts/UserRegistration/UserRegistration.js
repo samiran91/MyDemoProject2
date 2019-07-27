@@ -223,7 +223,7 @@ function ChangePasswordViaReset() {
 
         success: function (response) {
             $('#success-message').css("display", "block");
-            $('#success-message-text').text("Password Change Successfully!!");
+            $('#success-message-text').text("Password Changed Successfully!!");
 
             setTimeout(function () {
 
