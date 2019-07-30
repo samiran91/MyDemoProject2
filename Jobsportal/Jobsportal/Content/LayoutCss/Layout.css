@@ -81,10 +81,11 @@ div.col-sm-2.leftmenu {
 
 .ddmenudiv div.dropdown {
     line-height: 60px;
+    /*text-align: right;*/
 }
 
     .ddmenudiv div.dropdown > a {
-        background: #bcbbbc;
+        background: #428bca;
         padding: 10px;
         border-radius: 4px;
         text-decoration: none;
