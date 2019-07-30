@@ -571,7 +571,7 @@ namespace DAL
 
                     if(String.IsNullOrEmpty(OBJ.ImgValue))
                     {
-                        OBJ.ImgValue = "../NoImage.png";
+                        OBJ.ImgValue = "NoImage.png";
                     }
                 }
             }
@@ -733,7 +733,7 @@ namespace DAL
 
                             if(string.IsNullOrEmpty(Chat.ImgPath))
                             {
-                                Chat.ImgPath = "/images/NoImage.png";
+                                Chat.ImgPath = "/images/CandidateImages/NoImage.png";
                             }
                             else
                             {

@@ -218,7 +218,6 @@ function FetchCandidateDetails() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
-            
             $("#imagePreview").css("background-image", "url('" + data.ImgValue + "')");
             $("#txt_candName").val(data.Name);
             $("#txt_candGender").val(data.Gender);
@@ -229,7 +228,7 @@ function FetchCandidateDetails() {
             $("#txt_candQual").val(data.Qualification);
             $("#txt_candExp").val(data.Experiance);
             var arr = data.ImgValue.split('/');
-           
+            console.log(arr);
             $('input[name=hiddeninputname]').val(arr[3]);
 
 
