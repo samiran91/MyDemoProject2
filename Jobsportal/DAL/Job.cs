@@ -660,7 +660,7 @@ namespace DAL
             List<String> list = new List<String>();
 
             String connstring = Connection.GetConnectionString();
-            String sql_select = String.Format("select CONVERT(varchar(100),jobno)+' - '+JOBTITLE as JOBNUMANDTITLE from job where JOBNO like '%{0}%' or JOBTITLE like '%{0}%'", Keyword);
+            String sql_select = String.Format("select CONVERT(varchar(100),jobno)+' - '+JOBTITLE as JOBNUMANDTITLE from job where IsDeleted=0 and (JOBNO like '%{0}%' or JOBTITLE like '%{0}%')", Keyword);
 
             using (SqlConnection dbCon = new SqlConnection(connstring))
             {
