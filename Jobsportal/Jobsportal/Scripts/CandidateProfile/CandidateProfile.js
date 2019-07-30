@@ -65,6 +65,11 @@ $(document).ready(function () {
         source: InterestNames,
     });
 
+    $('html').keyup(function (e) {
+        if (e.keyCode == 8) {
+            $("div#myMultiSearch").children().find("a:last-child").remove();
+        }
+    })
  
     FetchCandidateDetails();
 

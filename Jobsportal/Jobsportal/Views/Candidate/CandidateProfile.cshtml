@@ -26,6 +26,19 @@
             //  $('#long').val(place.geometry['location'].lng());
         });
     }
+
+    $(document).ready(function () {
+
+        var input = $('#myInput');
+        input.on('keydown', function () {
+            var key = event.keyCode || event.charCode;
+
+            if (key == 8 || key == 46)
+                return false;
+        });
+
+
+    });
 </script>
 
 

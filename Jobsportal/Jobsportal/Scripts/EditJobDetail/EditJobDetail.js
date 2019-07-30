@@ -2,21 +2,19 @@
 $(document).ready(function () {
     PopulateQals();
     var i = 1;
-  
+
     $("#add_row").click(function () {
         var count = $('.product').length;
         $('#tab_logic').append('<tr id="addr' + (count + 1) + '" data-idno="added"></tr>');
 
         $('#addr' + (Number(count) + Number(1))).html("<td id='srn_" + (count + 1) + "'>" + (count + 1) + "</td ><td><input type='text' id='productcode_" + (count + 1) + "'  placeholder='Event' class='form-control product' onchange='return UpdateStatus(this.id)' /> <input type='hidden' id='productcode_stock_" + (count + 1) + "' aria-hidden='true' onKeyUp='return UpdateStatus(this.id)'" + "  /></td><td> <input class='form-control eventDt' type='date' id='evntDate_" + (count + 1) + "'name='evntDate' onchange='return UpdateStatus(this.id)' required pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}'></td><td> <span class='glyphicon glyphicon-remove'  id='del_" + (count + 1) + "'style='cursor: pointer;'></span></td>");
 
-
-     
-
         i++;
 
     });
+
     $(document).on('click', '.removenote', function (e) {
-        
+
         var IdNo = $(this).closest('tr').data('idno');
         var delid = $(this).closest('tr').prop('id')
         delid = delid.replace("addr_", "");
@@ -35,8 +33,8 @@ $(document).ready(function () {
         var nextid = delid;
         for (var loopcounter = 0; loopcounter < looprunning; loopcounter++) {
             nextid++;
-            
-            
+
+
             $('#addr_' + nextid).attr('id', 'addr_' + (nextid - 1));
             $('#uplodednotes_' + nextid).attr('id', 'uplodednotes_' + (nextid - 1));
 
@@ -44,12 +42,12 @@ $(document).ready(function () {
             $('#uplodeddate_' + nextid).attr('id', 'uplodeddate_' + (nextid - 1));
 
         }
-    
-});
+
+    });
     $(document).on('click', '.glyphicon-remove', function (e) {
         var id = this.id;
         var delid = id.replace("del_", "");
-        var IdNo= $(this).closest('tr').data('idno');
+        var IdNo = $(this).closest('tr').data('idno');
 
         var element = {};
         element.id = IdNo;
@@ -114,11 +112,11 @@ $(document).ready(function () {
         self.init();
     })
 
-   
+
     $("#SubmitJobDetail").click(function () {
         var JobDetailValidate = 1;
 
-         var JobNumber = $("#txt_JobNumber").val();
+        var JobNumber = $("#txt_JobNumber").val();
         var JobTitle = $("#txt_JobTitle").val();
         var JobPostedDate = $("#txt_PostedDate").val();
         var JobApplyLink = $("#txt_AplyLink").val();
@@ -126,21 +124,21 @@ $(document).ready(function () {
         var JobDescp = $(".note-editable").html();
         var Qual = [];
         var Str_Qual;
-       
+
         $("#myMultiSearch div.sel-anchor a").each(function () {
-          
+
             Qual.push($(this).text());
-            
+
         });
-        
+
         var qualtextvalues = $("#txt_qual").val().split(",");
         for (index = 0; index < qualtextvalues.length; index++) {
             Qual.push(qualtextvalues[index]);
-            
-        } 
+
+        }
         Str_Qual = Qual.toString();
         var JobData = [];
-        
+
         for (var i = 0; i < RowStatus.length; i++) {
             if (RowStatus[i].status === "Deleted") {
                 var element = {};
@@ -158,8 +156,8 @@ $(document).ready(function () {
         var count = $('.product').length;
         var loopcount = 1;
         while (mathedcount <= count) {
-            
-            
+
+
             var element = {};
             element.Id = $("#addr" + loopcount).data('idno');
             element.Events = $("#productcode_" + loopcount).val();
@@ -167,21 +165,19 @@ $(document).ready(function () {
             element.DBOP = 4;
             if (element.Id == 'added')
                 element.DBOP = 1;
-            
+
             for (var i = 0; i < RowStatus.length; i++) {
-                if (element.Id == RowStatus[i].id && element.Id != 'added')
-                {
-                    if (RowStatus[i].status == "Modified" ) {
+                if (element.Id == RowStatus[i].id && element.Id != 'added') {
+                    if (RowStatus[i].status == "Modified") {
                         element.DBOP = 2;
 
                     }
-                    
+
                 }
             }
             typeof (element.ProductCode != 'undefined')
             {
-                if (element.DBOP != 4)
-                {
+                if (element.DBOP != 4) {
                     JobData.push(element);
                 }
                 mathedcount++;
@@ -191,7 +187,7 @@ $(document).ready(function () {
 
         }
 
-        
+
 
 
         var Documents = [];
@@ -199,19 +195,19 @@ $(document).ready(function () {
         var count = $('.uplodednotes').length;
         var count = $('.uplodedby').length;
         var count = $('.uplodeddate').length;
-        
+
         for (var i = 0; i < DeleteNotes.length; i++) {
-            
-                var element = {};
-                element.Id = DeleteNotes[i].id;
-                element.Title = "Deleted";
-                element.Uplodedby = "Deleted";
-                element.DownloadLink = "Deleted";
-                element.DBOP = 3;
-                element.Uplodeddate= new Date();
-                Documents.push(element);
-                
-            
+
+            var element = {};
+            element.Id = DeleteNotes[i].id;
+            element.Title = "Deleted";
+            element.Uplodedby = "Deleted";
+            element.DownloadLink = "Deleted";
+            element.DBOP = 3;
+            element.Uplodeddate = new Date();
+            Documents.push(element);
+
+
         }
         var loopcount = 1;
         while (mathedcount <= count) {
@@ -221,8 +217,8 @@ $(document).ready(function () {
             element.Uplodedby = $("#uplodedby_" + loopcount).text();
             element.Uplodeddate = $("#uplodeddate_" + loopcount).text();
             element.DBOP = 4;
-            var dlink = $("#uplodednotes_" + loopcount+" a").prop("href").replace(/^.*[\\\/]/, '');
-            element.DownloadLink =   dlink;
+            var dlink = $("#uplodednotes_" + loopcount + " a").prop("href").replace(/^.*[\\\/]/, '');
+            element.DownloadLink = dlink;
             if (element.Id == 'added')
                 element.DBOP = 1;
             typeof (element.uplodednotes != 'undefined')
@@ -296,7 +292,7 @@ $(document).ready(function () {
 
             JobDetailValidate = 0;
         }
-        
+
 
         if (JobDetailValidate > 0) {
             var JobDetails = new Object();
@@ -311,8 +307,8 @@ $(document).ready(function () {
             JobDetails.JobNotes = Documents;
             JobDetails.Location = Location;
             JobDetails.comments = comments;
-            
-            
+
+
             $.ajax({
                 type: "POST",
                 url: "/Jobs/SaveJobDetails",
@@ -320,7 +316,7 @@ $(document).ready(function () {
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                   
+
                     if (response["status"] == '3') {
                         $.alert({
                             type: 'green',
@@ -336,7 +332,7 @@ $(document).ready(function () {
                             window.location.href = "/Jobs/ListJob_Admin";
 
                         }, 3000);
-                        
+
                     }
 
                     else if (response["status"] == '4') {
@@ -390,43 +386,49 @@ $(document).ready(function () {
 
     });
 
+    $('html').keyup(function (e) {
+        if (e.keyCode == 8) {
+            $("div#myMultiSearch").children().find("a:last-child").remove();
+        }
+    })
+
     fetchJobDetails();
-   
+
 
 });
 function PopulateQals() {
-   $.ajax({
-       url: '/Jobs/GetDegreeList',
+    $.ajax({
+        url: '/Jobs/GetDegreeList',
 
 
         dataType: "json",
         success: function (data) {
-          
-           QualData = JSON.parse(data);
-           //$.each(data, function (i, item) {
-           //    babyNames.push(item.Keyword);
-           //});​
-           for (index = 0; index < QualData.length; index++) {
-               var element = {};
-               element.name = QualData[index].Keyword;
 
-               QualNames.push(element);
-           } 
-           
-                
+            QualData = JSON.parse(data);
+            //$.each(data, function (i, item) {
+            //    babyNames.push(item.Keyword);
+            //});​
+            for (index = 0; index < QualData.length; index++) {
+                var element = {};
+                element.name = QualData[index].Keyword;
+
+                QualNames.push(element);
+            }
+
+
         }
     });
 }
 var QualData = [];
-var QualNames= [
-   
+var QualNames = [
+
 ];
 var DeleteNotes = [];
 var RowStatus = [
 
 ];
 function UpdateStatus(id) {
-    
+
     var IdNo = $("#" + id).parentsUntil("tr").parent().data("idno");
     if (IdNo != 'added') {
         var element = {};
@@ -439,9 +441,9 @@ function UpdateStatus(id) {
         element.status = "Added";
     }
     var exist = search(IdNo, RowStatus);
-       if(!exist)
+    if (!exist)
         RowStatus.push(element);
-    
+
 }
 function UploadNotes() {
     // alert("a");
@@ -461,7 +463,7 @@ function UploadNotes() {
         modifiedfilename = dateTime + "-" + files[0].name;
     }
 
-   
+
     var fileData = new FormData();
     // Looping over all files and add it to FormData object  
     for (var i = 0; i < files.length; i++) {
@@ -476,14 +478,14 @@ function UploadNotes() {
         data: fileData,
         success: function (result) {
 
-            
+
             var count = $('.uplodednotes').length;
             var count1 = $('.uplodedby').length;
             var count2 = $('.uplodeddate').length;
             count++;
             count1++;
             count2++;
-            var htm = '<tr id="addr_' + count +'" data-idno="added"><td id="uplodednotes_' + count + '" class="uplodednotes"><a href= "' + "/Notes/" + modifiedfilename + '">' + actualfilename + '</a> ' + '</td><td id="uplodedby_' + count1 + '" class="uplodedby">'+result+'</td><td id="uplodeddate_' + count2 + '" class="uplodeddate">' + date + '</td> <td> <i class="fa fa-times removenote" aria-hidden="true"></i></td></tr>';
+            var htm = '<tr id="addr_' + count + '" data-idno="added"><td id="uplodednotes_' + count + '" class="uplodednotes"><a href= "' + "/Notes/" + modifiedfilename + '">' + actualfilename + '</a> ' + '</td><td id="uplodedby_' + count1 + '" class="uplodedby">' + result + '</td><td id="uplodeddate_' + count2 + '" class="uplodeddate">' + date + '</td> <td> <i class="fa fa-times removenote" aria-hidden="true"></i></td></tr>';
             $("#DocUpload tbody").append(htm);
             count++;
         },
@@ -498,15 +500,15 @@ function search(nameKey, myArray) {
         if (myArray[i].name === nameKey) {
             return true;
         }
-        else 
-            {
-                return false;
-            }
+        else {
+            return false;
+        }
     }
 }
 
 function fetchJobDetails() {
     var JobNumber = GetParameterValues('JobNo');
+    
     if (JobNumber != null) {
         $.ajax({
             type: 'GET',
@@ -517,6 +519,7 @@ function fetchJobDetails() {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
+
                 $("#txt_JobNumber").val(data.JobNo);
                 $("#txt_JobTitle").val(data.JobTitle);
                 $("#txt_PostedDate").val(formatDate(data.PostedDate));
@@ -524,7 +527,7 @@ function fetchJobDetails() {
                 $("#txt_location").val(data.Location);
                 $("#txt_comments").val(data.Comments);
                 $(".note-editable").html(data.JobDesc);
-
+                
                 var Ql = data.Qualification;
                 var temp = new Array();
 
@@ -533,18 +536,19 @@ function fetchJobDetails() {
                 var htm1 = '<a href="#" data-role="selected-item">';
                 var htm2 = '</a>';
                 $.each(temp, function (i, val) {
-
-                    var final = htm1 + val + htm2;
-                    $("div.sel-anchor").append(final);
+                    if (val.length > 0) {
+                        var final = htm1 + val + htm2;
+                        $("div.sel-anchor").append(final);
+                    }
                 });
 
 
 
-                
+
                 $("#tab_logic tbody").html('');
                 var tablerow = $('#tab_logic tbody tr').length;
                 for (var i = 0; i < data.JobImpDates.length; i++) {
-                    var Id= data.JobImpDates[i].Id;
+                    var Id = data.JobImpDates[i].Id;
                     var Evnts = data.JobImpDates[i].Events;
                     var EventDateTime = data.JobImpDates[i].EventDateTime;
                     var j = i + 1;
@@ -570,7 +574,7 @@ function fetchJobDetails() {
                     count++;
                     count1++;
                     count2++;
-                    var htm = '<tr id="addr_'+count+'"'+ "data-idno=" + Id + '><td id="uplodednotes_' + count + '" class="uplodednotes"><a href="' + DownloadLink + '">' + Title + '</a></td><td id="uplodedby_' + count1 + '" class="uplodedby">' + UploadedBy + '</td><td id="uplodeddate_' + count2 + '" class="uplodeddate">' + UplodedDT + '</td> <td> <i class="fa fa-times removenote" aria-hidden="true"></i></td></tr>';
+                    var htm = '<tr id="addr_' + count + '"' + "data-idno=" + Id + '><td id="uplodednotes_' + count + '" class="uplodednotes"><a href="' + DownloadLink + '">' + Title + '</a></td><td id="uplodedby_' + count1 + '" class="uplodedby">' + UploadedBy + '</td><td id="uplodeddate_' + count2 + '" class="uplodeddate">' + UplodedDT + '</td> <td> <i class="fa fa-times removenote" aria-hidden="true"></i></td></tr>';
                     $("#DocUpload tbody").append(htm);
 
                 }

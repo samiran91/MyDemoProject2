@@ -203,3 +203,12 @@ input[type=file]::-ms-value {
     border-radius:0 !important;
 }
 
+.list-group {
+    margin-bottom: 0 !important;
+}
+
+ul.list-group {
+
+    border-bottom: 0;
+}
+
