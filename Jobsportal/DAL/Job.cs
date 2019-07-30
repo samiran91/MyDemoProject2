@@ -731,7 +731,7 @@ namespace DAL
                                 }
                             }
 
-                            if(Chat.ImgPath==null || Chat.ImgPath=="")
+                            if(string.IsNullOrEmpty(Chat.ImgPath))
                             {
                                 Chat.ImgPath = "/images/NoImage.png";
                             }

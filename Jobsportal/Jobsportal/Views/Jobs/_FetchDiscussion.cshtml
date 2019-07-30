@@ -40,7 +40,7 @@
 
                         <td style="display:inline-grid;">
                             @*<img height="46px" src="~/Images/NoImage.png" />*@
-                            <img height="50px" width="50px" style="border-radius:50%;" src="@item.ImgPath" />
+                            <img height="50px" width="50px" style="border-radius:50%;" src="@item.ImgPath" alt="Profile Image" />
                             <span style="font-weight:bold;">@item.DisplayName</span>
                         </td>
                         <td class="td-right" style="">@item.Messages<span  style="display:grid;">@item.MessageDateTime.ToString("dd/MM/yyyy h:mm tt")</span></td>
@@ -51,7 +51,7 @@
                 {
                     <tr>
                         <td style="display:inline-grid;">
-                            <img height="50px" width="50px" style="border-radius:50%;" src="@item.ImgPath" />
+                            <img height="50px" width="50px" style="border-radius:50%;" src="@item.ImgPath" alt="Profile Image" />
                             <span  style="font-weight:bold;">@item.DisplayName</span>
                         </td>
                         <td class="td-left">@item.Messages<span style="display:grid;">@item.MessageDateTime.ToString("dd/MM/yyyy h:mm tt")</span></td>
