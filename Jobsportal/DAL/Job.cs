@@ -538,7 +538,7 @@ namespace DAL
 
         public static CandidateProfile FetchCandidateDetails(string phoneno)
         {
-            CandidateProfile OBJ = null;
+            CandidateProfile OBJ = new CandidateProfile();
 
             String connstring = Connection.GetConnectionString();
 
@@ -557,22 +557,22 @@ namespace DAL
                     {
                         while (wizReader.Read())
                         {
-                            OBJ = new CandidateProfile()
-                            {
-                                Name = Convert.ToString(wizReader["NAME"]),
-                                Gender = Convert.ToString(wizReader["GENDER"]),
-                                DOB = Convert.ToDateTime(wizReader["DOB"]),
-                                Address = Convert.ToString(wizReader["ADDRESS"]),
-                                Email = Convert.ToString(wizReader["EMAIL"]),
-                                Qualification = Convert.ToString(wizReader["QUALIFICATION"]),
-                                Experiance = Convert.ToString(wizReader["EXPERIANCE"]),
-                                Interests = Convert.ToString(wizReader["INTEREST"]),
-                                ImgValue = Convert.ToString(wizReader["IMGPATH"])
-                            };
+                            OBJ.Name = Convert.ToString(wizReader["NAME"]);
+                            OBJ.Gender = Convert.ToString(wizReader["GENDER"]);
+                            OBJ.DOB = Convert.ToDateTime(wizReader["DOB"]);
+                            OBJ.Address = Convert.ToString(wizReader["ADDRESS"]);
+                            OBJ.Email = Convert.ToString(wizReader["EMAIL"]);
+                            OBJ.Qualification = Convert.ToString(wizReader["QUALIFICATION"]);
+                            OBJ.Experiance = Convert.ToString(wizReader["EXPERIANCE"]);
+                            OBJ.Interests = Convert.ToString(wizReader["INTEREST"]);
+                            OBJ.ImgValue = Convert.ToString(wizReader["IMGPATH"]);
                         }
                     }
 
-
+                    if(String.IsNullOrEmpty(OBJ.ImgValue))
+                    {
+                        OBJ.ImgValue = "../NoImage.png";
+                    }
                 }
             }
 
