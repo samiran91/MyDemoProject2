@@ -65,7 +65,8 @@ $(document).ready(function () {
         source: InterestNames,
     });
 
-    $('html').keyup(function (e) {
+    $('#txt_inst').keyup(function (e) {
+        debugger;
         if (e.keyCode == 8) {
             $("div#myMultiSearch").children().find("a:last-child").remove();
         }
