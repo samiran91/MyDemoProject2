@@ -85,7 +85,7 @@ namespace Jobsportal.Controllers
             Users U = Users.CandidateSignUp(USROBJ);
             if (U.Success == 1)
             {
-                SendWelcomeEmail(USROBJ.Email, USROBJ.Displayname);
+                SendWelcomeEmail(USROBJ.Email, USROBJ.Username);
                 SignIn(USROBJ);
             }
 
