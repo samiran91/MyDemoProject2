@@ -386,8 +386,7 @@ $(document).ready(function () {
 
     });
 
-    $('#txt_inst').keyup(function (e) {
-        debugger;
+    $('#txt_qual').keyup(function (e) {
         if (e.keyCode == 8) {
             $("div#myMultiSearch").children().find("a:last-child").remove();
         }

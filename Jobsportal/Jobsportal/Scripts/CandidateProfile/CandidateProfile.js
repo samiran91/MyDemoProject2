@@ -66,7 +66,7 @@ $(document).ready(function () {
     });
 
     $('#txt_inst').keyup(function (e) {
-        debugger;
+        
         if (e.keyCode == 8) {
             $("div#myMultiSearch").children().find("a:last-child").remove();
         }
