@@ -1,47 +1,62 @@
 ﻿function readURL(input) {
+    debugger;
 
-    var today = new Date();
-    var date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-    var time = today.getHours() + "-" + today.getMinutes() + "-" + today.getSeconds();
-    var dateTime = date + "-" + time;
+    var MaxSize = "4096";
+    var size = parseFloat(input.files[0].size / 1024).toFixed(2);
 
+    if (size > MaxSize) {
 
-    if (input.files && input.files[0]) {
-        var ImgUploadedFiles = input.files[0].name;
-        ImgUploadedFiles = dateTime + "-" + ImgUploadedFiles;
-
-
-        var files = input.files;
-        var fileData = new FormData();
-        for (var i = 0; i < files.length; i++) {
-            fileData.append(dateTime + "-" + files[i].name, files[i]);
-        }
-
-        $('input[name=hiddeninputname]').val(ImgUploadedFiles);
-
-        $.ajax({
-            url: '/Candidate/UploadFiles',
-            type: "POST",
-            contentType: false, // Not to set any content header  
-            processData: false, // Not to process data  
-            data: fileData,
-            success: function (result) {
-
-            },
-            error: function (err) {
-                alert(err.statusText);
-            }
+        $.alert({
+            type: 'red',
+            title: 'Alert!',
+            content: 'Image Not Uploaded, Please upload less than 4mb size',
         });
+    }
+    else {
+        debugger;
+        var today = new Date();
+        var date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+        var time = today.getHours() + "-" + today.getMinutes() + "-" + today.getSeconds();
+        var dateTime = date + "-" + time;
+
+        if (input.files && input.files[0]) {
+            var ImgUploadedFiles = input.files[0].name;
+            ImgUploadedFiles = dateTime + "-" + ImgUploadedFiles;
+
+
+            var files = input.files;
+            var fileData = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(dateTime + "-" + files[i].name, files[i]);
+            }
+
+            $('input[name=hiddeninputname]').val(ImgUploadedFiles);
+
+            $.ajax({
+                url: '/Candidate/UploadFiles',
+                type: "POST",
+                contentType: false, // Not to set any content header  
+                processData: false, // Not to process data  
+                data: fileData,
+                success: function (result) {
+
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            });
 
 
 
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
-            $('#imagePreview').hide();
-            $('#imagePreview').fadeIn(650);
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
+                $('#imagePreview').hide();
+                $('#imagePreview').fadeIn(650);
+            }
+            reader.readAsDataURL(input.files[0]);
         }
-        reader.readAsDataURL(input.files[0]);
+
     }
 }
 
