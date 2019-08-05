@@ -434,10 +434,11 @@ namespace DAL
 
                                     dbCom.ExecuteNonQuery();
                                     status = status + 1;
-                                    if (status != 3)
+                                    if (status < 3)
                                     {
                                         status = 4;
                                     }
+                                   
                                 }
 
                                 catch (Exception ex)
@@ -448,12 +449,19 @@ namespace DAL
                             }
 
                         }
+
+                        var JobImpDatesCount = JobDetails.JobImpDates.Count + 2;
+
+                        if (status == JobImpDatesCount)
+                        {
+                            status = 3;
+                        }
                     }
                 }
                 else
                 {
                     status = status + 1;
-                    if (status != 3)
+                    if (status < 3)
                     {
                         status = 4;
                     }
