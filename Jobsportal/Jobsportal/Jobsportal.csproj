@@ -321,9 +321,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Jobs\JobDetails.cshtml" />
     <Content Include="Views\Jobs\ListJob.cshtml" />
     <Content Include="Views\Jobs\EditJobDetail_Admin.cshtml" />
@@ -332,9 +329,9 @@
     <Content Include="Views\Shared\_JobPortalLayout.cshtml" />
     <Content Include="Views\Jobs\ListJob_Admin.cshtml" />
     <Content Include="Views\Shared\_JobPortalLayoutNoshellber.cshtml" />
-    <Content Include="Views\Login\ResetPassword.cshtml" />
     <Content Include="Views\Candidate\CandidateProfile.cshtml" />
     <Content Include="Views\Jobs\_FetchDiscussion.cshtml" />
+    <Content Include="Views\Jobs\Discussion_Admin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

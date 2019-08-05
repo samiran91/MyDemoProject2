@@ -316,6 +316,13 @@ namespace Jobsportal.Controllers
             DAL.Job.RemoveJob(JobNumber);
            // return Json(JsonRequestBehavior.AllowGet);
         }
+
+        [Authorize(Roles = "ADMIN")]
+        
+        public ActionResult DiscussionAdmin()
+        {
+            return View("Discussion_Admin");
+        }
         #endregion
 
 

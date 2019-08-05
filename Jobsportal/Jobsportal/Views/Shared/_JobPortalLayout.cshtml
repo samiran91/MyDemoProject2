@@ -47,7 +47,7 @@
 
                 <ul class="dropdown-menu">
 
-                    <li><a  data-toggle="modal" href="#ChangePassword"><i class="fa fa-key"></i>Change Password</a></li>
+                    <li><a data-toggle="modal" href="#ChangePassword"><i class="fa fa-key"></i>Change Password</a></li>
                     <li><a href="/Login/SignOut"><i class="fas fa-sign-out-alt"></i> Sign Out</a></li>
 
 
@@ -75,14 +75,20 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbarleft">
                     <ul class="nav nav-pills nav-stacked " id="myNavbarleftUL">
+
+                        <li><a href="@Url.Action("CandidateProfile","Candidate")"><i class="fas fa-user" aria-hidden="true"></i> Profile</a></li>
+
+
                         @if (((System.Web.Security.FormsIdentity)System.Web.HttpContext.Current.User.Identity).Ticket.UserData.Contains("ADMIN"))
                         {
                             <li><a href="@Url.Action("ListJob_Admin","Jobs")"><i class="fas fa-briefcase" aria-hidden="true"></i> Jobs</a></li>
+
+                            <li><a href="@Url.Action("DiscussionAdmin","Jobs")"><i class="fa fa-comments" aria-hidden="true"></i>Discussion</a></li>
                         }
 
 
 
-                        <li><a href="@Url.Action("CandidateProfile","Candidate")"><i class="fas fa-user" aria-hidden="true"></i> Profile</a></li>
+
                     </ul>
 
                 </div>
