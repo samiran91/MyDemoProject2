@@ -1,7 +1,76 @@
-﻿
+﻿@model List<DAL.Job.Discussion>
+
 @{
     ViewBag.Title = "Discussion Admin";
     Layout = "~/Views/Shared/_JobPortalLayout.cshtml";
 }
+<link href="~/Content/DiscussionAdmin/DiscussionAdmin.css" rel="stylesheet" />
+<script src="~/Scripts/DiscussionAdmin/DiscussionAdmin.js"></script>
+
+<h2>Discussion Admin</h2>
+<div class="container">
+    <table class="DiscussionAdmin-wrap">
+
+        <thead>
+            <tr>
+                <th width="10%">Image</th>
+                <th width="19%">User Name</th>
+                <th width="10%">Job Number</th>
+                <th width="30%"><b>Messages</b></th>
+                <th width="20%">Date Time</th>
+                <th width="10%">Action</th>
+            </tr>
+        </thead>
+
+        @if (Model != null)
+        {
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+
+                    <tr>
+                        <td class="profileImg"><img src="~/Images/candidateimages/@item.ImgPath" alt="Candidate Image" /></td>
+                        <td>@item.DisplayName</td>
+                        <td>@item.JobNo</td>
+                        <td><b>@item.Messages</b></td>
+                        <td>@item.MessageDateTime.ToString("dd/MM/yyyy h:mm tt")</td>
+                        <td><button type="button" class="btn btn-info" onclick="SubmitReply(@item.JobNo)">Reply</button></td>
+                    </tr>
+                }
+            </tbody>
+        }
+    </table>
+</div>
+
+
+<!-- Trigger the modal with a button -->
+@*<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>*@
+
+<!-- Modal -->
+<div id="DiscussionAdminModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Admin Reply</h4>
+            </div>
+            <div class="modal-body BodyOvrflow">
+                <div id="discussionAdmin_div"></div>
+                <div>
+                    <textarea placeholder="Reply"></textarea>
+                </div>
+                <div class="text-center"><button type="button" class="btn btn-info" onclick="SubmitAdminReply()">Submit</button></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 
 

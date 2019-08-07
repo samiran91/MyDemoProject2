@@ -30,7 +30,7 @@ namespace DAL
         public List<JOBIMPDATES> JobImpDates { get; set; }
 
         public List<JOBIMNOTES> JobNotes { get; set; }
-        
+
         public String Users { get; set; }
 
         public String Comments { get; set; }
@@ -52,7 +52,7 @@ namespace DAL
             public int DBOP { get; set; }
         }
 
-       
+
 
         public class JOBIMNOTES
         {
@@ -104,7 +104,7 @@ namespace DAL
 
         public class keywordSearch
         {
-   
+
 
             public String Keyword { get; set; }
         }
@@ -237,8 +237,8 @@ namespace DAL
                                 Qualification = (String)wizReader["QUALIFICATION"],
                                 ApplyLink = (String)wizReader["APPLYLINK"],
                                 Location = Convert.ToString(wizReader["Location"]),
-                                Comments= Convert.ToString(wizReader["Comments"])
-                                
+                                Comments = Convert.ToString(wizReader["Comments"])
+
                             };
 
                             J.JobImpDates = Job.GetEventDateList(JobNumber);
@@ -275,7 +275,7 @@ namespace DAL
                         {
                             var K = new JOBIMPDATES()
                             {
-                                Id= Convert.ToInt32(wizReader["Id"]),
+                                Id = Convert.ToInt32(wizReader["Id"]),
                                 JobNo = JobNumber,
                                 Events = Convert.ToString(wizReader["EVENTS"]),
                                 EventDateTime = Convert.ToDateTime(wizReader["EVENTSDATETIME"])
@@ -313,11 +313,11 @@ namespace DAL
                         {
                             var K = new JOBIMNOTES()
                             {
-                                Id=Convert.ToInt32(wizReader["Id"]),
+                                Id = Convert.ToInt32(wizReader["Id"]),
                                 Title = Convert.ToString(wizReader["TITLE"]),
-                                DownloadLink ="/Notes/" +Convert.ToString(wizReader["DOWNLOADLINK"]),
-                                Uplodedby= Convert.ToString(wizReader["UPLODEDBY"]),
-                                Uplodeddate=Convert.ToDateTime(wizReader["UPLODEDDATE"])
+                                DownloadLink = "/Notes/" + Convert.ToString(wizReader["DOWNLOADLINK"]),
+                                Uplodedby = Convert.ToString(wizReader["UPLODEDBY"]),
+                                Uplodeddate = Convert.ToDateTime(wizReader["UPLODEDDATE"])
                             };
 
                             records.Add(K);
@@ -368,7 +368,7 @@ namespace DAL
             {
                 dbCon.Open();
 
-               JobNumber  = SaveJobInfo(JobDetails);
+                JobNumber = SaveJobInfo(JobDetails);
                 status = 1;
                 if (JobDetails.JobNotes != null)
                 {
@@ -438,7 +438,7 @@ namespace DAL
                                     {
                                         status = 4;
                                     }
-                                   
+
                                 }
 
                                 catch (Exception ex)
@@ -577,7 +577,7 @@ namespace DAL
                         }
                     }
 
-                    if(String.IsNullOrEmpty(OBJ.ImgValue))
+                    if (String.IsNullOrEmpty(OBJ.ImgValue))
                     {
                         OBJ.ImgValue = "NoImage.png";
                     }
@@ -610,7 +610,7 @@ namespace DAL
                         {
                             var OBJ = new keywordSearch()
                             {
-                               
+
                                 Keyword = Convert.ToString(wizReader["keyword"]),
                             };
 
@@ -698,11 +698,11 @@ namespace DAL
             return list;
         }
 
-        public static List<Discussion> FetchDiscussion(string Jobno,int OffSetMinutes)
+        public static List<Discussion> FetchDiscussion(string Jobno, int OffSetMinutes)
         {
 
             String connstring = Connection.GetConnectionString();
-            
+
             List<Discussion> D = new List<Discussion>();
 
             using (SqlConnection dbCon = new SqlConnection(connstring))
@@ -739,7 +739,7 @@ namespace DAL
                                 }
                             }
 
-                            if(string.IsNullOrEmpty(Chat.ImgPath))
+                            if (string.IsNullOrEmpty(Chat.ImgPath))
                             {
                                 Chat.ImgPath = "/images/CandidateImages/NoImage.png";
                             }
@@ -816,7 +816,7 @@ namespace DAL
         public static void RemoveJob(Int32 JobNumber)
         {
             String connstring = Connection.GetConnectionString();
-            
+
             using (SqlConnection dbCon = new SqlConnection(connstring))
             {
                 dbCon.Open();
@@ -834,6 +834,51 @@ namespace DAL
                 }
 
             }
+        }
+
+        public static List<Discussion> DiscussionAdmin()
+        {
+
+            String connstring = Connection.GetConnectionString();
+
+            List<Discussion> DA = new List<Discussion>();
+
+            //String Sql_GetDiscussionAdmin = String.Format("SELECT ID,CHATID,USERNAME,JOBNO,MESSAGES,MSGDATETIME FROM DISCUSSION ORDER BY MSGDATETIME DESC");
+                String Sql_GetDiscussionAdmin = String.Format("SELECT DISCUSSION.ID, CHATID,DISCUSSION.USERNAME,JOBNO,MESSAGES,MSGDATETIME,users.PERSONID,ISNULL(NAME,'anonymous') DisplayName,IMGPATH FROM DISCUSSION left join Users on Discussion.USERNAME=Users.USERNAME  left join person on Person.PERSONID=Users.PERSONID ORDER BY MSGDATETIME DESC");
+            using (SqlConnection dbCon = new SqlConnection(connstring))
+            {
+                dbCon.Open();
+
+                using (SqlCommand dbCom = new SqlCommand(Sql_GetDiscussionAdmin, dbCon))
+                {
+
+                    dbCom.CommandType = CommandType.Text;
+
+                    using (SqlDataReader wizReader = dbCom.ExecuteReader())
+                    {
+
+                        while (wizReader.Read())
+                        {
+                            Discussion Chat = new Discussion();
+                            Chat.ID = Convert.ToInt32(wizReader["ID"]);
+                            Chat.ChatID = Convert.ToInt32(wizReader["CHATID"]);
+                            Chat.UserName = Convert.ToString(wizReader["USERNAME"]);
+                            Chat.DisplayName = Convert.ToString(wizReader["DISPLAYNAME"]);
+                            Chat.JobNo = Convert.ToInt32(wizReader["JOBNO"]);
+                            Chat.Messages = Convert.ToString(wizReader["MESSAGES"]);
+                            Chat.MessageDateTime = Convert.ToDateTime(wizReader["MSGDATETIME"]);
+                            Chat.ImgPath = Convert.ToString(wizReader["IMGPATH"]);
+                            DA.Add(Chat);
+
+                            if(String.IsNullOrEmpty(Chat.ImgPath))
+                            {
+                                Chat.ImgPath = "NoImage.png";
+                            }
+                        }
+                    }
+                }
+            }
+            return DA;
         }
     }
 

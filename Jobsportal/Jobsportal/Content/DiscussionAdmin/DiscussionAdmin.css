@@ -1,0 +1,47 @@
+﻿.DiscussionAdmin-wrap {
+    margin: 0 auto;
+    border: 1px solid #bcbbbc;
+    background-color: #f7f7f7;
+    margin-top:50px;
+}
+
+.DiscussionAdmin-wrap thead tr th {
+    padding:8px;
+    background-color: #bcbbbc;
+    color: #3f4952;
+}
+
+    .DiscussionAdmin-wrap tbody tr td {
+        padding: 8px;
+    }
+
+    .DiscussionAdmin-wrap tbody tr:nth-child(odd) {
+        background-color: #fff;
+    }
+
+    .DiscussionAdmin-wrap tbody tr:nth-child(even) {
+        background-color: #eee;
+    }
+
+    .DiscussionAdmin-wrap .profileImg img {
+        height: 50px;
+        width: 50px;
+        border-radius: 50% !important;
+    }
+
+.BodyOvrflow {
+    height: 300px;
+    overflow-y: scroll;
+}
+
+textarea {
+    width:100%;
+    border: 1px solid rgb(188, 187, 188);
+    border-radius: 4px;
+    padding: 5px;
+    margin: 5px;
+    min-height: 80px;
+    max-height: 80px;
+}
+
+

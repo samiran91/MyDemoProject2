@@ -321,7 +321,16 @@ namespace Jobsportal.Controllers
         
         public ActionResult DiscussionAdmin()
         {
-            return View("Discussion_Admin");
+            List<Job.Discussion> DA = new List<Job.Discussion>();
+            DA = Job.DiscussionAdmin();
+            return View("Discussion_Admin",DA);
+        }
+
+        public ActionResult DiscussionAdminView()
+        {
+
+            return PartialView("_DiscussionAdmin");
+
         }
         #endregion
 

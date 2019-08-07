@@ -223,6 +223,7 @@
     <Content Include="Content\CandidateProfile\CandidateProfile.min.css">
       <DependentUpon>CandidateProfile.css</DependentUpon>
     </Content>
+    <Content Include="Content\DiscussionAdmin\DiscussionAdmin.css" />
     <Content Include="Content\EditJobDetail\EditJobDetail.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\FooterTemplate\FooterTemplate.css" />
@@ -272,6 +273,7 @@
     <Content Include="Scripts\CandidateProfile\CandidateProfile.js" />
     <Content Include="Scripts\custom-html.js" />
     <Content Include="Scripts\custom-html.min.js" />
+    <Content Include="Scripts\DiscussionAdmin\DiscussionAdmin.js" />
     <Content Include="Scripts\EditJobDetail\EditJobDetail.js" />
     <Content Include="Scripts\grid\grid.js" />
     <Content Include="Scripts\grid\grid.min.js" />
@@ -332,6 +334,7 @@
     <Content Include="Views\Candidate\CandidateProfile.cshtml" />
     <Content Include="Views\Jobs\_FetchDiscussion.cshtml" />
     <Content Include="Views\Jobs\Discussion_Admin.cshtml" />
+    <Content Include="Views\Jobs\_DiscussionAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
