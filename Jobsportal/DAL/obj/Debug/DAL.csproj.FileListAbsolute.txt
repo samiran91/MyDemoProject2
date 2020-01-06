@@ -26,3 +26,9 @@ F:\Personal\Code\trunk\Jobsportal\Jobsportal\bin\DAL.pdb
 F:\Personal\Code\trunk\Jobsportal\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
 F:\Personal\Code\trunk\Jobsportal\DAL\obj\Debug\DAL.dll
 F:\Personal\Code\trunk\Jobsportal\DAL\obj\Debug\DAL.pdb
+C:\Users\Web4\source\repos\Dummy\trunk\Jobsportal\Jobsportal\bin\DAL.dll
+C:\Users\Web4\source\repos\Dummy\trunk\Jobsportal\Jobsportal\bin\DAL.pdb
+C:\Users\Web4\source\repos\Dummy\trunk\Jobsportal\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\Web4\source\repos\Dummy\trunk\Jobsportal\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
+C:\Users\Web4\source\repos\Dummy\trunk\Jobsportal\DAL\obj\Debug\DAL.dll
+C:\Users\Web4\source\repos\Dummy\trunk\Jobsportal\DAL\obj\Debug\DAL.pdb
